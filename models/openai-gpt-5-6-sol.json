@@ -1,0 +1,10 @@
+{
+  "display_name": "GPT-5.6 Sol",
+  "model_id": "gpt-5.6-sol",
+  "provider_route": "OpenAI direct",
+  "adapter": "openai_compatible",
+  "base_url": "https://api.openai.com/v1/chat/completions",
+  "api_key_env": "OPENAI_API_KEY",
+  "max_output_tokens": 800,
+  "tools_enabled": false
+}

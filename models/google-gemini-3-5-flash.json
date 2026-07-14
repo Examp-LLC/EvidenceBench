@@ -1,0 +1,10 @@
+{
+  "display_name": "Gemini 3.5 Flash",
+  "model_id": "gemini-3.5-flash",
+  "provider_route": "Google direct",
+  "adapter": "gemini_generate_content",
+  "base_url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent",
+  "api_key_env": "GEMINI_API_KEY",
+  "max_output_tokens": 800,
+  "tools_enabled": false
+}

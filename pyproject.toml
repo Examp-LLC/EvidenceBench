@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "evidencebench"
+version = "1.0.0"
+description = "Reproducible evidence-law and Federal Rules of Evidence benchmark."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "Objection Academy" }]
+dependencies = []
+
+[project.scripts]
+evidencebench = "evidencebench.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/evidencebench"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
