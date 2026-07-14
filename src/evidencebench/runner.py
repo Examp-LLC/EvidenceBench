@@ -111,12 +111,15 @@ def run(manifest_path: str, questions_path: str, output_path: str) -> dict:
         for attempt in range(2):
             try:
                 parsed, usage = adapter(manifest, prompt_for(question))
-                outputs.append({"question_id": question.id, **parsed, "status": "ok", "usage": usage})
+                # The benchmark owns the stable item ID.  A model must never
+                # be able to replace it with an echoed or fabricated field.
+                outputs.append({**parsed, "question_id": question.id, "status": "ok", "usage": usage})
                 break
             except Exception as error:  # invalid outputs and refusals are scored failures
                 if attempt == 0 and _is_transport_failure(error):
                     continue
                 outputs.append({"question_id": question.id, "choice_id": None, "explanation": "", "citations": [], "status": f"failed:{type(error).__name__}"})
+                break
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     Path(output_path).write_text("\n".join(json.dumps(item, sort_keys=True) for item in outputs) + "\n")
     return {

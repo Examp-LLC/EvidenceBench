@@ -1,7 +1,7 @@
 {
   "benchmark_version": "1.0.0",
-  "status": "ready_for_official_run",
-  "published_at": "2026-07-13T00:00:00Z",
+  "status": "official_snapshot",
+  "published_at": "2026-07-14T00:00:00Z",
   "authority_corpus": {
     "version": "FRE-2025-12-01",
     "source_url": "https://www.uscourts.gov/sites/default/files/document/federal-rules-of-evidence.pdf",
@@ -21,11 +21,11 @@
     "overall_formula": "0.70 * answer_accuracy + 0.30 * citation_f1"
   },
   "models": [
-    {"display_name": "OpenAI flagship", "family": "OpenAI", "status": "pending_official_run"},
-    {"display_name": "Anthropic flagship", "family": "Anthropic", "status": "pending_official_run"},
-    {"display_name": "Google flagship", "family": "Google", "status": "pending_official_run"},
-    {"display_name": "xAI flagship", "family": "xAI", "status": "pending_official_run"},
-    {"display_name": "DeepSeek flagship", "family": "DeepSeek", "status": "pending_official_run"},
-    {"display_name": "Mistral Large 3", "family": "Mistral", "status": "pending_official_run"}
+    {"display_name":"GPT-5.6 Sol","family":"OpenAI","model_id":"openai/gpt-5.6-sol","provider_route":"OpenRouter pinned route","status":"official","overall":0.9844,"answer_accuracy":1.0,"citation_f1":0.9479,"hallucination_rate":0.0091,"cost_usd":0.25238,"input_tokens":14920,"output_tokens":5926},
+    {"display_name":"Mistral Large","family":"Mistral","model_id":"mistralai/mistral-large-2512","provider_route":"OpenRouter pinned route","status":"official","overall":0.974,"answer_accuracy":1.0,"citation_f1":0.9132,"hallucination_rate":0.0339,"cost_usd":0.017155,"input_tokens":15252,"output_tokens":8011},
+    {"display_name":"Gemini 3.5 Flash","family":"Google","model_id":"google/gemini-3.5-flash","provider_route":"OpenRouter pinned route","status":"official","overall":0.9727,"answer_accuracy":1.0,"citation_f1":0.909,"hallucination_rate":0.0,"cost_usd":0.096867,"input_tokens":14988,"output_tokens":8265},
+    {"display_name":"Grok 4.5","family":"xAI","model_id":"x-ai/grok-4.5","provider_route":"OpenRouter pinned route","status":"official","overall":0.9656,"answer_accuracy":1.0,"citation_f1":0.8854,"hallucination_rate":0.0226,"cost_usd":0.30921,"input_tokens":36192,"output_tokens":44303},
+    {"display_name":"DeepSeek V4 Pro","family":"DeepSeek","model_id":"deepseek/deepseek-v4-pro","provider_route":"OpenRouter pinned route","status":"official","overall":0.9458,"answer_accuracy":0.9688,"citation_f1":0.8924,"hallucination_rate":0.0101,"cost_usd":0.092513,"input_tokens":15731,"output_tokens":34259},
+    {"display_name":"Claude Fable 5","family":"Anthropic","model_id":"anthropic/claude-fable-5","provider_route":"OpenRouter pinned route","status":"official","overall":0.9367,"answer_accuracy":1.0,"citation_f1":0.7889,"hallucination_rate":0.0151,"cost_usd":1.12072,"input_tokens":24252,"output_tokens":17564}
   ]
 }
