@@ -1,5 +1,4 @@
 {
-  "benchmark_name": "EvidenceBench",
   "benchmark_version": "3.0.0",
   "status": "official_snapshot",
   "published_at": "2026-07-14T23:29:38Z",
@@ -1965,7 +1964,5 @@
       "input_tokens": 26125,
       "output_tokens": 59564
     }
-  ],
-  "methodology_url": "https://github.com/Examp-LLC/EvidenceBench/blob/main/METHODOLOGY.md",
-  "repository_url": "https://github.com/Examp-LLC/EvidenceBench"
+  ]
 }

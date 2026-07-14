@@ -40,15 +40,22 @@ def aggregate(scores: list[ItemScore], questions: list[Question]) -> dict:
     by_category: dict[str, list[ItemScore]] = defaultdict(list)
     by_dimension: dict[str, dict[str, list[ItemScore]]] = defaultdict(lambda: defaultdict(list))
     category_by_id = {question.id: question.category for question in questions}
+    question_by_id = {question.id: question for question in questions}
     for score in scores:
         category = category_by_id[score.question_id]
         by_category[category].append(score)
         if category.startswith("caselaw_"):
-            _, jurisdiction, proceeding, familiarity = category.split("_", 3)
             by_dimension["domain"]["caselaw"].append(score)
-            by_dimension["jurisdiction"][jurisdiction].append(score)
-            by_dimension["proceeding"][proceeding].append(score)
-            by_dimension["familiarity"][familiarity].append(score)
+            question = question_by_id[score.question_id]
+            dimensions = question.dimensions or dict(
+                zip(
+                    ("jurisdiction", "proceeding", "familiarity"),
+                    category.split("_")[1:],
+                    strict=True,
+                )
+            )
+            for dimension, value in dimensions.items():
+                by_dimension[dimension][value].append(score)
         else:
             by_dimension["domain"]["fre"].append(score)
 

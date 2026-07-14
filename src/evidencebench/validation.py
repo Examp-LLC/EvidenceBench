@@ -17,7 +17,11 @@ def validate_questions(path: str) -> list[str]:
         option_ids = {option["id"] for option in question.options}
         if question.gold_choice_id not in option_ids:
             errors.append(f"{question.id}: gold choice is not an option")
-        if question.corpus_version not in {"FRE-2025-12-01", "FRE-2025-12-01+CASELAW-2026-07-14"}:
+        if question.corpus_version not in {
+            "FRE-2025-12-01",
+            "FRE-2025-12-01+CASELAW-2026-07-14",
+            "FRE-2025-12-01+CASELAW-DATAGOV-2026-07-14",
+        }:
             errors.append(f"{question.id}: unexpected corpus version")
         if question.attorney_review_status not in {"APPROVED", "PENDING"}:
             errors.append(f"{question.id}: invalid review status")

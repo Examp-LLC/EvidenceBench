@@ -21,6 +21,7 @@ class Question:
     citations: CitationAnnotation
     corpus_version: str
     attorney_review_status: str
+    dimensions: dict[str, str] | None = None
 
     @classmethod
     def from_dict(cls, payload: dict) -> "Question":
@@ -39,6 +40,7 @@ class Question:
             ),
             corpus_version=payload["corpus_version"],
             attorney_review_status=payload["attorney_review_status"],
+            dimensions=payload.get("dimensions"),
         )
 
     def to_dict(self) -> dict:

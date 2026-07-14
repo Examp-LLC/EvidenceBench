@@ -68,3 +68,23 @@ class ScoringTests(unittest.TestCase):
         self.assertEqual(result["dimensions"]["jurisdiction"]["state"]["count"], 1)
         self.assertEqual(result["dimensions"]["proceeding"]["criminal"]["count"], 1)
         self.assertEqual(result["dimensions"]["familiarity"]["obscure"]["count"], 1)
+
+    def test_aggregate_exposes_explicit_data_gov_dimensions(self):
+        question = Question(
+            **{
+                **sample_question().__dict__,
+                "id": "EB-DG-T",
+                "category": "caselaw_state_criminal_obscure",
+                "dimensions": {
+                    "jurisdiction": "state",
+                    "proceeding": "criminal",
+                    "familiarity": "obscure",
+                    "decision_year": "2024",
+                    "source": "data_gov_doj_nij",
+                },
+            }
+        )
+        score = score_item(question, ModelResponse(question.id, "A", "", ["FRE 801(c)"]))
+        result = aggregate([score], [question])
+        self.assertEqual(result["dimensions"]["decision_year"]["2024"]["count"], 1)
+        self.assertEqual(result["dimensions"]["source"]["data_gov_doj_nij"]["count"], 1)
