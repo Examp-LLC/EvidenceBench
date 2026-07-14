@@ -36,3 +36,9 @@ of prompt rendering and scoring without exposing the official holdout.
 EvidenceBench measures this specific closed-book task. It does not measure
 case-law research, jurisdiction-specific practice, current good-law status,
 or the safety of using a model in litigation.
+
+## Authority freeze
+
+v1 uses the Federal Rules effective December 1, 2025. As of July 2026, the
+Rule 801(d)(1)(A) amendment has been transmitted to Congress but is not
+effective until December 1, 2026 unless Congress acts; v1 excludes it.
