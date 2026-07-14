@@ -1,16 +1,16 @@
 {
   "benchmark_version": "1.0.0",
-  "status": "pending_attorney_review",
+  "status": "ready_for_official_run",
   "published_at": "2026-07-13T00:00:00Z",
   "authority_corpus": {
     "version": "FRE-2025-12-01",
     "source_url": "https://www.uscourts.gov/sites/default/files/document/federal-rules-of-evidence.pdf"
   },
   "holdout": {
-    "status": "sealed_pending_authoring",
+    "status": "sealed",
     "question_count": 96,
     "development_question_count": 24,
-    "dataset_sha256": null,
+    "dataset_sha256": "06c5f639679f6d06995403a910bfe2a40dd7ca517400e7c8c291d7f360331cba",
     "categories": ["relevance", "hearsay", "witnesses", "experts", "authentication", "best_evidence", "character", "impeachment", "privilege"]
   },
   "protocol": {

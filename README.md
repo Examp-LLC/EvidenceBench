@@ -44,8 +44,9 @@ citation F1.
 v1 uses the Federal Rules of Evidence in effect December 1, 2025. The pending
 Rule 801 amendment effective December 1, 2026 is excluded from v1.
 
-## Review gate
+## Official-run gate
 
-The repository is ready for official runs, but the initial official leaderboard
-is intentionally marked `pending_attorney_review` until Objection Academy has
-approved all 96 sealed questions and their citation annotations.
+The sealed 96-question holdout has an attorney-approved citation and content
+review record and is committed in the public manifest by SHA-256. The initial
+leaderboard remains empty until six credentialed, closed-book provider runs
+complete and their signed aggregate results are exported.
