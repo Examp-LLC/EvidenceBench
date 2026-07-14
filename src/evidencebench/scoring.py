@@ -38,9 +38,19 @@ def score_item(question: Question, response: ModelResponse) -> ItemScore:
 
 def aggregate(scores: list[ItemScore], questions: list[Question]) -> dict:
     by_category: dict[str, list[ItemScore]] = defaultdict(list)
+    by_dimension: dict[str, dict[str, list[ItemScore]]] = defaultdict(lambda: defaultdict(list))
     category_by_id = {question.id: question.category for question in questions}
     for score in scores:
-        by_category[category_by_id[score.question_id]].append(score)
+        category = category_by_id[score.question_id]
+        by_category[category].append(score)
+        if category.startswith("caselaw_"):
+            _, jurisdiction, proceeding, familiarity = category.split("_", 3)
+            by_dimension["domain"]["caselaw"].append(score)
+            by_dimension["jurisdiction"][jurisdiction].append(score)
+            by_dimension["proceeding"][proceeding].append(score)
+            by_dimension["familiarity"][familiarity].append(score)
+        else:
+            by_dimension["domain"]["fre"].append(score)
 
     def summarize(items: list[ItemScore]) -> dict:
         count = len(items) or 1
@@ -59,4 +69,11 @@ def aggregate(scores: list[ItemScore], questions: list[Question]) -> dict:
             "overall": round(0.70 * accuracy + 0.30 * citation_f1, 4),
         }
 
-    return {"overall": summarize(scores), "categories": {key: summarize(value) for key, value in sorted(by_category.items())}}
+    return {
+        "overall": summarize(scores),
+        "categories": {key: summarize(value) for key, value in sorted(by_category.items())},
+        "dimensions": {
+            dimension: {key: summarize(value) for key, value in sorted(groups.items())}
+            for dimension, groups in sorted(by_dimension.items())
+        },
+    }

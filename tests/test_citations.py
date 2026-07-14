@@ -12,3 +12,10 @@ class CitationTests(unittest.TestCase):
         self.assertTrue(citation_exists("FRE 801(c)"))
         self.assertFalse(citation_exists("FRE 801(z)"))
         self.assertFalse(citation_exists("FRE 999"))
+
+    def test_normalizes_case_reporter_citations(self):
+        self.assertEqual(normalize_citation("Daubert, 509 U.S. 579 (1993)"), "509 U.S. 579")
+        self.assertEqual(normalize_citation("55 Cal.4th 747"), "55 Cal. 4th 747")
+        self.assertEqual(normalize_citation("Parker, 7 NY3d 434"), "7 N.Y.3d 434")
+        self.assertTrue(citation_exists("208 N.J. 208"))
+        self.assertFalse(citation_exists("999 U.S. 999"))

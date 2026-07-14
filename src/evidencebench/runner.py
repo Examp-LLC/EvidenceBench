@@ -10,16 +10,18 @@ from pathlib import Path
 from .datasets import file_sha256, load_questions
 
 
-PROMPT_VERSION = "evidencebench-v1-closed-book"
+PROMPT_VERSION = "evidencebench-v2-closed-book"
 
 
 def prompt_for(question) -> str:
     options = "\n".join(f"{option['id']}. {option['text']}" for option in question.options)
     return f"""You are completing a closed-book Federal Rules of Evidence exercise.
 Do not browse, use tools, or claim to have consulted external material.
-Choose the best answer and cite only Federal Rules of Evidence provisions that
-support the answer. Return JSON only in this exact shape:
-{{"choice_id":"A","explanation":"brief explanation","citations":["FRE 801(c)"]}}
+Choose the best answer and cite only legal authorities that support it. For a
+rule question, cite normalized Federal Rules of Evidence provisions. For a
+caselaw question, cite the case's official reporter citation. Return JSON only
+in this exact shape:
+{{"choice_id":"A","explanation":"brief explanation","citations":["509 U.S. 579"]}}
 
 Question: {question.stem}
 

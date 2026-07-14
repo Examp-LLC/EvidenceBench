@@ -36,7 +36,35 @@ class ScoringTests(unittest.TestCase):
         self.assertEqual(score.answer_accuracy, 0)
         self.assertEqual(score.citation_f1, 0)
 
+    def test_case_reporter_citation_scores_as_supported_authority(self):
+        question = Question(
+            **{
+                **sample_question().__dict__,
+                "id": "EB-CASE-CITE",
+                "category": "caselaw_federal_civil_popular",
+                "citations": CitationAnnotation([["509 U.S. 579"]], ["509 U.S. 579", "FRE 702"]),
+            }
+        )
+        score = score_item(
+            question,
+            ModelResponse(question.id, "A", "", ["Daubert, 509 US 579 (1993)"]),
+        )
+        self.assertEqual(score.citation_f1, 1)
+        self.assertEqual(score.hallucinated_citations, [])
+
     def test_aggregate_uses_overall_formula(self):
         question = sample_question()
         result = aggregate([score_item(question, ModelResponse("EB-T-001", "A", "", ["FRE 801(c)"]))], [question])
         self.assertEqual(result["overall"]["overall"], 1)
+        self.assertEqual(result["dimensions"]["domain"]["fre"]["count"], 1)
+
+    def test_aggregate_exposes_caselaw_dimensions(self):
+        question = Question(
+            **{**sample_question().__dict__, "id": "EB-CASE-T", "category": "caselaw_state_criminal_obscure"}
+        )
+        score = score_item(question, ModelResponse(question.id, "A", "", ["FRE 801(c)"]))
+        result = aggregate([score], [question])
+        self.assertEqual(result["dimensions"]["domain"]["caselaw"]["count"], 1)
+        self.assertEqual(result["dimensions"]["jurisdiction"]["state"]["count"], 1)
+        self.assertEqual(result["dimensions"]["proceeding"]["criminal"]["count"], 1)
+        self.assertEqual(result["dimensions"]["familiarity"]["obscure"]["count"], 1)
