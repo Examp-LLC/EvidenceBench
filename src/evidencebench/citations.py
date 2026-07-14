@@ -4,6 +4,8 @@ import json
 import re
 from pathlib import Path
 
+from .data_gov import canonical_case_citation
+
 _CITATION = re.compile(
     r"(?:Fed(?:eral)?\.?\s*R(?:ule)?\.?\s*Evid\.?|FRE|Rule)?\s*"
     r"(?P<rule>\d{3,4})(?P<subsections>(?:\([a-zA-Z0-9]+\))*)",
@@ -35,7 +37,9 @@ def _index_path() -> Path:
 
 
 def _case_index_path() -> Path:
-    return Path(__file__).resolve().parents[2] / "data" / "case-authorities-v2.json"
+    root = Path(__file__).resolve().parents[2] / "data"
+    v3 = root / "case-authorities-v3.json"
+    return v3 if v3.exists() else root / "case-authorities-v2.json"
 
 
 def load_rule_index() -> dict[str, list[str]]:
@@ -60,6 +64,9 @@ def normalize_citation(value: str) -> str | None:
         reporter = _REPORTERS.get(reporter_key)
         if reporter:
             return f"{case_match.group('volume')} {reporter} {case_match.group('page')}"
+    data_gov_citation = canonical_case_citation(stripped)
+    if data_gov_citation:
+        return data_gov_citation
     match = _CITATION.fullmatch(stripped)
     if match:
         return f"FRE {match.group('rule')}{(match.group('subsections') or '').lower()}"

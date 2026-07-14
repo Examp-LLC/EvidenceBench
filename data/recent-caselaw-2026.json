@@ -1,0 +1,79 @@
+{
+  "version": "RECENT-CASELAW-2026-07-14",
+  "retrieved_at": "2026-07-14T23:05:00Z",
+  "selection": "Published 2026 decisions with material evidence-law holdings, verified against official court or GovInfo sources.",
+  "records": [
+    {
+      "case_name": "Ruffin v. BP Exploration & Production, Inc.",
+      "court": "United States Court of Appeals for the Fifth Circuit",
+      "decision_date": "2026-05-27",
+      "citation": "No. 23-30854",
+      "jurisdiction": "federal",
+      "proceeding": "civil",
+      "topics": ["FRE 702", "expert testimony", "toxic tort", "general causation"],
+      "holding": "The court rejected a categorical requirement of an exact numerical harmful dose but affirmed exclusion because the expert's chemical-specific and analytical gaps made the opinion irrelevant and unreliable.",
+      "source_url": "https://www.ca5.uscourts.gov/opinions/pub/23/23-30854-CV1.pdf",
+      "source_sha256": "7e905fa935d7ff5e7f4266be007f751cf3147a8bb9cfbc6a829c7248018c6177"
+    },
+    {
+      "case_name": "Barry v. DePuy Synthes Companies",
+      "court": "United States Court of Appeals for the Federal Circuit",
+      "decision_date": "2026-01-20",
+      "citation": "No. 23-2226",
+      "jurisdiction": "federal",
+      "proceeding": "civil",
+      "topics": ["FRE 702", "FRE 403", "expert testimony", "survey evidence"],
+      "holding": "The majority reversed the post-trial exclusion of technical and survey experts and the resulting judgment as a matter of law, holding that the technical opinion applied rather than contradicted the claim construction and that the survey criticisms went to weight on this record.",
+      "source_url": "https://www.govinfo.gov/content/pkg/USCOURTS-ca13-23-02226/pdf/USCOURTS-ca13-23-02226-0.pdf",
+      "source_sha256": "8802f94249d9fd81a43e2b238792ac6c0139495addf36b4ae948a97046b36eb9"
+    },
+    {
+      "case_name": "Ansari v. Jimenez",
+      "court": "United States Court of Appeals for the Sixth Circuit",
+      "decision_date": "2026-05-14",
+      "citation": "No. 24-1743",
+      "jurisdiction": "federal",
+      "proceeding": "civil",
+      "topics": ["FRE 403", "FRE 106", "documentary evidence", "civil rights"],
+      "holding": "The court affirmed exclusion of a 911-page prosecution file because uncertain provenance, irrelevant material, issue confusion, prejudice, and needless cumulative presentation substantially outweighed its potential probative value.",
+      "source_url": "https://www.opn.ca6.uscourts.gov/opinions.pdf/26a0148p-06.pdf",
+      "source_sha256": "0c653b2057241cbcf671148c59ecd3e7a928ae9a094f51fe1618b1de7fd43dbf"
+    },
+    {
+      "case_name": "United States v. Ross",
+      "court": "United States Court of Appeals for the First Circuit",
+      "decision_date": "2026-04-02",
+      "citation": "No. 24-1907",
+      "jurisdiction": "federal",
+      "proceeding": "criminal",
+      "topics": ["FRE 403", "stipulations", "unfair prejudice", "knowledge"],
+      "holding": "The court affirmed admission and limited presentation of a small representative set of stipulated contraband exhibits because they remained probative of knowledge and were not unfairly prejudicial under Rule 403.",
+      "source_url": "https://www.ca1.uscourts.gov/sites/ca1/files/opnfiles/24-1907P-01A.pdf",
+      "source_sha256": "ab5123a8653fa3bc7218dcf14eba35581c36611b8df8ea7cfcb2f56c550cb40a"
+    },
+    {
+      "case_name": "S.H. v. S.H.",
+      "court": "Supreme Court of the State of New York, Richmond County",
+      "decision_date": "2026-03-26",
+      "citation": "2026 NY Slip Op 26043",
+      "jurisdiction": "state",
+      "proceeding": "civil",
+      "topics": ["expert testimony", "expert disclosure", "hearsay", "unfair prejudice"],
+      "holding": "The court precluded a party from repurposing a neutral custody evaluator as her retained expert after an untimely and substantively inadequate disclosure created unfair prejudice.",
+      "source_url": "https://www.nycourts.gov/reporter/current/3dseries/2026/2026_26043.shtml",
+      "source_sha256": "92f265889da3917e439ccbd679616dca45f4f70b599d6c3a6d365e2355babef1"
+    },
+    {
+      "case_name": "People v. Ford",
+      "court": "City Court of Utica, New York",
+      "decision_date": "2026-03-12",
+      "citation": "2026 NY Slip Op 26081",
+      "jurisdiction": "state",
+      "proceeding": "criminal",
+      "topics": ["hearsay", "excited utterance", "Confrontation Clause", "preliminary hearing"],
+      "holding": "The court treated a contemporaneous 911 call as a competent excited utterance and as nontestimonial because its primary purpose was resolving an ongoing emergency, so it could be considered at the felony preliminary hearing.",
+      "source_url": "https://www.nycourts.gov/reporter/current/3dseries/2026/2026_26081.shtml",
+      "source_sha256": "ca032ac5ad389ab535858c33c1d2af803c94f8c4e109ad93b024d5093692a2b8"
+    }
+  ]
+}
