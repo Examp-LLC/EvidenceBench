@@ -1,16 +1,16 @@
 # EvidenceBench v1 methodology
 
-EvidenceBench evaluates closed-book responses to attorney-authored Federal
-Rules of Evidence questions. A model receives a multiple-choice question and
-must return JSON containing one option ID, a concise explanation, and Federal
-Rules of Evidence citations. No browsing, retrieval, tools, or external
-authority text is available to the model.
+EvidenceBench evaluates closed-book responses to attorney-authored evidence
+questions. A model receives a multiple-choice question and must return JSON
+containing one option ID, a concise explanation, and supporting FRE or official
+reporter citations. No browsing, retrieval, tools, or external authority text
+is available to the model.
 
 ## Dataset
 
 - Development set: 24 public questions licensed CC BY-NC 4.0.
-- Official holdout: 96 newly authored sealed questions; only aggregate results
-  are published.
+- Official v2 holdout: 112 sealed questions—96 FRE-focused and 16 caselaw;
+  only aggregate results are published.
 - Every item has a stable ID, category, difficulty, rationale, gold answer,
   required citation groups, accepted citations, corpus version, and attorney
   review record.
@@ -21,8 +21,9 @@ Answer accuracy is exact option match. Citation precision is accepted cited
 rules divided by all cited rules. Citation recall is the share of required
 citation groups satisfied. Citation F1 is their harmonic mean. A citation that
 does not exist in the frozen FRE corpus is hallucinated; a real but
-unannotated rule is unsupported. Overall score is 70% answer accuracy and 30%
-citation F1.
+unannotated authority is unsupported. Overall score is 70% answer accuracy and
+30% authority-citation F1. Caselaw results are additionally aggregated across
+federal/state, civil/criminal, and popular/obscure dimensions.
 
 ## Reproducibility
 

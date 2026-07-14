@@ -1,7 +1,7 @@
 # EvidenceBench
 
 EvidenceBench is Objection Academy's public benchmark for evidence-law answer
-accuracy and Federal Rules of Evidence citation reliability. It is an
+accuracy and legal-authority citation reliability. It is an
 educational research project, not legal advice and not a substitute for
 professional legal research.
 
@@ -10,11 +10,14 @@ professional legal research.
 - A 24-question development set and its scoring annotations.
 - The prompt contract, scoring code, model manifests, methodology, and website
   export format.
-- Aggregate official results after an attorney-approved sealed holdout run.
+- Aggregate official results after an approved sealed holdout run, including
+  separate FRE and caselaw dimensions.
 
 ## What is sealed
 
-The 96-question official holdout will be newly authored, attorney-reviewed,
+The v2 official holdout contains 96 FRE-focused questions plus a 16-question
+caselaw module balanced across federal/state, civil/criminal, and
+popular/obscure decisions. It is attorney-reviewed,
 and never distributed with the Objection Academy app. Its prompts,
 annotations, and item-level results are not public. Once approved, published
 manifests will commit to the holdout with a SHA-256 hash, counts, categories,
@@ -33,11 +36,11 @@ credentials named in that manifest. It never enables web search or tools.
 
 ## Metrics
 
-Each item receives answer accuracy, citation precision, citation recall,
+Each item receives answer accuracy, authority precision, authority recall,
 citation F1, citation-existence status, and unsupported-citation status.
 Official overall score is `0.70 * answer accuracy + 0.30 * citation F1`.
 Missing citations, refusals, and invalid structured outputs score zero for
-citation F1.
+authority F1. Caselaw questions require an official reporter citation.
 
 ## Authority corpus
 
