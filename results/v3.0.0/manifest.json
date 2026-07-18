@@ -1,7 +1,7 @@
 {
   "benchmark_version": "3.0.0",
   "status": "official_snapshot",
-  "published_at": "2026-07-14T23:29:38Z",
+  "published_at": "2026-07-18T13:36:30Z",
   "authority_corpus": {
     "version": "FRE-2025-12-01+CASELAW-DATAGOV-2026-07-14",
     "fre_source_url": "https://www.uscourts.gov/sites/default/files/document/federal-rules-of-evidence.pdf",
@@ -1335,6 +1335,320 @@
       "cost_usd": 0.55724,
       "input_tokens": 24286,
       "output_tokens": 14527
+    },
+    {
+      "display_name": "Kimi K3",
+      "family": "Moonshot AI",
+      "model_id": "moonshotai/kimi-k3",
+      "provider_route": "OpenRouter pinned route",
+      "status": "official",
+      "overall": 0.7738,
+      "answer_accuracy": 0.8146,
+      "citation_f1": 0.6786,
+      "hallucination_rate": 0.0789,
+      "dimensions": {
+        "decision_year": {
+          "2020": {
+            "answer_accuracy": 0.1538,
+            "citation_f1": 0.1795,
+            "count": 13,
+            "hallucination_rate": 0.5714,
+            "overall": 0.1615,
+            "unsupported_citation_count": 0
+          },
+          "2021": {
+            "answer_accuracy": 0.3333,
+            "citation_f1": 0.1667,
+            "count": 6,
+            "hallucination_rate": 0.5,
+            "overall": 0.2833,
+            "unsupported_citation_count": 0
+          },
+          "2022": {
+            "answer_accuracy": 0.1667,
+            "citation_f1": 0.0,
+            "count": 6,
+            "hallucination_rate": 1.0,
+            "overall": 0.1167,
+            "unsupported_citation_count": 0
+          },
+          "2023": {
+            "answer_accuracy": 0.0,
+            "citation_f1": 0.1667,
+            "count": 6,
+            "hallucination_rate": 0.0,
+            "overall": 0.05,
+            "unsupported_citation_count": 0
+          },
+          "2024": {
+            "answer_accuracy": 0.0,
+            "citation_f1": 0.0,
+            "count": 2,
+            "hallucination_rate": 0.0,
+            "overall": 0.0,
+            "unsupported_citation_count": 0
+          },
+          "2026": {
+            "answer_accuracy": 1.0,
+            "citation_f1": 0.0,
+            "count": 6,
+            "hallucination_rate": 0.2727,
+            "overall": 0.7,
+            "unsupported_citation_count": 4
+          }
+        },
+        "discipline": {
+          "bitemark": {
+            "answer_accuracy": 0.0,
+            "citation_f1": 0.0,
+            "count": 1,
+            "hallucination_rate": 0.0,
+            "overall": 0.0,
+            "unsupported_citation_count": 0
+          },
+          "dna": {
+            "answer_accuracy": 0.375,
+            "citation_f1": 0.2083,
+            "count": 8,
+            "hallucination_rate": 0.6,
+            "overall": 0.325,
+            "unsupported_citation_count": 0
+          },
+          "dna_pcast_dicta": {
+            "answer_accuracy": 0.0,
+            "citation_f1": 0.0,
+            "count": 1,
+            "hallucination_rate": 0.0,
+            "overall": 0.0,
+            "unsupported_citation_count": 0
+          },
+          "documentary_evidence": {
+            "answer_accuracy": 1.0,
+            "citation_f1": 0.0,
+            "count": 1,
+            "hallucination_rate": 0.0,
+            "overall": 0.7,
+            "unsupported_citation_count": 0
+          },
+          "expert_disclosure": {
+            "answer_accuracy": 1.0,
+            "citation_f1": 0.0,
+            "count": 1,
+            "hallucination_rate": 0.0,
+            "overall": 0.7,
+            "unsupported_citation_count": 0
+          },
+          "fingerprints": {
+            "answer_accuracy": 0.0,
+            "citation_f1": 0.0,
+            "count": 2,
+            "hallucination_rate": 0.0,
+            "overall": 0.0,
+            "unsupported_citation_count": 0
+          },
+          "footwear": {
+            "answer_accuracy": 0.0,
+            "citation_f1": 0.0,
+            "count": 1,
+            "hallucination_rate": 0.0,
+            "overall": 0.0,
+            "unsupported_citation_count": 0
+          },
+          "ftm": {
+            "answer_accuracy": 0.0625,
+            "citation_f1": 0.1667,
+            "count": 16,
+            "hallucination_rate": 0.4,
+            "overall": 0.0938,
+            "unsupported_citation_count": 0
+          },
+          "ftm_fingerprints": {
+            "answer_accuracy": 0.5,
+            "citation_f1": 0.0,
+            "count": 2,
+            "hallucination_rate": 1.0,
+            "overall": 0.35,
+            "unsupported_citation_count": 0
+          },
+          "hearsay_and_confrontation": {
+            "answer_accuracy": 1.0,
+            "citation_f1": 0.0,
+            "count": 1,
+            "hallucination_rate": 0.6667,
+            "overall": 0.7,
+            "unsupported_citation_count": 1
+          },
+          "pcast_dicta": {
+            "answer_accuracy": 0.0,
+            "citation_f1": 0.0,
+            "count": 1,
+            "hallucination_rate": 0.0,
+            "overall": 0.0,
+            "unsupported_citation_count": 0
+          },
+          "pcast_fre_702": {
+            "answer_accuracy": 0.0,
+            "citation_f1": 0.0,
+            "count": 1,
+            "hallucination_rate": 0.0,
+            "overall": 0.0,
+            "unsupported_citation_count": 0
+          },
+          "rule_403_stipulations": {
+            "answer_accuracy": 1.0,
+            "citation_f1": 0.0,
+            "count": 1,
+            "hallucination_rate": 0.0,
+            "overall": 0.7,
+            "unsupported_citation_count": 1
+          },
+          "technical_and_survey_experts": {
+            "answer_accuracy": 1.0,
+            "citation_f1": 0.0,
+            "count": 1,
+            "hallucination_rate": 0.0,
+            "overall": 0.7,
+            "unsupported_citation_count": 1
+          },
+          "toxic_tort_experts": {
+            "answer_accuracy": 1.0,
+            "citation_f1": 0.0,
+            "count": 1,
+            "hallucination_rate": 0.3333,
+            "overall": 0.7,
+            "unsupported_citation_count": 1
+          }
+        },
+        "domain": {
+          "caselaw": {
+            "answer_accuracy": 0.4909,
+            "citation_f1": 0.3576,
+            "count": 55,
+            "hallucination_rate": 0.2619,
+            "overall": 0.4509,
+            "unsupported_citation_count": 4
+          },
+          "fre": {
+            "answer_accuracy": 1.0,
+            "citation_f1": 0.8625,
+            "count": 96,
+            "hallucination_rate": 0.027,
+            "overall": 0.9588,
+            "unsupported_citation_count": 35
+          }
+        },
+        "familiarity": {
+          "obscure": {
+            "answer_accuracy": 0.4043,
+            "citation_f1": 0.2553,
+            "count": 47,
+            "hallucination_rate": 0.3226,
+            "overall": 0.3596,
+            "unsupported_citation_count": 4
+          },
+          "popular": {
+            "answer_accuracy": 1.0,
+            "citation_f1": 0.9583,
+            "count": 8,
+            "hallucination_rate": 0.0909,
+            "overall": 0.9875,
+            "unsupported_citation_count": 0
+          }
+        },
+        "jurisdiction": {
+          "federal": {
+            "answer_accuracy": 0.625,
+            "citation_f1": 0.4167,
+            "count": 24,
+            "hallucination_rate": 0.0952,
+            "overall": 0.5625,
+            "unsupported_citation_count": 3
+          },
+          "state": {
+            "answer_accuracy": 0.3871,
+            "citation_f1": 0.3118,
+            "count": 31,
+            "hallucination_rate": 0.4286,
+            "overall": 0.3645,
+            "unsupported_citation_count": 1
+          }
+        },
+        "proceeding": {
+          "civil": {
+            "answer_accuracy": 0.8,
+            "citation_f1": 0.5333,
+            "count": 15,
+            "hallucination_rate": 0.0667,
+            "overall": 0.72,
+            "unsupported_citation_count": 2
+          },
+          "criminal": {
+            "answer_accuracy": 0.375,
+            "citation_f1": 0.2917,
+            "count": 40,
+            "hallucination_rate": 0.3704,
+            "overall": 0.35,
+            "unsupported_citation_count": 2
+          }
+        },
+        "publication_status": {
+          "published": {
+            "answer_accuracy": 0.2821,
+            "citation_f1": 0.1111,
+            "count": 39,
+            "hallucination_rate": 0.4091,
+            "overall": 0.2308,
+            "unsupported_citation_count": 4
+          }
+        },
+        "recency": {
+          "2020-2021": {
+            "answer_accuracy": 0.2105,
+            "citation_f1": 0.1754,
+            "count": 19,
+            "hallucination_rate": 0.5556,
+            "overall": 0.2,
+            "unsupported_citation_count": 0
+          },
+          "2022-2024": {
+            "answer_accuracy": 0.0714,
+            "citation_f1": 0.0714,
+            "count": 14,
+            "hallucination_rate": 0.5,
+            "overall": 0.0714,
+            "unsupported_citation_count": 0
+          },
+          "2026": {
+            "answer_accuracy": 1.0,
+            "citation_f1": 0.0,
+            "count": 6,
+            "hallucination_rate": 0.2727,
+            "overall": 0.7,
+            "unsupported_citation_count": 4
+          }
+        },
+        "source": {
+          "data_gov_doj_nij": {
+            "answer_accuracy": 0.1515,
+            "citation_f1": 0.1313,
+            "count": 33,
+            "hallucination_rate": 0.5455,
+            "overall": 0.1455,
+            "unsupported_citation_count": 0
+          },
+          "official_courts_2026": {
+            "answer_accuracy": 1.0,
+            "citation_f1": 0.0,
+            "count": 6,
+            "hallucination_rate": 0.2727,
+            "overall": 0.7,
+            "unsupported_citation_count": 4
+          }
+        }
+      },
+      "cost_usd": 0.694256,
+      "input_tokens": 41218,
+      "output_tokens": 41404
     },
     {
       "display_name": "Mistral Large 3",

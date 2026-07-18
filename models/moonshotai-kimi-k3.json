@@ -1,0 +1,10 @@
+{
+  "display_name": "Kimi K3",
+  "model_id": "moonshotai/kimi-k3",
+  "provider_route": "OpenRouter pinned route",
+  "adapter": "openai_compatible",
+  "base_url": "https://openrouter.ai/api/v1/chat/completions",
+  "api_key_env": "OPENROUTER_API_KEY",
+  "max_output_tokens": 800,
+  "tools_enabled": false
+}

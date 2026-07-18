@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import socket
 import urllib.request
 import urllib.error
@@ -52,7 +53,24 @@ def _openai_compatible(manifest: dict, prompt: str) -> tuple[dict, dict]:
         "messages": [{"role": "user", "content": prompt}],
     }
     result = _post_json(manifest["base_url"], {"Authorization": f"Bearer {api_key}"}, payload)
-    return json.loads(result["choices"][0]["message"]["content"]), result.get("usage", {})
+    content = result["choices"][0]["message"]["content"]
+    if isinstance(content, list):
+        content = "".join(part.get("text", "") for part in content if isinstance(part, dict))
+    if not isinstance(content, str):
+        raise ValueError("OpenAI-compatible response content must be text")
+    content = re.sub(r"^```(?:json)?\s*|\s*```$", "", content.strip())
+    try:
+        parsed = json.loads(content)
+    except json.JSONDecodeError:
+        object_start = content.find("{")
+        if object_start < 0:
+            raise
+        parsed, _ = json.JSONDecoder().raw_decode(content[object_start:])
+    if isinstance(parsed, list) and len(parsed) == 1 and isinstance(parsed[0], dict):
+        parsed = parsed[0]
+    if not isinstance(parsed, dict):
+        raise ValueError("OpenAI-compatible response must contain a JSON object")
+    return parsed, result.get("usage", {})
 
 
 def _anthropic_messages(manifest: dict, prompt: str) -> tuple[dict, dict]:
@@ -119,7 +137,7 @@ def run(manifest_path: str, questions_path: str, output_path: str) -> dict:
                 outputs.append({**parsed, "question_id": question.id, "status": "ok", "usage": usage})
                 break
             except Exception as error:  # invalid outputs and refusals are scored failures
-                if attempt == 0 and _is_transport_failure(error):
+                if attempt == 0:
                     continue
                 outputs.append({"question_id": question.id, "choice_id": None, "explanation": "", "citations": [], "status": f"failed:{type(error).__name__}"})
                 break

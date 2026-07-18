@@ -19,6 +19,7 @@ MODELS = {
     "xai-grok-4-5": ("xAI", "models/xai-grok-4-5.json"),
     "deepseek-v4-pro": ("DeepSeek", "models/deepseek-v4-pro.json"),
     "mistral-large-3": ("Mistral", "models/mistral-large-3.json"),
+    "moonshotai-kimi-k3": ("Moonshot AI", "models/moonshotai-kimi-k3.json"),
 }
 
 
