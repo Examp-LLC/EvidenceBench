@@ -1,0 +1,71 @@
+{
+  "schema_version": "4.0",
+  "track": "matter",
+  "id": "V4M-DEV-001",
+  "family_id": "V4MF-901-001",
+  "title": "Email authentication assessment",
+  "task_type": "record_review",
+  "instructions": "Review the record and determine whether the proponent has supplied evidence sufficient to support a finding that the email is what the proponent claims. Address the opponent's assertion that eyewitness testimony or complete header metadata is mandatory.",
+  "documents": [
+    {
+      "path": "record.txt",
+      "sha256": "c2d707688713dd810dcfaa93ed90ae322e938691a7546a617acfb160eb2a907c"
+    }
+  ],
+  "deliverables": ["findings.json"],
+  "criteria": [
+    {
+      "id": "C1",
+      "dimension": "legal",
+      "title": "Reaches the supported authentication disposition",
+      "issue_code": "FRE_901_DISTINCTIVE_CHARACTERISTICS",
+      "expected_disposition": "sufficient",
+      "critical": true
+    },
+    {
+      "id": "C2",
+      "dimension": "authority",
+      "title": "Grounds the authentication route in Rule 901",
+      "issue_code": "FRE_901_DISTINCTIVE_CHARACTERISTICS",
+      "expected_disposition": "sufficient",
+      "required_authority_groups": [["FRE 901(a)"], ["FRE 901(b)(4)"]],
+      "accepted_authorities": ["FRE 901(a)", "FRE 901(b)(4)"],
+      "critical": true
+    },
+    {
+      "id": "C3",
+      "dimension": "fact",
+      "title": "Uses the distinctive contents and address evidence",
+      "issue_code": "FRE_901_DISTINCTIVE_CHARACTERISTICS",
+      "expected_disposition": "sufficient",
+      "required_fact_ids": ["F2", "F3", "F4"],
+      "required_record_refs": ["record.txt"],
+      "critical": true
+    },
+    {
+      "id": "C4",
+      "dimension": "deliverable",
+      "title": "Creates the structured findings deliverable",
+      "deliverable": "findings.json",
+      "critical": true
+    },
+    {
+      "id": "R1",
+      "dimension": "legal",
+      "title": "Explains the difference between sufficiency and ultimate weight",
+      "issue_code": "FRE_901_DISTINCTIVE_CHARACTERISTICS",
+      "critical": false,
+      "review_only": true
+    }
+  ],
+  "corpus_version": "fre-2025",
+  "review": {
+    "status": "DRAFT",
+    "author_id": "oa-v4-drafter",
+    "reviewer_ids": []
+  },
+  "dimensions": {
+    "skill": "record-grounded authentication analysis",
+    "source": "synthetic"
+  }
+}

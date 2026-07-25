@@ -1,0 +1,12 @@
+MATTER RECORD — DEVELOPMENT FIXTURE
+
+[F1] On March 3, Ana Ruiz received an email from marcus@northstar.test.
+[F2] Northstar's directory lists that address for manager Marcus Lee.
+[F3] The email calls the pricing project “Blue Finch,” a nickname used only by
+the five-person pricing team.
+[F4] It accurately says that Ana objected during a closed March 2 meeting.
+[F5] The exported message has no complete header metadata or server log.
+[F6] Ana did not see Marcus type or send the message.
+
+The proponent asks the court to admit the email. The opponent argues that only
+an eyewitness or complete header metadata could authenticate it.

@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "evidencebench"
-version = "3.0.0"
-description = "Reproducible evidence-law and Federal Rules of Evidence benchmark."
+version = "4.0.0"
+description = "Reproducible evidence-law benchmark for doctrine and matter-based legal agents."
 readme = "README.md"
 requires-python = ">=3.12"
 license = { text = "MIT" }

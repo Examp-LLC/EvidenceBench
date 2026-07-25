@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://objectionacademy.com/evidencebench/v4/doctrine-item.schema.json",
+  "title": "EvidenceBench v4 Doctrine item",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "track",
+    "id",
+    "family_id",
+    "category",
+    "difficulty",
+    "jurisdiction",
+    "stem",
+    "facts",
+    "allowed_rulings",
+    "gold",
+    "corpus_version",
+    "review"
+  ],
+  "properties": {
+    "schema_version": {"const": "4.0"},
+    "track": {"const": "doctrine"},
+    "id": {"type": "string", "minLength": 1},
+    "family_id": {"type": "string", "minLength": 1},
+    "category": {"type": "string", "minLength": 1},
+    "difficulty": {"enum": ["easy", "medium", "hard"]},
+    "jurisdiction": {"type": "string", "minLength": 1},
+    "stem": {"type": "string", "minLength": 1},
+    "facts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "text"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "text": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "allowed_rulings": {
+      "type": "array",
+      "minItems": 2,
+      "uniqueItems": true,
+      "items": {"enum": ["admit", "exclude", "limit", "defer"]}
+    },
+    "gold": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ruling",
+        "issue_codes",
+        "required_authority_groups",
+        "accepted_authorities",
+        "grounding",
+        "rationale"
+      ],
+      "properties": {
+        "ruling": {"enum": ["admit", "exclude", "limit", "defer"]},
+        "issue_codes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "required_authority_groups": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"type": "string", "minLength": 1}
+          }
+        },
+        "accepted_authorities": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        },
+        "grounding": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["issue_code", "fact_ids"],
+            "properties": {
+              "issue_code": {"type": "string", "minLength": 1},
+              "fact_ids": {
+                "type": "array",
+                "minItems": 1,
+                "items": {"type": "string", "minLength": 1}
+              }
+            }
+          }
+        },
+        "rationale": {"type": "string", "minLength": 1}
+      }
+    },
+    "corpus_version": {"type": "string", "minLength": 1},
+    "review": {"$ref": "#/$defs/review"},
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": {"type": "string"}
+    }
+  },
+  "$defs": {
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": {"enum": ["DRAFT", "IN_REVIEW", "APPROVED"]},
+        "author_id": {"type": ["string", "null"]},
+        "reviewer_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string"}
+        },
+        "adjudicator_id": {"type": ["string", "null"]},
+        "reviewed_at": {"type": ["string", "null"], "format": "date-time"}
+      }
+    }
+  }
+}
