@@ -19,9 +19,41 @@ from .datasets_v4 import load_doctrine_items, load_matter_tasks
 from .models_v4 import MatterTask
 
 
-DOCTRINE_PROMPT_VERSION = "evidencebench-v4-doctrine-1"
-MATTER_PROMPT_VERSION = "evidencebench-v4-matter-agent-1"
+DOCTRINE_PROMPT_VERSION = "evidencebench-v4-doctrine-2"
+MATTER_PROMPT_VERSION = "evidencebench-v4-matter-agent-2"
 DEFAULT_OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
+DOCTRINE_ISSUE_CATALOG = (
+    (
+        "EBV4_D01_JUDICIAL_ADMINISTRATION",
+        "Judicial administration and preliminary questions",
+    ),
+    ("EBV4_D02_RELEVANCE_403", "Relevance and Rule 403 balancing"),
+    (
+        "EBV4_D03_CHARACTER_PROPENSITY_HABIT",
+        "Character, propensity, other acts, or habit",
+    ),
+    ("EBV4_D04_POLICY_EXCLUSIONS", "Policy-based exclusions and compromise rules"),
+    (
+        "EBV4_D05_WITNESS_EXAMINATION",
+        "Witness competency, examination, and sequestration",
+    ),
+    ("EBV4_D06_IMPEACHMENT_REHABILITATION", "Impeachment and rehabilitation"),
+    ("EBV4_D07_OPINION_EXPERTS", "Lay or expert opinion evidence"),
+    ("EBV4_D08_HEARSAY_DEFINITIONS", "Hearsay definitions and exclusions"),
+    ("EBV4_D09_HEARSAY_EXCEPTIONS", "Hearsay exceptions"),
+    (
+        "EBV4_D10_AUTHENTICATION_IDENTIFICATION",
+        "Authentication and identification",
+    ),
+    (
+        "EBV4_D11_CONTENTS_ORIGINALS_SUMMARIES",
+        "Original-writing rule, contents, and summaries",
+    ),
+    (
+        "EBV4_D12_PRIVILEGE_CONSTITUTIONAL",
+        "Privilege and constitutional evidence limits",
+    ),
+)
 
 
 class CostBudgetExceeded(RuntimeError):
@@ -199,6 +231,9 @@ def _json_content(message: dict) -> dict:
 def doctrine_prompt(item) -> str:
     facts = "\n".join(f"{fact.id}: {fact.text}" for fact in item.facts)
     rulings = ", ".join(item.allowed_rulings)
+    issue_catalog = "\n".join(
+        f"- {code}: {label}" for code, label in DOCTRINE_ISSUE_CATALOG
+    )
     governing_law = (
         "the Federal Rules of Evidence"
         if item.jurisdiction == "federal"
@@ -209,11 +244,13 @@ This is closed-book. Do not browse or use tools. Apply {governing_law} and
 return one JSON object only. Use only the supplied fact IDs.
 
 Required shape:
-{{"ruling":"admit|exclude|limit|defer","issue_codes":["RULE_..."],
-"authorities":["controlling rule or case citation"],"grounding":[{{"issue_code":"RULE_...",
+{{"ruling":"admit|exclude|limit|defer","issue_codes":["EBV4_D..."],
+"authorities":["controlling rule or case citation"],"grounding":[{{"issue_code":"EBV4_D...",
 "fact_ids":["F1"]}}],"confidence":0.0,"explanation":"brief analysis"}}
 
 Allowed rulings: {rulings}
+Choose every materially controlling issue code from this fixed catalog:
+{issue_catalog}
 Question: {item.stem}
 Facts:
 {facts}
@@ -514,6 +551,9 @@ class MatterWorkspace:
 def matter_prompt(task: MatterTask) -> str:
     deliverables = ", ".join(task.deliverables)
     documents = ", ".join(document.path for document in task.documents)
+    issue_codes = ", ".join(
+        finding.issue_code for finding in task.gold_findings
+    )
     return f"""You are completing the EvidenceBench v4 Matter track in a
 restricted workspace. Review the supplied record with the available tools.
 Do not browse or assume facts not in the record.
@@ -522,11 +562,16 @@ Task: {task.title}
 Instructions: {task.instructions}
 Declared documents: {documents}
 Required deliverables: {deliverables}
+Required issue slots: {issue_codes}
 
 You must write findings.json with this shape:
 {{"findings":[{{"issue_code":"...","disposition":"...",
 "fact_ids":["..."],"record_refs":["document:line-or-section"],
 "authorities":["controlling rule or case citation"],"explanation":"..."}}]}}
+Write exactly one finding for every required issue slot. The slot identifiers
+are neutral output keys, not answers; determine each disposition, authority,
+fact, and record reference from the matter.
+Disposition must be exactly one of: admit, exclude, limit, defer.
 Read every declared document. Prefer one read_documents call for the complete
 record. Use write_output for every deliverable. When complete, respond briefly.
 """

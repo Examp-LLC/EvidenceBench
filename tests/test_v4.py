@@ -22,6 +22,7 @@ from evidencebench.runner_v4 import (
     RunCostBudget,
     _generation_parameters,
     doctrine_prompt,
+    matter_prompt,
     run_doctrine,
 )
 from evidencebench.release_v4 import build_release_manifest
@@ -96,6 +97,24 @@ class V4ScoringTests(unittest.TestCase):
         self.assertEqual(score.invalid_authorities, ["Rule banana"])
         self.assertEqual(score.authority_precision, 0.5)
         self.assertLess(score.doctrine_score, 1.0)
+
+    def test_specific_subsection_satisfies_accepted_parent_rule(self) -> None:
+        source = load_doctrine_items(DOCTRINE)[0]
+        payload = source.to_dict()
+        payload["gold"]["accepted_authorities"] = ["FRE 104"]
+        payload["gold"]["required_authority_groups"] = [["FRE 104"]]
+        item = source.__class__.from_dict(payload)
+        response = DoctrineResponse(
+            item_id=item.id,
+            ruling=item.gold.ruling,
+            issue_codes=item.gold.issue_codes,
+            authorities=["FRE 104(a)"],
+            grounding=item.gold.grounding,
+            confidence=1.0,
+        )
+        score = score_doctrine_item(item, response)
+        self.assertEqual(score.authority_precision, 1.0)
+        self.assertEqual(score.authority_recall, 1.0)
 
     def test_perfect_matter_response_scores_one(self) -> None:
         _, task = load_matter_tasks(MATTER)[0]
@@ -361,6 +380,23 @@ class PromptTests(unittest.TestCase):
         prompt = doctrine_prompt(state_item)
         self.assertIn("controlling evidence law of California", prompt)
         self.assertNotIn("Apply the Federal Rules of Evidence", prompt)
+
+    def test_doctrine_prompt_exposes_the_fixed_issue_code_catalog(self) -> None:
+        prompt = doctrine_prompt(load_doctrine_items(DOCTRINE)[0])
+        self.assertIn("EBV4_D01_JUDICIAL_ADMINISTRATION", prompt)
+        self.assertIn("EBV4_D12_PRIVILEGE_CONSTITUTIONAL", prompt)
+        self.assertIn("Choose every materially controlling issue code", prompt)
+
+    def test_matter_prompt_exposes_neutral_required_issue_slots(self) -> None:
+        _, task = load_matter_tasks(MATTER)[0]
+        prompt = matter_prompt(task)
+        for finding in task.gold_findings:
+            self.assertIn(finding.issue_code, prompt)
+        self.assertIn("neutral output keys, not answers", prompt)
+        self.assertIn(
+            "Disposition must be exactly one of: admit, exclude, limit, defer",
+            prompt,
+        )
 
     def test_generation_parameters_support_reasoning_without_temperature(self) -> None:
         self.assertEqual(

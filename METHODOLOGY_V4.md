@@ -36,6 +36,13 @@ The fixed equal weighting prevents the larger track from silently dominating.
 Every release also reports 40/60 and 60/40 sensitivity values. A submission
 must complete both tracks; a missing track does not receive a headline score.
 
+Doctrine prompts publish a fixed twelve-code issue catalog. Models select every
+materially controlling domain code and use the same code to ground supplied fact
+IDs. Matter prompts publish neutral issue-slot identifiers for every required
+finding. Those identifiers disclose output cardinality, not the disposition,
+authority, fact, or record answer. Publishing both contracts prevents opaque
+private IDs from making structured-match credit impossible.
+
 ## Doctrine scoring
 
 Each item receives:

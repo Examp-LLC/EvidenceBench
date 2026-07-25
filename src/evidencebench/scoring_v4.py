@@ -52,6 +52,10 @@ def _precision_recall_f1(
     return precision, recall, f1
 
 
+def _authority_matches(submitted: str, accepted: str) -> bool:
+    return submitted == accepted or submitted.startswith(f"{accepted}(")
+
+
 def _authority_score(
     submitted: Iterable[str],
     accepted_values: Iterable[str],
@@ -76,7 +80,9 @@ def _authority_score(
         if (normalized := normalize_citation(value)) is not None
     }
     supported = {
-        value for value in canonical_submissions if value in accepted
+        value
+        for value in canonical_submissions
+        if any(_authority_matches(value, target) for target in accepted)
     }
     hallucinated = sorted(
         original
@@ -106,7 +112,14 @@ def _authority_score(
         for group in required_groups
     ]
     recall = (
-        sum(bool(group.intersection(supported)) for group in normalized_groups)
+        sum(
+            any(
+                _authority_matches(submitted, target)
+                for submitted in supported
+                for target in group
+            )
+            for group in normalized_groups
+        )
         / len(normalized_groups)
         if normalized_groups
         else 1.0
@@ -358,7 +371,10 @@ def _matter_authority_f1(
             submitted_count += 1
             if normalized is None:
                 invalid.append(raw)
-            elif normalized in accepted:
+            elif any(
+                _authority_matches(normalized, target)
+                for target in accepted
+            ):
                 supported_count += 1
                 supported_by_issue[issue].add(normalized)
             elif not citation_exists(normalized):
@@ -374,7 +390,11 @@ def _matter_authority_f1(
                 if (normalized := normalize_citation(value)) is not None
             }
             required_total += 1
-            required_met += bool(normalized_group & supported_by_issue[issue])
+            required_met += any(
+                _authority_matches(submitted, target)
+                for submitted in supported_by_issue[issue]
+                for target in normalized_group
+            )
     recall = required_met / required_total if required_total else 1.0
     f1 = (
         0.0
