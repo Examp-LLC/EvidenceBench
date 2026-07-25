@@ -126,6 +126,7 @@ def score_doctrine_item(
         return DoctrineItemScore(
             item_id=item.id,
             family_id=item.family_id,
+            domain=item.domain,
             outcome_accuracy=0.0,
             issue_precision=0.0,
             issue_recall=0.0,
@@ -193,6 +194,7 @@ def score_doctrine_item(
     return DoctrineItemScore(
         item_id=item.id,
         family_id=item.family_id,
+        domain=item.domain,
         outcome_accuracy=outcome,
         issue_precision=issue_precision,
         issue_recall=issue_recall,
@@ -237,9 +239,26 @@ def _criterion_passes(
     if criterion.review_only:
         return False
     if criterion.dimension == "deliverable":
-        return bool(
-            criterion.deliverable
-            and criterion.deliverable in set(response.deliverables)
+        if not criterion.deliverable:
+            return False
+        metadata = {
+            item.path: item for item in response.deliverable_metadata
+        }.get(criterion.deliverable)
+        if metadata is None:
+            return (
+                criterion.min_bytes <= 1
+                and not criterion.required_sections
+                and criterion.deliverable in set(response.deliverables)
+            )
+        required_sections = {
+            section.strip().casefold() for section in criterion.required_sections
+        }
+        actual_sections = {
+            section.strip().casefold() for section in metadata.sections
+        }
+        return (
+            metadata.bytes >= criterion.min_bytes
+            and required_sections.issubset(actual_sections)
         )
 
     finding = _matching_finding(criterion, response.findings)
@@ -272,6 +291,171 @@ def _criterion_passes(
     raise ValueError(f"unsupported matter criterion dimension: {criterion.dimension}")
 
 
+def _legal_f1(task: MatterTask, response: MatterResponse) -> tuple[float, float, float]:
+    if not task.gold_findings:
+        return 0.0, 0.0, 0.0
+    gold_by_issue = {
+        finding.issue_code.strip().upper(): {
+            disposition.strip().casefold()
+            for disposition in finding.accepted_dispositions
+        }
+        for finding in task.gold_findings
+    }
+    predicted = {
+        (
+            finding.issue_code.strip().upper(),
+            (finding.disposition or "").strip().casefold(),
+        )
+        for finding in response.findings
+        if finding.issue_code.strip()
+    }
+    supported = {
+        pair
+        for pair in predicted
+        if pair[0] in gold_by_issue and pair[1] in gold_by_issue[pair[0]]
+    }
+    precision = len(supported) / len(predicted) if predicted else 0.0
+    recalled_issues = {issue for issue, _ in supported}
+    recall = len(recalled_issues) / len(gold_by_issue) if gold_by_issue else 1.0
+    f1 = (
+        0.0
+        if precision + recall == 0
+        else 2 * precision * recall / (precision + recall)
+    )
+    return precision, recall, f1
+
+
+def _matter_authority_f1(
+    task: MatterTask, response: MatterResponse
+) -> tuple[float, float, float, list[str], list[str]]:
+    gold_by_issue = {
+        finding.issue_code.strip().upper(): finding
+        for finding in task.gold_findings
+    }
+    submitted_count = 0
+    supported_count = 0
+    invalid: list[str] = []
+    hallucinated: list[str] = []
+    supported_by_issue: dict[str, set[str]] = defaultdict(set)
+    for finding in response.findings:
+        issue = finding.issue_code.strip().upper()
+        gold = gold_by_issue.get(issue)
+        accepted = {
+            normalized
+            for value in (gold.accepted_authorities if gold else [])
+            if (normalized := normalize_citation(value)) is not None
+        }
+        seen: set[str] = set()
+        for raw_value in finding.authorities:
+            raw = raw_value.strip()
+            if not raw:
+                continue
+            normalized = normalize_citation(raw)
+            key = normalized or f"INVALID::{raw.casefold()}"
+            if key in seen:
+                continue
+            seen.add(key)
+            submitted_count += 1
+            if normalized is None:
+                invalid.append(raw)
+            elif normalized in accepted:
+                supported_count += 1
+                supported_by_issue[issue].add(normalized)
+            elif not citation_exists(normalized):
+                hallucinated.append(raw)
+    precision = supported_count / submitted_count if submitted_count else 0.0
+    required_total = 0
+    required_met = 0
+    for issue, gold in gold_by_issue.items():
+        for group in gold.required_authority_groups:
+            normalized_group = {
+                normalized
+                for value in group
+                if (normalized := normalize_citation(value)) is not None
+            }
+            required_total += 1
+            required_met += bool(normalized_group & supported_by_issue[issue])
+    recall = required_met / required_total if required_total else 1.0
+    f1 = (
+        0.0
+        if precision + recall == 0
+        else 2 * precision * recall / (precision + recall)
+    )
+    return (
+        precision,
+        recall,
+        f1,
+        sorted(set(invalid)),
+        sorted(set(hallucinated)),
+    )
+
+
+def _ref_is_accepted(submitted: str, accepted: str) -> bool:
+    return (
+        submitted == accepted
+        or submitted.startswith(f"{accepted}:")
+        or submitted.startswith(f"{accepted}#")
+    )
+
+
+def _matter_fact_f1(
+    task: MatterTask, response: MatterResponse
+) -> tuple[float, float, float]:
+    gold_by_issue = {
+        finding.issue_code.strip().upper(): finding
+        for finding in task.gold_findings
+    }
+    predicted: set[tuple[str, str, str]] = set()
+    accepted: set[tuple[str, str, str]] = set()
+    required: set[tuple[str, str, str]] = set()
+    for issue, gold in gold_by_issue.items():
+        accepted.update(
+            (issue, "fact", value.strip().upper())
+            for value in gold.accepted_fact_ids
+        )
+        required.update(
+            (issue, "fact", value.strip().upper())
+            for value in gold.required_fact_ids
+        )
+        accepted.update(
+            (issue, "ref", value.strip()) for value in gold.accepted_record_refs
+        )
+        required.update(
+            (issue, "ref", value.strip()) for value in gold.required_record_refs
+        )
+    for finding in response.findings:
+        issue = finding.issue_code.strip().upper()
+        predicted.update(
+            (issue, "fact", value.strip().upper())
+            for value in finding.fact_ids
+            if value.strip()
+        )
+        for submitted in finding.record_refs:
+            value = submitted.strip()
+            if not value:
+                continue
+            canonical = next(
+                (
+                    gold_value
+                    for gold_issue, kind, gold_value in accepted
+                    if gold_issue == issue
+                    and kind == "ref"
+                    and _ref_is_accepted(value, gold_value)
+                ),
+                value,
+            )
+            predicted.add((issue, "ref", canonical))
+    true_positive = len(predicted & accepted)
+    precision = true_positive / len(predicted) if predicted else 0.0
+    recall = len(predicted & required) / len(required) if required else 1.0
+    f1 = (
+        0.0
+        if precision + recall == 0
+        else 2 * precision * recall / (precision + recall)
+    )
+    return precision, recall, f1
+
+
 def score_matter_task(
     task: MatterTask, response: MatterResponse
 ) -> MatterTaskScore:
@@ -279,9 +463,16 @@ def score_matter_task(
         return MatterTaskScore(
             task_id=task.id,
             family_id=task.family_id,
+            domain=task.domain,
             legal_criteria_rate=0.0,
+            legal_precision=0.0,
+            legal_recall=0.0,
             authority_grounding_rate=0.0,
+            authority_precision=0.0,
+            authority_recall=0.0,
             factual_accuracy_rate=0.0,
+            factual_precision=0.0,
+            factual_recall=0.0,
             deliverable_completeness_rate=0.0,
             matter_score=0.0,
             complete_task=False,
@@ -310,9 +501,36 @@ def score_matter_task(
         values = by_dimension[dimension]
         return sum(score.passed for score in values) / len(values) if values else 0.0
 
-    legal = rate("legal")
-    authority = rate("authority")
-    fact = rate("fact")
+    if task.gold_findings:
+        legal_precision, legal_recall, legal = _legal_f1(task, response)
+        (
+            authority_precision,
+            authority_recall,
+            authority,
+            invalid,
+            hallucinated,
+        ) = _matter_authority_f1(task, response)
+        fact_precision, fact_recall, fact = _matter_fact_f1(task, response)
+    else:
+        legal = rate("legal")
+        authority = rate("authority")
+        fact = rate("fact")
+        legal_precision = legal_recall = legal
+        authority_precision = authority_recall = authority
+        fact_precision = fact_recall = fact
+        all_authorities = [
+            authority_value
+            for finding in response.findings
+            for authority_value in finding.authorities
+        ]
+        accepted = [
+            authority_value
+            for criterion in task.criteria
+            for authority_value in criterion.accepted_authorities
+        ]
+        _, _, _, invalid, hallucinated, _ = _authority_score(
+            all_authorities, accepted, []
+        )
     deliverable = rate("deliverable")
     matter_score = (
         MATTER_WEIGHTS["legal"] * legal
@@ -325,29 +543,24 @@ def score_matter_task(
         for score in criterion_scores
         if score.critical and not score.review_only
     ]
-    all_authorities = [
-        authority_value
-        for finding in response.findings
-        for authority_value in finding.authorities
-    ]
-    accepted = [
-        authority_value
-        for criterion in task.criteria
-        for authority_value in criterion.accepted_authorities
-    ]
-    _, _, _, invalid, hallucinated, _ = _authority_score(
-        all_authorities, accepted, []
-    )
     return MatterTaskScore(
         task_id=task.id,
         family_id=task.family_id,
+        domain=task.domain,
         legal_criteria_rate=legal,
+        legal_precision=legal_precision,
+        legal_recall=legal_recall,
         authority_grounding_rate=authority,
+        authority_precision=authority_precision,
+        authority_recall=authority_recall,
         factual_accuracy_rate=fact,
+        factual_precision=fact_precision,
+        factual_recall=fact_recall,
         deliverable_completeness_rate=deliverable,
         matter_score=matter_score,
         complete_task=bool(critical_scores)
-        and all(score.passed for score in critical_scores),
+        and all(score.passed for score in critical_scores)
+        and all(value == 1.0 for value in (legal, authority, fact, deliverable)),
         criteria=criterion_scores,
         invalid_authorities=invalid,
         hallucinated_authorities=hallucinated,

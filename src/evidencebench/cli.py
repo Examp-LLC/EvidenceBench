@@ -73,9 +73,13 @@ def _write_or_print(payload: dict, output: str | None) -> None:
 
 def _validate_v4(args: argparse.Namespace) -> int:
     if args.track == "doctrine":
-        errors = validate_doctrine_items(args.input, official=args.official)
+        errors = validate_doctrine_items(
+            args.input, official=args.official, candidate=args.candidate
+        )
     else:
-        errors = validate_matter_tasks(args.input, official=args.official)
+        errors = validate_matter_tasks(
+            args.input, official=args.official, candidate=args.candidate
+        )
     if errors:
         print("\n".join(errors))
         return 1
@@ -212,6 +216,7 @@ def main() -> int:
     validate_v4.add_argument("--track", choices=("doctrine", "matter"), required=True)
     validate_v4.add_argument("--input", required=True)
     validate_v4.add_argument("--official", action="store_true")
+    validate_v4.add_argument("--candidate", action="store_true")
     validate_v4.set_defaults(handler=_validate_v4)
     score_v4 = subparsers.add_parser("score-v4")
     score_v4.add_argument("--track", choices=("doctrine", "matter"), required=True)

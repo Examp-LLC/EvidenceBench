@@ -9,6 +9,7 @@
     "track",
     "id",
     "family_id",
+    "domain",
     "category",
     "difficulty",
     "jurisdiction",
@@ -24,6 +25,22 @@
     "track": {"const": "doctrine"},
     "id": {"type": "string", "minLength": 1},
     "family_id": {"type": "string", "minLength": 1},
+    "domain": {
+      "enum": [
+        "D01_JUDICIAL_ADMINISTRATION",
+        "D02_RELEVANCE_403",
+        "D03_CHARACTER_PROPENSITY_HABIT",
+        "D04_POLICY_EXCLUSIONS",
+        "D05_WITNESS_EXAMINATION",
+        "D06_IMPEACHMENT_REHABILITATION",
+        "D07_OPINION_EXPERTS",
+        "D08_HEARSAY_DEFINITIONS",
+        "D09_HEARSAY_EXCEPTIONS",
+        "D10_AUTHENTICATION_IDENTIFICATION",
+        "D11_CONTENTS_ORIGINALS_SUMMARIES",
+        "D12_PRIVILEGE_CONSTITUTIONAL"
+      ]
+    },
     "category": {"type": "string", "minLength": 1},
     "difficulty": {"enum": ["easy", "medium", "hard"]},
     "jurisdiction": {"type": "string", "minLength": 1},
@@ -98,6 +115,8 @@
       }
     },
     "corpus_version": {"type": "string", "minLength": 1},
+    "legacy_source_id": {"type": ["string", "null"]},
+    "coverage_cell": {"type": "string", "minLength": 1},
     "review": {"$ref": "#/$defs/review"},
     "dimensions": {
       "type": "object",

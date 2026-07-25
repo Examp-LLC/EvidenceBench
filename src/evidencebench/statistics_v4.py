@@ -58,11 +58,57 @@ def summarize_doctrine(scores: list[DoctrineItemScore]) -> dict:
         "grounding_f1",
         "calibration",
     )
+    families: dict[str, list[DoctrineItemScore]] = defaultdict(list)
+    for score in scores:
+        families[score.family_id].append(score)
+    family_records = [
+        {
+            "family_id": family_id,
+            "domain": values[0].domain,
+            **{
+                metric_name: mean(
+                    getattr(value, metric_name) for value in values
+                )
+                for metric_name in metric_names
+            },
+        }
+        for family_id, values in sorted(families.items())
+    ]
+    domains: dict[str, list[dict]] = defaultdict(list)
+    for record in family_records:
+        domains[record["domain"]].append(record)
+
+    def domain_macro(metric_name: str) -> float:
+        return (
+            mean(
+                mean(record[metric_name] for record in records)
+                for records in domains.values()
+            )
+            if domains
+            else 0.0
+        )
+
     result = {
         "n": len(scores),
-        **{
-            name: mean(getattr(score, name) for score in scores) if scores else 0.0
-            for name in metric_names
+        "family_count": len(family_records),
+        "domain_count": len(domains),
+        **{name: domain_macro(name) for name in metric_names},
+        "item_mean_score": mean(score.doctrine_score for score in scores)
+        if scores
+        else 0.0,
+        "family_mean_score": mean(
+            record["doctrine_score"] for record in family_records
+        )
+        if family_records
+        else 0.0,
+        "by_domain": {
+            domain: {
+                "family_count": len(records),
+                "doctrine_score": mean(
+                    record["doctrine_score"] for record in records
+                ),
+            }
+            for domain, records in sorted(domains.items())
         },
         "invalid_authority_count": sum(
             len(score.invalid_authorities) for score in scores
@@ -72,8 +118,24 @@ def summarize_doctrine(scores: list[DoctrineItemScore]) -> dict:
         ),
         "failure_count": sum(score.status != "ok" for score in scores),
     }
-    low, high = cluster_bootstrap_interval(
-        scores, lambda score: score.family_id, lambda score: score.doctrine_score
+    generator = random.Random(20260304)
+    bootstrap_values: list[float] = []
+    for _ in range(5000):
+        bootstrap_values.append(
+            mean(
+                mean(
+                    generator.choice(records)["doctrine_score"]
+                    for _ in records
+                )
+                for records in domains.values()
+            )
+            if domains
+            else 0.0
+        )
+    bootstrap_values.sort()
+    low, high = (
+        _percentile(bootstrap_values, 0.025),
+        _percentile(bootstrap_values, 0.975),
     )
     result["score_ci_95"] = [low, high]
     return result
@@ -127,23 +189,32 @@ def summarize_suite(
         doctrine_groups[score.family_id].append(score)
     for score in matter_scores:
         matter_groups[score.family_id].append(score)
-    doctrine_families = sorted(doctrine_groups)
+    doctrine_domains: dict[str, list[str]] = defaultdict(list)
+    for family_id, values in doctrine_groups.items():
+        doctrine_domains[values[0].domain].append(family_id)
     matter_families = sorted(matter_groups)
     generator = random.Random(20260304)
     samples: list[float] = []
     for _ in range(5000):
-        sampled_doctrine = [
-            item
-            for _ in doctrine_families
-            for item in doctrine_groups[generator.choice(doctrine_families)]
-        ]
         sampled_matter = [
             item
             for _ in matter_families
             for item in matter_groups[generator.choice(matter_families)]
         ]
         samples.append(
-            0.5 * mean(score.doctrine_score for score in sampled_doctrine)
+            0.5
+            * mean(
+                mean(
+                    mean(
+                        item.doctrine_score
+                        for item in doctrine_groups[
+                            generator.choice(family_ids)
+                        ]
+                    )
+                    for _ in family_ids
+                )
+                for family_ids in doctrine_domains.values()
+            )
             + 0.5 * mean(score.matter_score for score in sampled_matter)
         )
     samples.sort()

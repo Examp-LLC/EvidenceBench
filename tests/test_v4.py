@@ -6,15 +6,18 @@ from pathlib import Path
 
 from evidencebench.datasets_v4 import load_doctrine_items, load_matter_tasks
 from evidencebench.models_v4 import (
+    DoctrineItemScore,
     DoctrineGrounding,
     DoctrineResponse,
+    MatterDeliverableMetadata,
     MatterFinding,
     MatterResponse,
+    MatterTask,
 )
-from evidencebench.runner_v4 import MatterWorkspace
+from evidencebench.runner_v4 import MatterWorkspace, doctrine_prompt
 from evidencebench.release_v4 import build_release_manifest
 from evidencebench.scoring_v4 import score_doctrine_item, score_matter_task
-from evidencebench.statistics_v4 import summarize_suite
+from evidencebench.statistics_v4 import summarize_doctrine, summarize_suite
 from evidencebench.validation_v4 import (
     validate_doctrine_items,
     validate_matter_tasks,
@@ -143,6 +146,141 @@ class V4ScoringTests(unittest.TestCase):
         self.assertEqual(summary["overall_score_100"], 100.0)
         self.assertIn("doctrine_40_matter_60", summary["weight_sensitivity"])
 
+    def test_extra_matter_findings_reduce_precision(self) -> None:
+        task = MatterTask.from_dict(
+            {
+                "schema_version": "4.0",
+                "track": "matter",
+                "id": "M-PRECISION",
+                "family_id": "M-PRECISION",
+                "domain": "D10_AUTHENTICATION_IDENTIFICATION",
+                "jurisdiction": "federal",
+                "title": "Precision test",
+                "task_type": "admissibility_memo",
+                "instructions": "Resolve the record.",
+                "documents": [{"path": "record.txt", "sha256": "0" * 64}],
+                "deliverables": ["findings.json"],
+                "criteria": [
+                    {
+                        "id": "L1",
+                        "dimension": "legal",
+                        "title": "Correct result",
+                        "issue_code": "AUTH",
+                        "expected_disposition": "admit",
+                    },
+                    {
+                        "id": "A1",
+                        "dimension": "authority",
+                        "title": "Correct authority",
+                        "issue_code": "AUTH",
+                        "required_authority_groups": [["FRE 901(a)"]],
+                        "accepted_authorities": ["FRE 901(a)"],
+                    },
+                    {
+                        "id": "F1",
+                        "dimension": "fact",
+                        "title": "Correct fact and record",
+                        "issue_code": "AUTH",
+                        "required_fact_ids": ["F1"],
+                        "required_record_refs": ["record.txt"],
+                    },
+                    {
+                        "id": "D1",
+                        "dimension": "deliverable",
+                        "title": "Structured findings",
+                        "deliverable": "findings.json",
+                        "min_bytes": 10,
+                        "required_sections": ["findings"],
+                    },
+                ],
+                "gold_findings": [
+                    {
+                        "issue_code": "AUTH",
+                        "accepted_dispositions": ["admit"],
+                        "required_fact_ids": ["F1"],
+                        "accepted_fact_ids": ["F1"],
+                        "required_record_refs": ["record.txt"],
+                        "accepted_record_refs": ["record.txt"],
+                        "required_authority_groups": [["FRE 901(a)"]],
+                        "accepted_authorities": ["FRE 901(a)"],
+                    }
+                ],
+                "corpus_version": "test",
+                "review": {"status": "DRAFT"},
+                "coverage_cell": "test",
+            }
+        )
+        response = MatterResponse(
+            task_id=task.id,
+            findings=[
+                MatterFinding(
+                    "AUTH",
+                    "admit",
+                    ["F1"],
+                    ["record.txt"],
+                    ["FRE 901(a)"],
+                ),
+                MatterFinding(
+                    "UNSUPPORTED",
+                    "exclude",
+                    ["F99"],
+                    ["other.txt"],
+                    ["FRE 403"],
+                ),
+            ],
+            deliverables=["findings.json"],
+            deliverable_metadata=[
+                MatterDeliverableMetadata(
+                    path="findings.json",
+                    bytes=100,
+                    sha256="0" * 64,
+                    sections=["findings"],
+                )
+            ],
+        )
+        score = score_matter_task(task, response)
+        self.assertAlmostEqual(score.legal_precision, 0.5)
+        self.assertAlmostEqual(score.authority_precision, 0.5)
+        self.assertAlmostEqual(score.factual_precision, 0.5)
+        self.assertAlmostEqual(score.legal_recall, 1.0)
+        self.assertFalse(score.complete_task)
+
+    def test_doctrine_uses_family_first_domain_macro_average(self) -> None:
+        def record(item: str, family: str, domain: str, value: float) -> DoctrineItemScore:
+            return DoctrineItemScore(
+                item_id=item,
+                family_id=family,
+                domain=domain,
+                outcome_accuracy=value,
+                issue_precision=value,
+                issue_recall=value,
+                issue_f1=value,
+                authority_precision=value,
+                authority_recall=value,
+                authority_f1=value,
+                grounding_precision=value,
+                grounding_recall=value,
+                grounding_f1=value,
+                calibration=value,
+                invalid_authorities=[],
+                hallucinated_authorities=[],
+                unsupported_authorities=[],
+                doctrine_score=value,
+                status="ok",
+            )
+
+        summary = summarize_doctrine(
+            [
+                record("A1", "F1", "D01", 1.0),
+                record("A2", "F1", "D01", 0.0),
+                record("A3", "F2", "D01", 1.0),
+                record("B1", "F3", "D02", 0.0),
+            ]
+        )
+        self.assertEqual(summary["item_mean_score"], 0.5)
+        self.assertEqual(summary["family_mean_score"], 0.5)
+        self.assertEqual(summary["doctrine_score"], 0.375)
+
 
 class MatterWorkspaceTests(unittest.TestCase):
     def test_workspace_separates_read_and_write_roots(self) -> None:
@@ -164,6 +302,50 @@ class MatterWorkspaceTests(unittest.TestCase):
                 workspace.execute(
                     "write_output", {"path": "../escape.txt", "content": "no"}
                 )
+
+    def test_workspace_exposes_canonical_text_only_through_declared_document(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            documents = root / "documents"
+            outputs = root / "outputs"
+            canonical = documents / "_canonical"
+            canonical.mkdir(parents=True)
+            (documents / "record.docx").write_bytes(b"not used")
+            (canonical / "record.txt").write_text("canonical needle")
+            workspace = MatterWorkspace(
+                documents,
+                outputs,
+                document_paths=["record.docx"],
+                canonical_paths={"record.docx": "_canonical/record.txt"},
+            )
+            self.assertEqual(
+                workspace.execute("list_documents", {})["documents"],
+                ["record.docx"],
+            )
+            self.assertEqual(
+                workspace.execute(
+                    "read_document", {"path": "record.docx"}
+                )["content"],
+                "canonical needle",
+            )
+            with self.assertRaises(ValueError):
+                workspace.execute(
+                    "read_document", {"path": "_canonical/record.txt"}
+                )
+
+
+class PromptTests(unittest.TestCase):
+    def test_state_doctrine_prompt_uses_state_law(self) -> None:
+        item = load_doctrine_items(DOCTRINE)[0]
+        state_item = item.__class__.from_dict(
+            {
+                **item.to_dict(),
+                "jurisdiction": "california",
+            }
+        )
+        prompt = doctrine_prompt(state_item)
+        self.assertIn("controlling evidence law of California", prompt)
+        self.assertNotIn("Apply the Federal Rules of Evidence", prompt)
 
 
 if __name__ == "__main__":

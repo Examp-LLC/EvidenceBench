@@ -42,6 +42,10 @@ def _case_index_path() -> Path:
     return v3 if v3.exists() else root / "case-authorities-v2.json"
 
 
+def _v4_authority_path() -> Path:
+    return Path(__file__).resolve().parents[2] / "data" / "authority-corpus-v4.json"
+
+
 def load_rule_index() -> dict[str, list[str]]:
     return json.loads(_index_path().read_text())["rules"]
 
@@ -50,8 +54,27 @@ def load_case_index() -> set[str]:
     return set(json.loads(_case_index_path().read_text())["citations"])
 
 
+def load_v4_authority_index() -> tuple[dict[str, str], set[str]]:
+    path = _v4_authority_path()
+    if not path.exists():
+        return {}, set()
+    entries = json.loads(path.read_text())["authorities"]
+    aliases: dict[str, str] = {}
+    canonical: set[str] = set()
+    for entry in entries:
+        canonical_value = entry["canonical"]
+        canonical.add(canonical_value)
+        for value in [canonical_value, *entry.get("aliases", [])]:
+            aliases[re.sub(r"\s+", " ", value.strip()).casefold()] = canonical_value
+    return aliases, canonical
+
+
 def normalize_citation(value: str) -> str | None:
     stripped = value.strip()
+    v4_aliases, _ = load_v4_authority_index()
+    registered = v4_aliases.get(re.sub(r"\s+", " ", stripped).casefold())
+    if registered:
+        return registered
     if re.search(r"(?:FRE|Fed(?:eral)?\.?\s*R(?:ule)?\.?\s*Evid\.?|Rule)\s*\d", stripped, re.I):
         match = _CITATION.search(stripped)
         if match:
@@ -77,6 +100,9 @@ def citation_exists(citation: str, index: dict[str, list[str]] | None = None) ->
     normalized = normalize_citation(citation)
     if not normalized:
         return False
+    _, v4_canonical = load_v4_authority_index()
+    if normalized in v4_canonical:
+        return True
     if not normalized.startswith("FRE "):
         return normalized in load_case_index()
     index = index or load_rule_index()

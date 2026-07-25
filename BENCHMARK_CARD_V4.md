@@ -12,7 +12,7 @@ or evidence that a system can work without attorney review.
 
 ## Unit of evaluation
 
-Doctrine units are independently authored fact patterns. Matter units are
+Doctrine units are reviewed applied-ruling fact patterns. Matter units are
 closed-universe workspaces containing instructions, documents, expected
 deliverables, and atomic criteria. `family_id` is the resampling and leakage
 boundary.
@@ -36,6 +36,11 @@ outputs.
 The single overall score is the equal-weighted mean of Doctrine and Matter.
 Both track scores and all submetrics remain mandatory, because equal headline
 scores can conceal materially different capabilities.
+
+Doctrine is family-first and then macro-averaged across 12 domains. Matter
+penalizes unsupported extra findings through precision-aware legal, authority,
+and factual F1. A separate all-critical-criteria task-resolution rate remains a
+strict secondary metric.
 
 ## Quality controls
 

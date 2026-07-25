@@ -19,9 +19,15 @@ No result is “official EvidenceBench v4” until all gates pass.
       invalid citations, fabricated citations, refusals, and partial failures.
 - [ ] A frozen scoring version and prompt version are recorded.
 - [ ] Family-clustered confidence intervals are reported.
+- [ ] Doctrine family-first and 12-domain macro-averaging are independently
+      recomputed from released aggregate records.
+- [ ] Precision attacks with extra issues, citations, facts, and record
+      references are covered by gold-response tests.
 - [ ] At least three runs per system are completed.
 - [ ] Track-weight sensitivity is reported.
 - [ ] Human agreement and adjudication statistics are published.
+- [ ] All PDF/DOCX canonical companions match the reviewed native documents,
+      and a batch render audit finds no truncation or malformed pages.
 
 ## Execution gate
 

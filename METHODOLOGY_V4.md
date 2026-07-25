@@ -51,6 +51,13 @@ required authority groups for which at least one accepted citation is supplied.
 The benchmark separately records invalid, hallucinated, and real-but-unsupported
 authorities.
 
+Item scores are not pooled directly. Variants first average within
+`family_id`, family scores then average within each of the 12 registered
+evidence domains, and the Doctrine track is the unweighted macro-average of
+those domain scores. This prevents a four-variant family or a densely sampled
+topic from receiving extra headline weight. Confidence intervals resample
+families within domains.
+
 ## Matter scoring
 
 Expert rubrics are atomic and binary. Scoring dimensions are:
@@ -60,12 +67,19 @@ Expert rubrics are atomic and binary. Scoring dimensions are:
 - factual/record grounding: 15%; and
 - deliverable completeness: 15%.
 
-The Matter score is the weighted mean of dimension-level pass rates. In
-addition, a task-resolution flag passes only if every critical criterion
-passes. This preserves the useful strictness of all-pass review without
-collapsing the headline metric into a mostly-zero statistic. Criteria marked
-`review_only` can support qualitative error analysis but cannot change the
-official score.
+Legal, authority, and factual dimensions use precision, recall, and F1 against
+versioned accepted and required sets. Unsupported extra issues, dispositions,
+facts, record references, and authorities reduce precision; missing required
+material reduces recall. Deliverable criteria remain deterministic binary
+checks of benchmark-observed file bytes and required sections. The Matter score
+is the weighted mean of legal F1, authority F1, factual/record F1, and
+deliverable pass rate.
+
+A task-resolution flag passes only if every critical atomic criterion passes
+and every scored dimension equals one. This preserves the useful strictness of
+all-pass review without collapsing the headline metric into a mostly-zero
+statistic. Criteria marked `review_only` can support qualitative error analysis
+but cannot change the official score.
 
 The evaluator derives deliverable existence from the output filesystem; a
 model cannot earn credit merely by claiming it wrote a file.
@@ -91,10 +105,23 @@ a private, access-controlled repository. Public and holdout data may not share
 a `family_id`. Exact normalized stem overlap is automatically rejected; release
 review must additionally test semantic overlap and contamination.
 
-Synthetic matters must use fictional parties and facts. Real cases may be used
+Synthetic matters must use fictional parties and facts. Native PDF and DOCX
+records have hashed canonical-text companions so extraction-library variance
+cannot change the input presented to a model. Real cases may be used
 only when the source, license, holding, current-law status, and retrieval hash
 are recorded. Every official item must name an author and at least one
 independent reviewer and must have status `APPROVED`.
+
+The construction target is 240 Doctrine items and 60 Matter tasks. Doctrine
+contains 151 migrated v3 concepts and 89 new coverage items, scored as 168
+families across 12 domains. Its jurisdiction split is 144 federal and 96 state
+items. Matter contains five task archetypes in every domain, with 36 federal
+and 24 state tasks. The selected state panel is California, New York, Texas,
+Florida, Pennsylvania, New Jersey, Illinois, Ohio, Michigan, Georgia,
+Washington, and Arizona.
+The 89 new items use this panel. Migrated legacy precedent concepts retain
+their original jurisdictions, including several states outside the panel, so
+historical lineage is not silently rewritten.
 
 ## Required reporting
 
@@ -111,8 +138,10 @@ An official result publishes:
 
 ## Known limitations
 
-EvidenceBench focuses on United States federal evidence doctrine. Development
-fixtures are small and synthetic. Deterministic issue codes and rubrics reduce
+EvidenceBench focuses on United States federal evidence doctrine and a
+population-and-region-selected 12-state panel; it does not claim complete
+coverage of every state. Development fixtures are small and synthetic.
+Deterministic issue codes and rubrics reduce
 judge variance but can under-credit unanticipated sound analysis; challenges
 must be adjudicated and incorporated prospectively in a versioned annotation.
 OpenRouter can route the same model slug through different upstream providers,

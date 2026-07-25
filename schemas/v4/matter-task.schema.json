@@ -9,6 +9,8 @@
     "track",
     "id",
     "family_id",
+    "domain",
+    "jurisdiction",
     "title",
     "task_type",
     "instructions",
@@ -23,6 +25,23 @@
     "track": {"const": "matter"},
     "id": {"type": "string", "minLength": 1},
     "family_id": {"type": "string", "minLength": 1},
+    "domain": {
+      "enum": [
+        "D01_JUDICIAL_ADMINISTRATION",
+        "D02_RELEVANCE_403",
+        "D03_CHARACTER_PROPENSITY_HABIT",
+        "D04_POLICY_EXCLUSIONS",
+        "D05_WITNESS_EXAMINATION",
+        "D06_IMPEACHMENT_REHABILITATION",
+        "D07_OPINION_EXPERTS",
+        "D08_HEARSAY_DEFINITIONS",
+        "D09_HEARSAY_EXCEPTIONS",
+        "D10_AUTHENTICATION_IDENTIFICATION",
+        "D11_CONTENTS_ORIGINALS_SUMMARIES",
+        "D12_PRIVILEGE_CONSTITUTIONAL"
+      ]
+    },
+    "jurisdiction": {"type": "string", "minLength": 1},
     "title": {"type": "string", "minLength": 1},
     "task_type": {"type": "string", "minLength": 1},
     "instructions": {"type": "string", "minLength": 1},
@@ -35,7 +54,12 @@
         "required": ["path", "sha256"],
         "properties": {
           "path": {"type": "string", "minLength": 1},
-          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "canonical_text_path": {"type": ["string", "null"]},
+          "canonical_text_sha256": {
+            "type": ["string", "null"],
+            "pattern": "^[a-f0-9]{64}$"
+          }
         }
       }
     },
@@ -81,12 +105,79 @@
             "items": {"type": "string"}
           },
           "deliverable": {"type": ["string", "null"]},
+          "min_bytes": {"type": "integer", "minimum": 1},
+          "required_sections": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
           "critical": {"type": "boolean"},
           "review_only": {"type": "boolean"}
         }
       }
     },
+    "gold_findings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "issue_code",
+          "accepted_dispositions",
+          "required_fact_ids",
+          "accepted_fact_ids",
+          "required_record_refs",
+          "accepted_record_refs",
+          "required_authority_groups",
+          "accepted_authorities"
+        ],
+        "properties": {
+          "issue_code": {"type": "string", "minLength": 1},
+          "accepted_dispositions": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "required_fact_ids": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "accepted_fact_ids": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "required_record_refs": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "accepted_record_refs": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "required_authority_groups": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "minItems": 1,
+              "items": {"type": "string", "minLength": 1}
+            }
+          },
+          "accepted_authorities": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
     "corpus_version": {"type": "string", "minLength": 1},
+    "legacy_source_id": {"type": ["string", "null"]},
+    "coverage_cell": {"type": "string", "minLength": 1},
     "review": {
       "type": "object",
       "additionalProperties": false,

@@ -19,9 +19,11 @@ v4 reports a single overall score:
 `0.50 × Doctrine score + 0.50 × Matter score`
 
 It also reports both track scores, submetrics, strict Matter task-resolution
-rate, family-clustered 95% bootstrap intervals, and 40/60 versus 60/40 weight
-sensitivity. Headline scoring is deterministic; LLM judges cannot change the
-official score.
+rate, family- and domain-aware 95% bootstrap intervals, and 40/60 versus 60/40
+weight sensitivity. Doctrine variants are averaged within families and then
+macro-averaged across 12 domains. Matter uses precision-aware F1 so unsupported
+extra issues, authorities, facts, and record references reduce the score.
+Headline scoring is deterministic; LLM judges cannot change the official score.
 
 See [METHODOLOGY_V4.md](METHODOLOGY_V4.md) and
 [BENCHMARK_CARD_V4.md](BENCHMARK_CARD_V4.md). The design rationale and the
@@ -51,6 +53,10 @@ and never distributed with the Objection Academy app. Its prompts,
 annotations, and item-level results are not public. Once approved, published
 manifests will commit to the holdout with a SHA-256 hash, counts, categories,
 protocol hash, and aggregate metrics.
+
+The private v4 construction target is 240 Doctrine candidates and 60 Matter
+tasks. These remain a candidate pool—not an official holdout—until every item
+passes the review and freeze gates.
 
 ## v4 commands
 

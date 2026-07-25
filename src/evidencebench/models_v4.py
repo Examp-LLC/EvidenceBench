@@ -87,6 +87,9 @@ class DoctrineItem:
     gold: DoctrineGold
     corpus_version: str
     review: ReviewRecord
+    domain: str = ""
+    legacy_source_id: str | None = None
+    coverage_cell: str | None = None
     dimensions: dict[str, str] = field(default_factory=dict)
 
     @classmethod
@@ -105,6 +108,11 @@ class DoctrineItem:
             gold=DoctrineGold.from_dict(payload["gold"]),
             corpus_version=payload["corpus_version"],
             review=ReviewRecord.from_dict(payload["review"]),
+            domain=payload.get(
+                "domain", payload.get("dimensions", {}).get("domain", payload["category"])
+            ),
+            legacy_source_id=payload.get("legacy_source_id"),
+            coverage_cell=payload.get("coverage_cell"),
             dimensions=dict(payload.get("dimensions", {})),
         )
 
@@ -157,6 +165,7 @@ class DoctrineResponse:
 class DoctrineItemScore:
     item_id: str
     family_id: str
+    domain: str
     outcome_accuracy: float
     issue_precision: float
     issue_recall: float
@@ -179,10 +188,45 @@ class DoctrineItemScore:
 class MatterDocument:
     path: str
     sha256: str
+    canonical_text_path: str | None = None
+    canonical_text_sha256: str | None = None
 
     @classmethod
     def from_dict(cls, payload: dict[str, Any]) -> "MatterDocument":
-        return cls(path=payload["path"], sha256=payload["sha256"])
+        return cls(
+            path=payload["path"],
+            sha256=payload["sha256"],
+            canonical_text_path=payload.get("canonical_text_path"),
+            canonical_text_sha256=payload.get("canonical_text_sha256"),
+        )
+
+
+@dataclass(frozen=True)
+class MatterGoldFinding:
+    issue_code: str
+    accepted_dispositions: list[str]
+    required_fact_ids: list[str]
+    accepted_fact_ids: list[str]
+    required_record_refs: list[str]
+    accepted_record_refs: list[str]
+    required_authority_groups: list[list[str]]
+    accepted_authorities: list[str]
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, Any]) -> "MatterGoldFinding":
+        return cls(
+            issue_code=payload["issue_code"],
+            accepted_dispositions=list(payload["accepted_dispositions"]),
+            required_fact_ids=list(payload.get("required_fact_ids", [])),
+            accepted_fact_ids=list(payload.get("accepted_fact_ids", [])),
+            required_record_refs=list(payload.get("required_record_refs", [])),
+            accepted_record_refs=list(payload.get("accepted_record_refs", [])),
+            required_authority_groups=[
+                list(group)
+                for group in payload.get("required_authority_groups", [])
+            ],
+            accepted_authorities=list(payload.get("accepted_authorities", [])),
+        )
 
 
 @dataclass(frozen=True)
@@ -197,6 +241,8 @@ class MatterCriterion:
     required_authority_groups: list[list[str]] = field(default_factory=list)
     accepted_authorities: list[str] = field(default_factory=list)
     deliverable: str | None = None
+    min_bytes: int = 1
+    required_sections: list[str] = field(default_factory=list)
     critical: bool = True
     review_only: bool = False
 
@@ -216,6 +262,8 @@ class MatterCriterion:
             ],
             accepted_authorities=list(payload.get("accepted_authorities", [])),
             deliverable=payload.get("deliverable"),
+            min_bytes=payload.get("min_bytes", 1),
+            required_sections=list(payload.get("required_sections", [])),
             critical=payload.get("critical", True),
             review_only=payload.get("review_only", False),
         )
@@ -235,6 +283,11 @@ class MatterTask:
     criteria: list[MatterCriterion]
     corpus_version: str
     review: ReviewRecord
+    domain: str = ""
+    jurisdiction: str = "federal"
+    gold_findings: list[MatterGoldFinding] = field(default_factory=list)
+    legacy_source_id: str | None = None
+    coverage_cell: str | None = None
     dimensions: dict[str, str] = field(default_factory=dict)
 
     @classmethod
@@ -256,6 +309,20 @@ class MatterTask:
             ],
             corpus_version=payload["corpus_version"],
             review=ReviewRecord.from_dict(payload["review"]),
+            domain=payload.get(
+                "domain",
+                payload.get("dimensions", {}).get("domain", payload["task_type"]),
+            ),
+            jurisdiction=payload.get(
+                "jurisdiction",
+                payload.get("dimensions", {}).get("jurisdiction", "federal"),
+            ),
+            gold_findings=[
+                MatterGoldFinding.from_dict(item)
+                for item in payload.get("gold_findings", [])
+            ],
+            legacy_source_id=payload.get("legacy_source_id"),
+            coverage_cell=payload.get("coverage_cell"),
             dimensions=dict(payload.get("dimensions", {})),
         )
 
@@ -290,6 +357,9 @@ class MatterResponse:
     findings: list[MatterFinding]
     deliverables: list[str]
     status: str = "ok"
+    deliverable_metadata: list["MatterDeliverableMetadata"] = field(
+        default_factory=list
+    )
 
     @classmethod
     def from_dict(cls, payload: dict[str, Any]) -> "MatterResponse":
@@ -300,7 +370,28 @@ class MatterResponse:
                 for item in payload.get("findings", [])
             ],
             deliverables=list(payload.get("deliverables", [])),
+            deliverable_metadata=[
+                MatterDeliverableMetadata.from_dict(item)
+                for item in payload.get("deliverable_metadata", [])
+            ],
             status=payload.get("status", "ok"),
+        )
+
+
+@dataclass(frozen=True)
+class MatterDeliverableMetadata:
+    path: str
+    bytes: int
+    sha256: str
+    sections: list[str] = field(default_factory=list)
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, Any]) -> "MatterDeliverableMetadata":
+        return cls(
+            path=payload["path"],
+            bytes=int(payload["bytes"]),
+            sha256=payload["sha256"],
+            sections=list(payload.get("sections", [])),
         )
 
 
@@ -317,9 +408,16 @@ class MatterCriterionScore:
 class MatterTaskScore:
     task_id: str
     family_id: str
+    domain: str
     legal_criteria_rate: float
+    legal_precision: float
+    legal_recall: float
     authority_grounding_rate: float
+    authority_precision: float
+    authority_recall: float
     factual_accuracy_rate: float
+    factual_precision: float
+    factual_recall: float
     deliverable_completeness_rate: float
     matter_score: float
     complete_task: bool

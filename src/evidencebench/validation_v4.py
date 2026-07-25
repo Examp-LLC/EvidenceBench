@@ -14,6 +14,20 @@ SCHEMA_VERSION = "4.0"
 REVIEW_STATUSES = {"DRAFT", "IN_REVIEW", "APPROVED"}
 RULINGS = {"admit", "exclude", "limit", "defer"}
 MATTER_DIMENSIONS = {"legal", "authority", "fact", "deliverable"}
+DOMAINS = {
+    "D01_JUDICIAL_ADMINISTRATION",
+    "D02_RELEVANCE_403",
+    "D03_CHARACTER_PROPENSITY_HABIT",
+    "D04_POLICY_EXCLUSIONS",
+    "D05_WITNESS_EXAMINATION",
+    "D06_IMPEACHMENT_REHABILITATION",
+    "D07_OPINION_EXPERTS",
+    "D08_HEARSAY_DEFINITIONS",
+    "D09_HEARSAY_EXCEPTIONS",
+    "D10_AUTHENTICATION_IDENTIFICATION",
+    "D11_CONTENTS_ORIGINALS_SUMMARIES",
+    "D12_PRIVILEGE_CONSTITUTIONAL",
+}
 
 
 def _review_errors(review: ReviewRecord, label: str, official: bool) -> list[str]:
@@ -49,7 +63,9 @@ def _normalized_text(value: str) -> str:
     return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9 ]", " ", value.casefold())).strip()
 
 
-def validate_doctrine_items(path: str | Path, official: bool = False) -> list[str]:
+def validate_doctrine_items(
+    path: str | Path, official: bool = False, candidate: bool = False
+) -> list[str]:
     errors: list[str] = []
     try:
         items = load_doctrine_items(path)
@@ -61,6 +77,7 @@ def validate_doctrine_items(path: str | Path, official: bool = False) -> list[st
         errors.append(f"duplicate doctrine id: {item_id}")
 
     normalized_stems: dict[str, str] = {}
+    family_domains: dict[str, str] = {}
     for item in items:
         label = item.id
         if item.schema_version != SCHEMA_VERSION:
@@ -69,6 +86,14 @@ def validate_doctrine_items(path: str | Path, official: bool = False) -> list[st
             errors.append(f"{label}: track must be doctrine")
         if not item.family_id:
             errors.append(f"{label}: family_id is required")
+        if official or candidate:
+            if item.domain not in DOMAINS:
+                errors.append(f"{label}: domain is not in the v4 registry")
+            if not item.coverage_cell:
+                errors.append(f"{label}: coverage_cell is required")
+            prior_domain = family_domains.setdefault(item.family_id, item.domain)
+            if prior_domain != item.domain:
+                errors.append(f"{label}: family spans multiple domains")
         if item.gold.ruling not in item.allowed_rulings:
             errors.append(f"{label}: gold ruling is not in allowed_rulings")
         if set(item.allowed_rulings) - RULINGS:
@@ -135,10 +160,38 @@ def _document_errors(task: MatterTask, task_dir: Path) -> list[str]:
         digest = hashlib.sha256(candidate.read_bytes()).hexdigest()
         if digest != document.sha256:
             errors.append(f"{task.id}: sha256 mismatch for {document.path!r}")
+        if document.canonical_text_path:
+            canonical = (document_root / document.canonical_text_path).resolve()
+            try:
+                canonical.relative_to(document_root)
+            except ValueError:
+                errors.append(
+                    f"{task.id}: unsafe canonical text path "
+                    f"{document.canonical_text_path!r}"
+                )
+                continue
+            if not canonical.is_file():
+                errors.append(
+                    f"{task.id}: missing canonical text "
+                    f"{document.canonical_text_path!r}"
+                )
+            elif not document.canonical_text_sha256:
+                errors.append(
+                    f"{task.id}: canonical text sha256 is required"
+                )
+            elif hashlib.sha256(canonical.read_bytes()).hexdigest() != (
+                document.canonical_text_sha256
+            ):
+                errors.append(
+                    f"{task.id}: canonical text sha256 mismatch for "
+                    f"{document.canonical_text_path!r}"
+                )
     return errors
 
 
-def validate_matter_tasks(path: str | Path, official: bool = False) -> list[str]:
+def validate_matter_tasks(
+    path: str | Path, official: bool = False, candidate: bool = False
+) -> list[str]:
     errors: list[str] = []
     root = Path(path)
     try:
@@ -158,6 +211,13 @@ def validate_matter_tasks(path: str | Path, official: bool = False) -> list[str]
             errors.append(f"{label}: track must be matter")
         if not task.family_id:
             errors.append(f"{label}: family_id is required")
+        if official or candidate:
+            if task.domain not in DOMAINS:
+                errors.append(f"{label}: domain is not in the v4 registry")
+            if not task.coverage_cell:
+                errors.append(f"{label}: coverage_cell is required")
+            if not task.gold_findings:
+                errors.append(f"{label}: gold_findings are required")
         if not task.documents:
             errors.append(f"{label}: at least one matter document is required")
         if not task.deliverables:
@@ -186,6 +246,10 @@ def validate_matter_tasks(path: str | Path, official: bool = False) -> list[str]
                     errors.append(
                         f"{criterion_label}: deliverable is not declared by task"
                     )
+                if criterion.min_bytes < 1:
+                    errors.append(
+                        f"{criterion_label}: min_bytes must be positive"
+                    )
             else:
                 if not criterion.issue_code:
                     errors.append(f"{criterion_label}: issue_code is required")
@@ -209,6 +273,46 @@ def validate_matter_tasks(path: str | Path, official: bool = False) -> list[str]
                             errors.append(
                                 f"{criterion_label}: authority group is not accepted"
                             )
+        gold_issues = [finding.issue_code for finding in task.gold_findings]
+        if len(gold_issues) != len(set(gold_issues)):
+            errors.append(f"{label}: gold finding issue codes must be unique")
+        for finding in task.gold_findings:
+            gold_label = f"{label}/{finding.issue_code}"
+            if not finding.accepted_dispositions:
+                errors.append(
+                    f"{gold_label}: accepted_dispositions cannot be empty"
+                )
+            if not set(finding.required_fact_ids).issubset(
+                finding.accepted_fact_ids
+            ):
+                errors.append(
+                    f"{gold_label}: required facts must be accepted"
+                )
+            if not set(finding.required_record_refs).issubset(
+                finding.accepted_record_refs
+            ):
+                errors.append(
+                    f"{gold_label}: required record refs must be accepted"
+                )
+            accepted = {
+                normalize_citation(value)
+                for value in finding.accepted_authorities
+            }
+            errors.extend(
+                _authority_errors(
+                    finding.accepted_authorities,
+                    f"{gold_label} accepted",
+                )
+            )
+            for group in finding.required_authority_groups:
+                if not group:
+                    errors.append(f"{gold_label}: authority group is empty")
+                if any(
+                    normalize_citation(value) not in accepted for value in group
+                ):
+                    errors.append(
+                        f"{gold_label}: required authority is not accepted"
+                    )
         errors.extend(_document_errors(task, task_dir))
         errors.extend(_review_errors(task.review, label, official))
     return errors

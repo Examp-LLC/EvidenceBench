@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import os
 import re
 import socket
@@ -109,13 +110,18 @@ def _json_content(message: dict) -> dict:
 def doctrine_prompt(item) -> str:
     facts = "\n".join(f"{fact.id}: {fact.text}" for fact in item.facts)
     rulings = ", ".join(item.allowed_rulings)
+    governing_law = (
+        "the Federal Rules of Evidence"
+        if item.jurisdiction == "federal"
+        else f"the controlling evidence law of {item.jurisdiction.replace('_', ' ').title()}"
+    )
     return f"""You are completing the EvidenceBench v4 Doctrine track.
-This is closed-book. Do not browse or use tools. Apply the Federal Rules of
-Evidence and return one JSON object only. Use only the supplied fact IDs.
+This is closed-book. Do not browse or use tools. Apply {governing_law} and
+return one JSON object only. Use only the supplied fact IDs.
 
 Required shape:
 {{"ruling":"admit|exclude|limit|defer","issue_codes":["RULE_..."],
-"authorities":["FRE 123(a)"],"grounding":[{{"issue_code":"RULE_...",
+"authorities":["controlling rule or case citation"],"grounding":[{{"issue_code":"RULE_...",
 "fact_ids":["F1"]}}],"confidence":0.0,"explanation":"brief analysis"}}
 
 Allowed rulings: {rulings}
@@ -284,13 +290,24 @@ MATTER_TOOLS = [
 
 
 class MatterWorkspace:
-    def __init__(self, document_root: Path, output_root: Path) -> None:
+    def __init__(
+        self,
+        document_root: Path,
+        output_root: Path,
+        *,
+        document_paths: list[str] | None = None,
+        canonical_paths: dict[str, str] | None = None,
+    ) -> None:
         self.document_root = document_root.resolve()
         self.output_root = output_root.resolve()
+        self.document_paths = document_paths
+        self.canonical_paths = canonical_paths or {}
         self.output_root.mkdir(parents=True, exist_ok=True)
 
     def execute(self, name: str, arguments: dict) -> dict:
         if name == "list_documents":
+            if self.document_paths is not None:
+                return {"documents": sorted(self.document_paths)}
             return {
                 "documents": [
                     str(path.relative_to(self.document_root))
@@ -299,16 +316,36 @@ class MatterWorkspace:
                 ]
             }
         if name == "read_document":
-            path = _safe_path(self.document_root, arguments["path"])
-            return {"path": arguments["path"], "content": _extract_document(path)}
+            requested = arguments["path"]
+            if (
+                self.document_paths is not None
+                and requested not in self.document_paths
+            ):
+                raise ValueError("document is not declared by the task")
+            path = _safe_path(self.document_root, requested)
+            canonical_path = self.canonical_paths.get(requested)
+            content = (
+                _safe_path(self.document_root, canonical_path).read_text()
+                if canonical_path
+                else _extract_document(path)
+            )
+            return {"path": requested, "content": content}
         if name == "search_documents":
             query = arguments["query"].casefold()
             matches = []
             for path in sorted(self.document_root.rglob("*")):
                 if not path.is_file():
                     continue
+                relative = str(path.relative_to(self.document_root))
+                if self.document_paths is not None and relative not in self.document_paths:
+                    continue
                 try:
-                    text = _extract_document(path)
+                    canonical_path = self.canonical_paths.get(relative)
+                    text = (
+                        _safe_path(self.document_root, canonical_path).read_text()
+                        if canonical_path
+                        else _extract_document(path)
+                    )
                 except (ValueError, OSError, subprocess.SubprocessError):
                     continue
                 for number, line in enumerate(text.splitlines(), 1):
@@ -344,7 +381,7 @@ Required deliverables: {deliverables}
 You must write findings.json with this shape:
 {{"findings":[{{"issue_code":"...","disposition":"...",
 "fact_ids":["..."],"record_refs":["document:line-or-section"],
-"authorities":["FRE 123(a)"],"explanation":"..."}}]}}
+"authorities":["controlling rule or case citation"],"explanation":"..."}}]}}
 Use write_output for every deliverable. When complete, respond briefly.
 """
 
@@ -355,7 +392,16 @@ def _run_matter_task(
     task: MatterTask,
     output_root: Path,
 ) -> tuple[dict, list[dict], dict]:
-    workspace = MatterWorkspace(task_dir / "documents", output_root)
+    workspace = MatterWorkspace(
+        task_dir / "documents",
+        output_root,
+        document_paths=[document.path for document in task.documents],
+        canonical_paths={
+            document.path: document.canonical_text_path
+            for document in task.documents
+            if document.canonical_text_path
+        },
+    )
     messages: list[dict] = [{"role": "user", "content": matter_prompt(task)}]
     transcript: list[dict] = list(messages)
     total_usage: dict[str, int] = {}
@@ -408,10 +454,37 @@ def _run_matter_task(
         for path in sorted(output_root.rglob("*"))
         if path.is_file()
     ]
+    deliverable_metadata = []
+    for relative in actual_deliverables:
+        path = output_root / relative
+        content = path.read_text(errors="replace")
+        sections = []
+        if path.suffix.casefold() == ".md":
+            sections = [
+                match.group(1).strip()
+                for line in content.splitlines()
+                if (match := re.match(r"^#{1,6}\s+(.+?)\s*$", line))
+            ]
+        elif path.suffix.casefold() == ".json":
+            try:
+                parsed_content = json.loads(content)
+                if isinstance(parsed_content, dict):
+                    sections = list(parsed_content)
+            except json.JSONDecodeError:
+                pass
+        deliverable_metadata.append(
+            {
+                "path": relative,
+                "bytes": path.stat().st_size,
+                "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                "sections": sections,
+            }
+        )
     response = {
         "task_id": task.id,
         "findings": parsed["findings"],
         "deliverables": actual_deliverables,
+        "deliverable_metadata": deliverable_metadata,
         "status": "ok",
     }
     return response, transcript, total_usage

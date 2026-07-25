@@ -1,0 +1,1530 @@
+{
+  "authorities": [
+    {
+      "aliases": [],
+      "canonical": "FRE 104",
+      "domain": "D01_JUDICIAL_ADMINISTRATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "federal",
+      "source_url": "https://www.uscourts.gov/sites/default/files/document/federal-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "FRE 403",
+      "domain": "D02_RELEVANCE_403",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "federal",
+      "source_url": "https://www.uscourts.gov/sites/default/files/document/federal-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "FRE 404",
+      "domain": "D03_CHARACTER_PROPENSITY_HABIT",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "federal",
+      "source_url": "https://www.uscourts.gov/sites/default/files/document/federal-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "FRE 407",
+      "domain": "D04_POLICY_EXCLUSIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "federal",
+      "source_url": "https://www.uscourts.gov/sites/default/files/document/federal-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "FRE 611",
+      "domain": "D05_WITNESS_EXAMINATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "federal",
+      "source_url": "https://www.uscourts.gov/sites/default/files/document/federal-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "FRE 613",
+      "domain": "D06_IMPEACHMENT_REHABILITATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "federal",
+      "source_url": "https://www.uscourts.gov/sites/default/files/document/federal-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "FRE 702",
+      "domain": "D07_OPINION_EXPERTS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "federal",
+      "source_url": "https://www.uscourts.gov/sites/default/files/document/federal-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "FRE 801",
+      "domain": "D08_HEARSAY_DEFINITIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "federal",
+      "source_url": "https://www.uscourts.gov/sites/default/files/document/federal-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "FRE 803(6)",
+      "domain": "D09_HEARSAY_EXCEPTIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "federal",
+      "source_url": "https://www.uscourts.gov/sites/default/files/document/federal-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "FRE 901",
+      "domain": "D10_AUTHENTICATION_IDENTIFICATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "federal",
+      "source_url": "https://www.uscourts.gov/sites/default/files/document/federal-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "FRE 1002",
+      "domain": "D11_CONTENTS_ORIGINALS_SUMMARIES",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "federal",
+      "source_url": "https://www.uscourts.gov/sites/default/files/document/federal-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "FRE 502",
+      "domain": "D12_PRIVILEGE_CONSTITUTIONAL",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "federal",
+      "source_url": "https://www.uscourts.gov/sites/default/files/document/federal-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [
+        "Cal. Evid. Code Section 405",
+        "Cal Evid Code \u00a7 405"
+      ],
+      "canonical": "Cal. Evid. Code \u00a7 405",
+      "domain": "D01_JUDICIAL_ADMINISTRATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "california",
+      "source_url": "https://leginfo.legislature.ca.gov/faces/codes.xhtml"
+    },
+    {
+      "aliases": [
+        "Cal. Evid. Code Section 352",
+        "Cal Evid Code \u00a7 352"
+      ],
+      "canonical": "Cal. Evid. Code \u00a7 352",
+      "domain": "D02_RELEVANCE_403",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "california",
+      "source_url": "https://leginfo.legislature.ca.gov/faces/codes.xhtml"
+    },
+    {
+      "aliases": [
+        "Cal. Evid. Code Section 1101",
+        "Cal Evid Code \u00a7 1101"
+      ],
+      "canonical": "Cal. Evid. Code \u00a7 1101",
+      "domain": "D03_CHARACTER_PROPENSITY_HABIT",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "california",
+      "source_url": "https://leginfo.legislature.ca.gov/faces/codes.xhtml"
+    },
+    {
+      "aliases": [
+        "Cal. Evid. Code Section 1151",
+        "Cal Evid Code \u00a7 1151"
+      ],
+      "canonical": "Cal. Evid. Code \u00a7 1151",
+      "domain": "D04_POLICY_EXCLUSIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "california",
+      "source_url": "https://leginfo.legislature.ca.gov/faces/codes.xhtml"
+    },
+    {
+      "aliases": [
+        "Cal. Evid. Code Section 765",
+        "Cal Evid Code \u00a7 765"
+      ],
+      "canonical": "Cal. Evid. Code \u00a7 765",
+      "domain": "D05_WITNESS_EXAMINATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "california",
+      "source_url": "https://leginfo.legislature.ca.gov/faces/codes.xhtml"
+    },
+    {
+      "aliases": [
+        "Cal. Evid. Code Section 780",
+        "Cal Evid Code \u00a7 780"
+      ],
+      "canonical": "Cal. Evid. Code \u00a7 780",
+      "domain": "D06_IMPEACHMENT_REHABILITATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "california",
+      "source_url": "https://leginfo.legislature.ca.gov/faces/codes.xhtml"
+    },
+    {
+      "aliases": [
+        "Cal. Evid. Code Section 801",
+        "Cal Evid Code \u00a7 801"
+      ],
+      "canonical": "Cal. Evid. Code \u00a7 801",
+      "domain": "D07_OPINION_EXPERTS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "california",
+      "source_url": "https://leginfo.legislature.ca.gov/faces/codes.xhtml"
+    },
+    {
+      "aliases": [
+        "Cal. Evid. Code Section 1200",
+        "Cal Evid Code \u00a7 1200"
+      ],
+      "canonical": "Cal. Evid. Code \u00a7 1200",
+      "domain": "D08_HEARSAY_DEFINITIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "california",
+      "source_url": "https://leginfo.legislature.ca.gov/faces/codes.xhtml"
+    },
+    {
+      "aliases": [
+        "Cal. Evid. Code Section 1271",
+        "Cal Evid Code \u00a7 1271"
+      ],
+      "canonical": "Cal. Evid. Code \u00a7 1271",
+      "domain": "D09_HEARSAY_EXCEPTIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "california",
+      "source_url": "https://leginfo.legislature.ca.gov/faces/codes.xhtml"
+    },
+    {
+      "aliases": [
+        "Cal. Evid. Code Section 1400",
+        "Cal Evid Code \u00a7 1400"
+      ],
+      "canonical": "Cal. Evid. Code \u00a7 1400",
+      "domain": "D10_AUTHENTICATION_IDENTIFICATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "california",
+      "source_url": "https://leginfo.legislature.ca.gov/faces/codes.xhtml"
+    },
+    {
+      "aliases": [
+        "Cal. Evid. Code Section 1521",
+        "Cal Evid Code \u00a7 1521"
+      ],
+      "canonical": "Cal. Evid. Code \u00a7 1521",
+      "domain": "D11_CONTENTS_ORIGINALS_SUMMARIES",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "california",
+      "source_url": "https://leginfo.legislature.ca.gov/faces/codes.xhtml"
+    },
+    {
+      "aliases": [
+        "Cal. Evid. Code Section 954",
+        "Cal Evid Code \u00a7 954"
+      ],
+      "canonical": "Cal. Evid. Code \u00a7 954",
+      "domain": "D12_PRIVILEGE_CONSTITUTIONAL",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "california",
+      "source_url": "https://leginfo.legislature.ca.gov/faces/codes.xhtml"
+    },
+    {
+      "aliases": [],
+      "canonical": "GNYE 1.09",
+      "domain": "D01_JUDICIAL_ADMINISTRATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_york",
+      "source_url": "https://www.nycourts.gov/guide-new-york-evidence"
+    },
+    {
+      "aliases": [],
+      "canonical": "GNYE 4.07",
+      "domain": "D02_RELEVANCE_403",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_york",
+      "source_url": "https://www.nycourts.gov/guide-new-york-evidence"
+    },
+    {
+      "aliases": [],
+      "canonical": "GNYE 4.09",
+      "domain": "D03_CHARACTER_PROPENSITY_HABIT",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_york",
+      "source_url": "https://www.nycourts.gov/guide-new-york-evidence"
+    },
+    {
+      "aliases": [],
+      "canonical": "GNYE 4.19",
+      "domain": "D04_POLICY_EXCLUSIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_york",
+      "source_url": "https://www.nycourts.gov/guide-new-york-evidence"
+    },
+    {
+      "aliases": [],
+      "canonical": "GNYE 6.10",
+      "domain": "D05_WITNESS_EXAMINATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_york",
+      "source_url": "https://www.nycourts.gov/guide-new-york-evidence"
+    },
+    {
+      "aliases": [],
+      "canonical": "GNYE 6.15",
+      "domain": "D06_IMPEACHMENT_REHABILITATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_york",
+      "source_url": "https://www.nycourts.gov/guide-new-york-evidence"
+    },
+    {
+      "aliases": [],
+      "canonical": "GNYE 7.01",
+      "domain": "D07_OPINION_EXPERTS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_york",
+      "source_url": "https://www.nycourts.gov/guide-new-york-evidence"
+    },
+    {
+      "aliases": [],
+      "canonical": "GNYE 8.00",
+      "domain": "D08_HEARSAY_DEFINITIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_york",
+      "source_url": "https://www.nycourts.gov/guide-new-york-evidence"
+    },
+    {
+      "aliases": [],
+      "canonical": "GNYE 8.08",
+      "domain": "D09_HEARSAY_EXCEPTIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_york",
+      "source_url": "https://www.nycourts.gov/guide-new-york-evidence"
+    },
+    {
+      "aliases": [],
+      "canonical": "GNYE 9.01",
+      "domain": "D10_AUTHENTICATION_IDENTIFICATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_york",
+      "source_url": "https://www.nycourts.gov/guide-new-york-evidence"
+    },
+    {
+      "aliases": [],
+      "canonical": "GNYE 10.03",
+      "domain": "D11_CONTENTS_ORIGINALS_SUMMARIES",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_york",
+      "source_url": "https://www.nycourts.gov/guide-new-york-evidence"
+    },
+    {
+      "aliases": [],
+      "canonical": "GNYE 5.03",
+      "domain": "D12_PRIVILEGE_CONSTITUTIONAL",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_york",
+      "source_url": "https://www.nycourts.gov/guide-new-york-evidence"
+    },
+    {
+      "aliases": [
+        "Tex R Evid 104"
+      ],
+      "canonical": "Tex. R. Evid. 104",
+      "domain": "D01_JUDICIAL_ADMINISTRATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "texas",
+      "source_url": "https://txcourts.gov/rules-forms/"
+    },
+    {
+      "aliases": [
+        "Tex R Evid 403"
+      ],
+      "canonical": "Tex. R. Evid. 403",
+      "domain": "D02_RELEVANCE_403",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "texas",
+      "source_url": "https://txcourts.gov/rules-forms/"
+    },
+    {
+      "aliases": [
+        "Tex R Evid 404"
+      ],
+      "canonical": "Tex. R. Evid. 404",
+      "domain": "D03_CHARACTER_PROPENSITY_HABIT",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "texas",
+      "source_url": "https://txcourts.gov/rules-forms/"
+    },
+    {
+      "aliases": [
+        "Tex R Evid 407"
+      ],
+      "canonical": "Tex. R. Evid. 407",
+      "domain": "D04_POLICY_EXCLUSIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "texas",
+      "source_url": "https://txcourts.gov/rules-forms/"
+    },
+    {
+      "aliases": [
+        "Tex R Evid 611"
+      ],
+      "canonical": "Tex. R. Evid. 611",
+      "domain": "D05_WITNESS_EXAMINATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "texas",
+      "source_url": "https://txcourts.gov/rules-forms/"
+    },
+    {
+      "aliases": [
+        "Tex R Evid 613"
+      ],
+      "canonical": "Tex. R. Evid. 613",
+      "domain": "D06_IMPEACHMENT_REHABILITATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "texas",
+      "source_url": "https://txcourts.gov/rules-forms/"
+    },
+    {
+      "aliases": [
+        "Tex R Evid 702"
+      ],
+      "canonical": "Tex. R. Evid. 702",
+      "domain": "D07_OPINION_EXPERTS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "texas",
+      "source_url": "https://txcourts.gov/rules-forms/"
+    },
+    {
+      "aliases": [
+        "Tex R Evid 801"
+      ],
+      "canonical": "Tex. R. Evid. 801",
+      "domain": "D08_HEARSAY_DEFINITIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "texas",
+      "source_url": "https://txcourts.gov/rules-forms/"
+    },
+    {
+      "aliases": [
+        "Tex R Evid 803(6)"
+      ],
+      "canonical": "Tex. R. Evid. 803(6)",
+      "domain": "D09_HEARSAY_EXCEPTIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "texas",
+      "source_url": "https://txcourts.gov/rules-forms/"
+    },
+    {
+      "aliases": [
+        "Tex R Evid 901"
+      ],
+      "canonical": "Tex. R. Evid. 901",
+      "domain": "D10_AUTHENTICATION_IDENTIFICATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "texas",
+      "source_url": "https://txcourts.gov/rules-forms/"
+    },
+    {
+      "aliases": [
+        "Tex R Evid 1002"
+      ],
+      "canonical": "Tex. R. Evid. 1002",
+      "domain": "D11_CONTENTS_ORIGINALS_SUMMARIES",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "texas",
+      "source_url": "https://txcourts.gov/rules-forms/"
+    },
+    {
+      "aliases": [
+        "Tex R Evid 503"
+      ],
+      "canonical": "Tex. R. Evid. 503",
+      "domain": "D12_PRIVILEGE_CONSTITUTIONAL",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "texas",
+      "source_url": "https://txcourts.gov/rules-forms/"
+    },
+    {
+      "aliases": [
+        "Fla. Stat. Section 90.105",
+        "Fla Stat \u00a7 90.105"
+      ],
+      "canonical": "Fla. Stat. \u00a7 90.105",
+      "domain": "D01_JUDICIAL_ADMINISTRATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "florida",
+      "source_url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0090/0090ContentsIndex.html"
+    },
+    {
+      "aliases": [
+        "Fla. Stat. Section 90.403",
+        "Fla Stat \u00a7 90.403"
+      ],
+      "canonical": "Fla. Stat. \u00a7 90.403",
+      "domain": "D02_RELEVANCE_403",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "florida",
+      "source_url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0090/0090ContentsIndex.html"
+    },
+    {
+      "aliases": [
+        "Fla. Stat. Section 90.404",
+        "Fla Stat \u00a7 90.404"
+      ],
+      "canonical": "Fla. Stat. \u00a7 90.404",
+      "domain": "D03_CHARACTER_PROPENSITY_HABIT",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "florida",
+      "source_url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0090/0090ContentsIndex.html"
+    },
+    {
+      "aliases": [
+        "Fla. Stat. Section 90.407",
+        "Fla Stat \u00a7 90.407"
+      ],
+      "canonical": "Fla. Stat. \u00a7 90.407",
+      "domain": "D04_POLICY_EXCLUSIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "florida",
+      "source_url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0090/0090ContentsIndex.html"
+    },
+    {
+      "aliases": [
+        "Fla. Stat. Section 90.612",
+        "Fla Stat \u00a7 90.612"
+      ],
+      "canonical": "Fla. Stat. \u00a7 90.612",
+      "domain": "D05_WITNESS_EXAMINATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "florida",
+      "source_url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0090/0090ContentsIndex.html"
+    },
+    {
+      "aliases": [
+        "Fla. Stat. Section 90.608",
+        "Fla Stat \u00a7 90.608"
+      ],
+      "canonical": "Fla. Stat. \u00a7 90.608",
+      "domain": "D06_IMPEACHMENT_REHABILITATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "florida",
+      "source_url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0090/0090ContentsIndex.html"
+    },
+    {
+      "aliases": [
+        "Fla. Stat. Section 90.702",
+        "Fla Stat \u00a7 90.702"
+      ],
+      "canonical": "Fla. Stat. \u00a7 90.702",
+      "domain": "D07_OPINION_EXPERTS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "florida",
+      "source_url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0090/0090ContentsIndex.html"
+    },
+    {
+      "aliases": [
+        "Fla. Stat. Section 90.801",
+        "Fla Stat \u00a7 90.801"
+      ],
+      "canonical": "Fla. Stat. \u00a7 90.801",
+      "domain": "D08_HEARSAY_DEFINITIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "florida",
+      "source_url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0090/0090ContentsIndex.html"
+    },
+    {
+      "aliases": [
+        "Fla. Stat. Section 90.803(6)",
+        "Fla Stat \u00a7 90.803(6)"
+      ],
+      "canonical": "Fla. Stat. \u00a7 90.803(6)",
+      "domain": "D09_HEARSAY_EXCEPTIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "florida",
+      "source_url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0090/0090ContentsIndex.html"
+    },
+    {
+      "aliases": [
+        "Fla. Stat. Section 90.901",
+        "Fla Stat \u00a7 90.901"
+      ],
+      "canonical": "Fla. Stat. \u00a7 90.901",
+      "domain": "D10_AUTHENTICATION_IDENTIFICATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "florida",
+      "source_url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0090/0090ContentsIndex.html"
+    },
+    {
+      "aliases": [
+        "Fla. Stat. Section 90.952",
+        "Fla Stat \u00a7 90.952"
+      ],
+      "canonical": "Fla. Stat. \u00a7 90.952",
+      "domain": "D11_CONTENTS_ORIGINALS_SUMMARIES",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "florida",
+      "source_url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0090/0090ContentsIndex.html"
+    },
+    {
+      "aliases": [
+        "Fla. Stat. Section 90.502",
+        "Fla Stat \u00a7 90.502"
+      ],
+      "canonical": "Fla. Stat. \u00a7 90.502",
+      "domain": "D12_PRIVILEGE_CONSTITUTIONAL",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "florida",
+      "source_url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0090/0090ContentsIndex.html"
+    },
+    {
+      "aliases": [
+        "Pa R.E 104"
+      ],
+      "canonical": "Pa. R.E. 104",
+      "domain": "D01_JUDICIAL_ADMINISTRATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "pennsylvania",
+      "source_url": "https://www.pacourts.us/courts/supreme-court/committees/rules-committees/committee-on-rules-of-evidence"
+    },
+    {
+      "aliases": [
+        "Pa R.E 403"
+      ],
+      "canonical": "Pa. R.E. 403",
+      "domain": "D02_RELEVANCE_403",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "pennsylvania",
+      "source_url": "https://www.pacourts.us/courts/supreme-court/committees/rules-committees/committee-on-rules-of-evidence"
+    },
+    {
+      "aliases": [
+        "Pa R.E 404"
+      ],
+      "canonical": "Pa. R.E. 404",
+      "domain": "D03_CHARACTER_PROPENSITY_HABIT",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "pennsylvania",
+      "source_url": "https://www.pacourts.us/courts/supreme-court/committees/rules-committees/committee-on-rules-of-evidence"
+    },
+    {
+      "aliases": [
+        "Pa R.E 407"
+      ],
+      "canonical": "Pa. R.E. 407",
+      "domain": "D04_POLICY_EXCLUSIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "pennsylvania",
+      "source_url": "https://www.pacourts.us/courts/supreme-court/committees/rules-committees/committee-on-rules-of-evidence"
+    },
+    {
+      "aliases": [
+        "Pa R.E 611"
+      ],
+      "canonical": "Pa. R.E. 611",
+      "domain": "D05_WITNESS_EXAMINATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "pennsylvania",
+      "source_url": "https://www.pacourts.us/courts/supreme-court/committees/rules-committees/committee-on-rules-of-evidence"
+    },
+    {
+      "aliases": [
+        "Pa R.E 613"
+      ],
+      "canonical": "Pa. R.E. 613",
+      "domain": "D06_IMPEACHMENT_REHABILITATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "pennsylvania",
+      "source_url": "https://www.pacourts.us/courts/supreme-court/committees/rules-committees/committee-on-rules-of-evidence"
+    },
+    {
+      "aliases": [
+        "Pa R.E 702"
+      ],
+      "canonical": "Pa. R.E. 702",
+      "domain": "D07_OPINION_EXPERTS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "pennsylvania",
+      "source_url": "https://www.pacourts.us/courts/supreme-court/committees/rules-committees/committee-on-rules-of-evidence"
+    },
+    {
+      "aliases": [
+        "Pa R.E 801"
+      ],
+      "canonical": "Pa. R.E. 801",
+      "domain": "D08_HEARSAY_DEFINITIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "pennsylvania",
+      "source_url": "https://www.pacourts.us/courts/supreme-court/committees/rules-committees/committee-on-rules-of-evidence"
+    },
+    {
+      "aliases": [
+        "Pa R.E 803(6)"
+      ],
+      "canonical": "Pa. R.E. 803(6)",
+      "domain": "D09_HEARSAY_EXCEPTIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "pennsylvania",
+      "source_url": "https://www.pacourts.us/courts/supreme-court/committees/rules-committees/committee-on-rules-of-evidence"
+    },
+    {
+      "aliases": [
+        "Pa R.E 901"
+      ],
+      "canonical": "Pa. R.E. 901",
+      "domain": "D10_AUTHENTICATION_IDENTIFICATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "pennsylvania",
+      "source_url": "https://www.pacourts.us/courts/supreme-court/committees/rules-committees/committee-on-rules-of-evidence"
+    },
+    {
+      "aliases": [
+        "Pa R.E 1002"
+      ],
+      "canonical": "Pa. R.E. 1002",
+      "domain": "D11_CONTENTS_ORIGINALS_SUMMARIES",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "pennsylvania",
+      "source_url": "https://www.pacourts.us/courts/supreme-court/committees/rules-committees/committee-on-rules-of-evidence"
+    },
+    {
+      "aliases": [
+        "Pa R.E 502"
+      ],
+      "canonical": "Pa. R.E. 502",
+      "domain": "D12_PRIVILEGE_CONSTITUTIONAL",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "pennsylvania",
+      "source_url": "https://www.pacourts.us/courts/supreme-court/committees/rules-committees/committee-on-rules-of-evidence"
+    },
+    {
+      "aliases": [
+        "N.J.R.E 104"
+      ],
+      "canonical": "N.J.R.E. 104",
+      "domain": "D01_JUDICIAL_ADMINISTRATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_jersey",
+      "source_url": "https://www.njcourts.gov/sites/default/files/evidence1.pdf"
+    },
+    {
+      "aliases": [
+        "N.J.R.E 403"
+      ],
+      "canonical": "N.J.R.E. 403",
+      "domain": "D02_RELEVANCE_403",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_jersey",
+      "source_url": "https://www.njcourts.gov/sites/default/files/evidence1.pdf"
+    },
+    {
+      "aliases": [
+        "N.J.R.E 404"
+      ],
+      "canonical": "N.J.R.E. 404",
+      "domain": "D03_CHARACTER_PROPENSITY_HABIT",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_jersey",
+      "source_url": "https://www.njcourts.gov/sites/default/files/evidence1.pdf"
+    },
+    {
+      "aliases": [
+        "N.J.R.E 407"
+      ],
+      "canonical": "N.J.R.E. 407",
+      "domain": "D04_POLICY_EXCLUSIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_jersey",
+      "source_url": "https://www.njcourts.gov/sites/default/files/evidence1.pdf"
+    },
+    {
+      "aliases": [
+        "N.J.R.E 611"
+      ],
+      "canonical": "N.J.R.E. 611",
+      "domain": "D05_WITNESS_EXAMINATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_jersey",
+      "source_url": "https://www.njcourts.gov/sites/default/files/evidence1.pdf"
+    },
+    {
+      "aliases": [
+        "N.J.R.E 613"
+      ],
+      "canonical": "N.J.R.E. 613",
+      "domain": "D06_IMPEACHMENT_REHABILITATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_jersey",
+      "source_url": "https://www.njcourts.gov/sites/default/files/evidence1.pdf"
+    },
+    {
+      "aliases": [
+        "N.J.R.E 702"
+      ],
+      "canonical": "N.J.R.E. 702",
+      "domain": "D07_OPINION_EXPERTS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_jersey",
+      "source_url": "https://www.njcourts.gov/sites/default/files/evidence1.pdf"
+    },
+    {
+      "aliases": [
+        "N.J.R.E 801"
+      ],
+      "canonical": "N.J.R.E. 801",
+      "domain": "D08_HEARSAY_DEFINITIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_jersey",
+      "source_url": "https://www.njcourts.gov/sites/default/files/evidence1.pdf"
+    },
+    {
+      "aliases": [
+        "N.J.R.E 803(6)"
+      ],
+      "canonical": "N.J.R.E. 803(6)",
+      "domain": "D09_HEARSAY_EXCEPTIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_jersey",
+      "source_url": "https://www.njcourts.gov/sites/default/files/evidence1.pdf"
+    },
+    {
+      "aliases": [
+        "N.J.R.E 901"
+      ],
+      "canonical": "N.J.R.E. 901",
+      "domain": "D10_AUTHENTICATION_IDENTIFICATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_jersey",
+      "source_url": "https://www.njcourts.gov/sites/default/files/evidence1.pdf"
+    },
+    {
+      "aliases": [
+        "N.J.R.E 1002"
+      ],
+      "canonical": "N.J.R.E. 1002",
+      "domain": "D11_CONTENTS_ORIGINALS_SUMMARIES",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_jersey",
+      "source_url": "https://www.njcourts.gov/sites/default/files/evidence1.pdf"
+    },
+    {
+      "aliases": [
+        "N.J.R.E 500"
+      ],
+      "canonical": "N.J.R.E. 500",
+      "domain": "D12_PRIVILEGE_CONSTITUTIONAL",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "new_jersey",
+      "source_url": "https://www.njcourts.gov/sites/default/files/evidence1.pdf"
+    },
+    {
+      "aliases": [
+        "Ill R Evid 104"
+      ],
+      "canonical": "Ill. R. Evid. 104",
+      "domain": "D01_JUDICIAL_ADMINISTRATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "illinois",
+      "source_url": "https://www.illinoiscourts.gov/courts-supreme-court-illinois-rules-of-evidence/"
+    },
+    {
+      "aliases": [
+        "Ill R Evid 403"
+      ],
+      "canonical": "Ill. R. Evid. 403",
+      "domain": "D02_RELEVANCE_403",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "illinois",
+      "source_url": "https://www.illinoiscourts.gov/courts-supreme-court-illinois-rules-of-evidence/"
+    },
+    {
+      "aliases": [
+        "Ill R Evid 404"
+      ],
+      "canonical": "Ill. R. Evid. 404",
+      "domain": "D03_CHARACTER_PROPENSITY_HABIT",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "illinois",
+      "source_url": "https://www.illinoiscourts.gov/courts-supreme-court-illinois-rules-of-evidence/"
+    },
+    {
+      "aliases": [
+        "Ill R Evid 407"
+      ],
+      "canonical": "Ill. R. Evid. 407",
+      "domain": "D04_POLICY_EXCLUSIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "illinois",
+      "source_url": "https://www.illinoiscourts.gov/courts-supreme-court-illinois-rules-of-evidence/"
+    },
+    {
+      "aliases": [
+        "Ill R Evid 611"
+      ],
+      "canonical": "Ill. R. Evid. 611",
+      "domain": "D05_WITNESS_EXAMINATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "illinois",
+      "source_url": "https://www.illinoiscourts.gov/courts-supreme-court-illinois-rules-of-evidence/"
+    },
+    {
+      "aliases": [
+        "Ill R Evid 613"
+      ],
+      "canonical": "Ill. R. Evid. 613",
+      "domain": "D06_IMPEACHMENT_REHABILITATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "illinois",
+      "source_url": "https://www.illinoiscourts.gov/courts-supreme-court-illinois-rules-of-evidence/"
+    },
+    {
+      "aliases": [
+        "Ill R Evid 702"
+      ],
+      "canonical": "Ill. R. Evid. 702",
+      "domain": "D07_OPINION_EXPERTS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "illinois",
+      "source_url": "https://www.illinoiscourts.gov/courts-supreme-court-illinois-rules-of-evidence/"
+    },
+    {
+      "aliases": [
+        "Ill R Evid 801"
+      ],
+      "canonical": "Ill. R. Evid. 801",
+      "domain": "D08_HEARSAY_DEFINITIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "illinois",
+      "source_url": "https://www.illinoiscourts.gov/courts-supreme-court-illinois-rules-of-evidence/"
+    },
+    {
+      "aliases": [
+        "Ill R Evid 803(6)"
+      ],
+      "canonical": "Ill. R. Evid. 803(6)",
+      "domain": "D09_HEARSAY_EXCEPTIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "illinois",
+      "source_url": "https://www.illinoiscourts.gov/courts-supreme-court-illinois-rules-of-evidence/"
+    },
+    {
+      "aliases": [
+        "Ill R Evid 901"
+      ],
+      "canonical": "Ill. R. Evid. 901",
+      "domain": "D10_AUTHENTICATION_IDENTIFICATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "illinois",
+      "source_url": "https://www.illinoiscourts.gov/courts-supreme-court-illinois-rules-of-evidence/"
+    },
+    {
+      "aliases": [
+        "Ill R Evid 1002"
+      ],
+      "canonical": "Ill. R. Evid. 1002",
+      "domain": "D11_CONTENTS_ORIGINALS_SUMMARIES",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "illinois",
+      "source_url": "https://www.illinoiscourts.gov/courts-supreme-court-illinois-rules-of-evidence/"
+    },
+    {
+      "aliases": [
+        "Ill R Evid 502"
+      ],
+      "canonical": "Ill. R. Evid. 502",
+      "domain": "D12_PRIVILEGE_CONSTITUTIONAL",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "illinois",
+      "source_url": "https://www.illinoiscourts.gov/courts-supreme-court-illinois-rules-of-evidence/"
+    },
+    {
+      "aliases": [
+        "Ohio R Evid 104"
+      ],
+      "canonical": "Ohio R. Evid. 104",
+      "domain": "D01_JUDICIAL_ADMINISTRATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "ohio",
+      "source_url": "https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/evidence/evidence.pdf"
+    },
+    {
+      "aliases": [
+        "Ohio R Evid 403"
+      ],
+      "canonical": "Ohio R. Evid. 403",
+      "domain": "D02_RELEVANCE_403",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "ohio",
+      "source_url": "https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/evidence/evidence.pdf"
+    },
+    {
+      "aliases": [
+        "Ohio R Evid 404"
+      ],
+      "canonical": "Ohio R. Evid. 404",
+      "domain": "D03_CHARACTER_PROPENSITY_HABIT",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "ohio",
+      "source_url": "https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/evidence/evidence.pdf"
+    },
+    {
+      "aliases": [
+        "Ohio R Evid 407"
+      ],
+      "canonical": "Ohio R. Evid. 407",
+      "domain": "D04_POLICY_EXCLUSIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "ohio",
+      "source_url": "https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/evidence/evidence.pdf"
+    },
+    {
+      "aliases": [
+        "Ohio R Evid 611"
+      ],
+      "canonical": "Ohio R. Evid. 611",
+      "domain": "D05_WITNESS_EXAMINATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "ohio",
+      "source_url": "https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/evidence/evidence.pdf"
+    },
+    {
+      "aliases": [
+        "Ohio R Evid 613"
+      ],
+      "canonical": "Ohio R. Evid. 613",
+      "domain": "D06_IMPEACHMENT_REHABILITATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "ohio",
+      "source_url": "https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/evidence/evidence.pdf"
+    },
+    {
+      "aliases": [
+        "Ohio R Evid 702"
+      ],
+      "canonical": "Ohio R. Evid. 702",
+      "domain": "D07_OPINION_EXPERTS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "ohio",
+      "source_url": "https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/evidence/evidence.pdf"
+    },
+    {
+      "aliases": [
+        "Ohio R Evid 801"
+      ],
+      "canonical": "Ohio R. Evid. 801",
+      "domain": "D08_HEARSAY_DEFINITIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "ohio",
+      "source_url": "https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/evidence/evidence.pdf"
+    },
+    {
+      "aliases": [
+        "Ohio R Evid 803(6)"
+      ],
+      "canonical": "Ohio R. Evid. 803(6)",
+      "domain": "D09_HEARSAY_EXCEPTIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "ohio",
+      "source_url": "https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/evidence/evidence.pdf"
+    },
+    {
+      "aliases": [
+        "Ohio R Evid 901"
+      ],
+      "canonical": "Ohio R. Evid. 901",
+      "domain": "D10_AUTHENTICATION_IDENTIFICATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "ohio",
+      "source_url": "https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/evidence/evidence.pdf"
+    },
+    {
+      "aliases": [
+        "Ohio R Evid 1002"
+      ],
+      "canonical": "Ohio R. Evid. 1002",
+      "domain": "D11_CONTENTS_ORIGINALS_SUMMARIES",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "ohio",
+      "source_url": "https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/evidence/evidence.pdf"
+    },
+    {
+      "aliases": [
+        "Ohio R Evid 502"
+      ],
+      "canonical": "Ohio R. Evid. 502",
+      "domain": "D12_PRIVILEGE_CONSTITUTIONAL",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "ohio",
+      "source_url": "https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/evidence/evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "MRE 104",
+      "domain": "D01_JUDICIAL_ADMINISTRATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "michigan",
+      "source_url": "https://www.courts.michigan.gov/siteassets/rules-instructions-administrative-orders/rules-of-evidence/michigan-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "MRE 403",
+      "domain": "D02_RELEVANCE_403",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "michigan",
+      "source_url": "https://www.courts.michigan.gov/siteassets/rules-instructions-administrative-orders/rules-of-evidence/michigan-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "MRE 404",
+      "domain": "D03_CHARACTER_PROPENSITY_HABIT",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "michigan",
+      "source_url": "https://www.courts.michigan.gov/siteassets/rules-instructions-administrative-orders/rules-of-evidence/michigan-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "MRE 407",
+      "domain": "D04_POLICY_EXCLUSIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "michigan",
+      "source_url": "https://www.courts.michigan.gov/siteassets/rules-instructions-administrative-orders/rules-of-evidence/michigan-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "MRE 611",
+      "domain": "D05_WITNESS_EXAMINATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "michigan",
+      "source_url": "https://www.courts.michigan.gov/siteassets/rules-instructions-administrative-orders/rules-of-evidence/michigan-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "MRE 613",
+      "domain": "D06_IMPEACHMENT_REHABILITATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "michigan",
+      "source_url": "https://www.courts.michigan.gov/siteassets/rules-instructions-administrative-orders/rules-of-evidence/michigan-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "MRE 702",
+      "domain": "D07_OPINION_EXPERTS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "michigan",
+      "source_url": "https://www.courts.michigan.gov/siteassets/rules-instructions-administrative-orders/rules-of-evidence/michigan-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "MRE 801",
+      "domain": "D08_HEARSAY_DEFINITIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "michigan",
+      "source_url": "https://www.courts.michigan.gov/siteassets/rules-instructions-administrative-orders/rules-of-evidence/michigan-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "MRE 803(6)",
+      "domain": "D09_HEARSAY_EXCEPTIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "michigan",
+      "source_url": "https://www.courts.michigan.gov/siteassets/rules-instructions-administrative-orders/rules-of-evidence/michigan-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "MRE 901",
+      "domain": "D10_AUTHENTICATION_IDENTIFICATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "michigan",
+      "source_url": "https://www.courts.michigan.gov/siteassets/rules-instructions-administrative-orders/rules-of-evidence/michigan-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "MRE 1002",
+      "domain": "D11_CONTENTS_ORIGINALS_SUMMARIES",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "michigan",
+      "source_url": "https://www.courts.michigan.gov/siteassets/rules-instructions-administrative-orders/rules-of-evidence/michigan-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [],
+      "canonical": "MRE 501",
+      "domain": "D12_PRIVILEGE_CONSTITUTIONAL",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "michigan",
+      "source_url": "https://www.courts.michigan.gov/siteassets/rules-instructions-administrative-orders/rules-of-evidence/michigan-rules-of-evidence.pdf"
+    },
+    {
+      "aliases": [
+        "O.C.G.A. Section 24-1-104",
+        "O.C.G.A \u00a7 24-1-104"
+      ],
+      "canonical": "O.C.G.A. \u00a7 24-1-104",
+      "domain": "D01_JUDICIAL_ADMINISTRATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "georgia",
+      "source_url": "https://www.legis.ga.gov/"
+    },
+    {
+      "aliases": [
+        "O.C.G.A. Section 24-4-403",
+        "O.C.G.A \u00a7 24-4-403"
+      ],
+      "canonical": "O.C.G.A. \u00a7 24-4-403",
+      "domain": "D02_RELEVANCE_403",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "georgia",
+      "source_url": "https://www.legis.ga.gov/"
+    },
+    {
+      "aliases": [
+        "O.C.G.A. Section 24-4-404",
+        "O.C.G.A \u00a7 24-4-404"
+      ],
+      "canonical": "O.C.G.A. \u00a7 24-4-404",
+      "domain": "D03_CHARACTER_PROPENSITY_HABIT",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "georgia",
+      "source_url": "https://www.legis.ga.gov/"
+    },
+    {
+      "aliases": [
+        "O.C.G.A. Section 24-4-407",
+        "O.C.G.A \u00a7 24-4-407"
+      ],
+      "canonical": "O.C.G.A. \u00a7 24-4-407",
+      "domain": "D04_POLICY_EXCLUSIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "georgia",
+      "source_url": "https://www.legis.ga.gov/"
+    },
+    {
+      "aliases": [
+        "O.C.G.A. Section 24-6-611",
+        "O.C.G.A \u00a7 24-6-611"
+      ],
+      "canonical": "O.C.G.A. \u00a7 24-6-611",
+      "domain": "D05_WITNESS_EXAMINATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "georgia",
+      "source_url": "https://www.legis.ga.gov/"
+    },
+    {
+      "aliases": [
+        "O.C.G.A. Section 24-6-613",
+        "O.C.G.A \u00a7 24-6-613"
+      ],
+      "canonical": "O.C.G.A. \u00a7 24-6-613",
+      "domain": "D06_IMPEACHMENT_REHABILITATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "georgia",
+      "source_url": "https://www.legis.ga.gov/"
+    },
+    {
+      "aliases": [
+        "O.C.G.A. Section 24-7-702",
+        "O.C.G.A \u00a7 24-7-702"
+      ],
+      "canonical": "O.C.G.A. \u00a7 24-7-702",
+      "domain": "D07_OPINION_EXPERTS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "georgia",
+      "source_url": "https://www.legis.ga.gov/"
+    },
+    {
+      "aliases": [
+        "O.C.G.A. Section 24-8-801",
+        "O.C.G.A \u00a7 24-8-801"
+      ],
+      "canonical": "O.C.G.A. \u00a7 24-8-801",
+      "domain": "D08_HEARSAY_DEFINITIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "georgia",
+      "source_url": "https://www.legis.ga.gov/"
+    },
+    {
+      "aliases": [
+        "O.C.G.A. Section 24-8-803",
+        "O.C.G.A \u00a7 24-8-803"
+      ],
+      "canonical": "O.C.G.A. \u00a7 24-8-803",
+      "domain": "D09_HEARSAY_EXCEPTIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "georgia",
+      "source_url": "https://www.legis.ga.gov/"
+    },
+    {
+      "aliases": [
+        "O.C.G.A. Section 24-9-901",
+        "O.C.G.A \u00a7 24-9-901"
+      ],
+      "canonical": "O.C.G.A. \u00a7 24-9-901",
+      "domain": "D10_AUTHENTICATION_IDENTIFICATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "georgia",
+      "source_url": "https://www.legis.ga.gov/"
+    },
+    {
+      "aliases": [
+        "O.C.G.A. Section 24-10-1002",
+        "O.C.G.A \u00a7 24-10-1002"
+      ],
+      "canonical": "O.C.G.A. \u00a7 24-10-1002",
+      "domain": "D11_CONTENTS_ORIGINALS_SUMMARIES",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "georgia",
+      "source_url": "https://www.legis.ga.gov/"
+    },
+    {
+      "aliases": [
+        "O.C.G.A. Section 24-5-501",
+        "O.C.G.A \u00a7 24-5-501"
+      ],
+      "canonical": "O.C.G.A. \u00a7 24-5-501",
+      "domain": "D12_PRIVILEGE_CONSTITUTIONAL",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "georgia",
+      "source_url": "https://www.legis.ga.gov/"
+    },
+    {
+      "aliases": [
+        "Wash ER 104"
+      ],
+      "canonical": "Wash. ER 104",
+      "domain": "D01_JUDICIAL_ADMINISTRATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "washington",
+      "source_url": "https://www.courts.wa.gov/court_rules/"
+    },
+    {
+      "aliases": [
+        "Wash ER 403"
+      ],
+      "canonical": "Wash. ER 403",
+      "domain": "D02_RELEVANCE_403",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "washington",
+      "source_url": "https://www.courts.wa.gov/court_rules/"
+    },
+    {
+      "aliases": [
+        "Wash ER 404"
+      ],
+      "canonical": "Wash. ER 404",
+      "domain": "D03_CHARACTER_PROPENSITY_HABIT",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "washington",
+      "source_url": "https://www.courts.wa.gov/court_rules/"
+    },
+    {
+      "aliases": [
+        "Wash ER 407"
+      ],
+      "canonical": "Wash. ER 407",
+      "domain": "D04_POLICY_EXCLUSIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "washington",
+      "source_url": "https://www.courts.wa.gov/court_rules/"
+    },
+    {
+      "aliases": [
+        "Wash ER 611"
+      ],
+      "canonical": "Wash. ER 611",
+      "domain": "D05_WITNESS_EXAMINATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "washington",
+      "source_url": "https://www.courts.wa.gov/court_rules/"
+    },
+    {
+      "aliases": [
+        "Wash ER 613"
+      ],
+      "canonical": "Wash. ER 613",
+      "domain": "D06_IMPEACHMENT_REHABILITATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "washington",
+      "source_url": "https://www.courts.wa.gov/court_rules/"
+    },
+    {
+      "aliases": [
+        "Wash ER 702"
+      ],
+      "canonical": "Wash. ER 702",
+      "domain": "D07_OPINION_EXPERTS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "washington",
+      "source_url": "https://www.courts.wa.gov/court_rules/"
+    },
+    {
+      "aliases": [
+        "Wash ER 801"
+      ],
+      "canonical": "Wash. ER 801",
+      "domain": "D08_HEARSAY_DEFINITIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "washington",
+      "source_url": "https://www.courts.wa.gov/court_rules/"
+    },
+    {
+      "aliases": [
+        "Wash ER 803(6)"
+      ],
+      "canonical": "Wash. ER 803(6)",
+      "domain": "D09_HEARSAY_EXCEPTIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "washington",
+      "source_url": "https://www.courts.wa.gov/court_rules/"
+    },
+    {
+      "aliases": [
+        "Wash ER 901"
+      ],
+      "canonical": "Wash. ER 901",
+      "domain": "D10_AUTHENTICATION_IDENTIFICATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "washington",
+      "source_url": "https://www.courts.wa.gov/court_rules/"
+    },
+    {
+      "aliases": [
+        "Wash ER 1002"
+      ],
+      "canonical": "Wash. ER 1002",
+      "domain": "D11_CONTENTS_ORIGINALS_SUMMARIES",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "washington",
+      "source_url": "https://www.courts.wa.gov/court_rules/"
+    },
+    {
+      "aliases": [
+        "Wash ER 501"
+      ],
+      "canonical": "Wash. ER 501",
+      "domain": "D12_PRIVILEGE_CONSTITUTIONAL",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "washington",
+      "source_url": "https://www.courts.wa.gov/court_rules/"
+    },
+    {
+      "aliases": [
+        "Ariz R Evid 104"
+      ],
+      "canonical": "Ariz. R. Evid. 104",
+      "domain": "D01_JUDICIAL_ADMINISTRATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "arizona",
+      "source_url": "https://www.azcourts.gov/rules/CurrentArizonaRules.aspx"
+    },
+    {
+      "aliases": [
+        "Ariz R Evid 403"
+      ],
+      "canonical": "Ariz. R. Evid. 403",
+      "domain": "D02_RELEVANCE_403",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "arizona",
+      "source_url": "https://www.azcourts.gov/rules/CurrentArizonaRules.aspx"
+    },
+    {
+      "aliases": [
+        "Ariz R Evid 404"
+      ],
+      "canonical": "Ariz. R. Evid. 404",
+      "domain": "D03_CHARACTER_PROPENSITY_HABIT",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "arizona",
+      "source_url": "https://www.azcourts.gov/rules/CurrentArizonaRules.aspx"
+    },
+    {
+      "aliases": [
+        "Ariz R Evid 407"
+      ],
+      "canonical": "Ariz. R. Evid. 407",
+      "domain": "D04_POLICY_EXCLUSIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "arizona",
+      "source_url": "https://www.azcourts.gov/rules/CurrentArizonaRules.aspx"
+    },
+    {
+      "aliases": [
+        "Ariz R Evid 611"
+      ],
+      "canonical": "Ariz. R. Evid. 611",
+      "domain": "D05_WITNESS_EXAMINATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "arizona",
+      "source_url": "https://www.azcourts.gov/rules/CurrentArizonaRules.aspx"
+    },
+    {
+      "aliases": [
+        "Ariz R Evid 613"
+      ],
+      "canonical": "Ariz. R. Evid. 613",
+      "domain": "D06_IMPEACHMENT_REHABILITATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "arizona",
+      "source_url": "https://www.azcourts.gov/rules/CurrentArizonaRules.aspx"
+    },
+    {
+      "aliases": [
+        "Ariz R Evid 702"
+      ],
+      "canonical": "Ariz. R. Evid. 702",
+      "domain": "D07_OPINION_EXPERTS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "arizona",
+      "source_url": "https://www.azcourts.gov/rules/CurrentArizonaRules.aspx"
+    },
+    {
+      "aliases": [
+        "Ariz R Evid 801"
+      ],
+      "canonical": "Ariz. R. Evid. 801",
+      "domain": "D08_HEARSAY_DEFINITIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "arizona",
+      "source_url": "https://www.azcourts.gov/rules/CurrentArizonaRules.aspx"
+    },
+    {
+      "aliases": [
+        "Ariz R Evid 803(6)"
+      ],
+      "canonical": "Ariz. R. Evid. 803(6)",
+      "domain": "D09_HEARSAY_EXCEPTIONS",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "arizona",
+      "source_url": "https://www.azcourts.gov/rules/CurrentArizonaRules.aspx"
+    },
+    {
+      "aliases": [
+        "Ariz R Evid 901"
+      ],
+      "canonical": "Ariz. R. Evid. 901",
+      "domain": "D10_AUTHENTICATION_IDENTIFICATION",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "arizona",
+      "source_url": "https://www.azcourts.gov/rules/CurrentArizonaRules.aspx"
+    },
+    {
+      "aliases": [
+        "Ariz R Evid 1002"
+      ],
+      "canonical": "Ariz. R. Evid. 1002",
+      "domain": "D11_CONTENTS_ORIGINALS_SUMMARIES",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "arizona",
+      "source_url": "https://www.azcourts.gov/rules/CurrentArizonaRules.aspx"
+    },
+    {
+      "aliases": [
+        "Ariz R Evid 502"
+      ],
+      "canonical": "Ariz. R. Evid. 502",
+      "domain": "D12_PRIVILEGE_CONSTITUTIONAL",
+      "effective_status": "verify_at_freeze",
+      "jurisdiction": "arizona",
+      "source_url": "https://www.azcourts.gov/rules/CurrentArizonaRules.aspx"
+    }
+  ],
+  "freeze_policy": "current law on final corpus-freeze date",
+  "schema_version": "4.0"
+}
