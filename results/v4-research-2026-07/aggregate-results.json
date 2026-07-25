@@ -1,0 +1,512 @@
+{
+  "corpus": {
+    "combined_candidate_tree_sha256": "ed142ea92d19647c6fe064c63274e1085f33d743554ff791bd6855341bb67759",
+    "doctrine": {
+      "count": 240,
+      "families": 168,
+      "sha256": "5bef4dd64f13cdb6b046611cc339817d54161613e54885fcd67739b016d5cc9c"
+    },
+    "matter": {
+      "count": 60,
+      "tree_sha256": "556b7049bd62098100132fde2be475680ec415b8d4f4a49082e75580bba567f4"
+    }
+  },
+  "cost_accounting": {
+    "account_delta_usd": 90.83802740000002,
+    "full_run_reported_cost_usd": 75.89118115000001,
+    "hard_limit_usd": 100.0,
+    "smoke_reported_cost_usd": 1.10092825
+  },
+  "models": [
+    {
+      "display_name": "Grok 4.5",
+      "doctrine": {
+        "authority_f1": 0.6795655695425432,
+        "by_domain": {
+          "D01_JUDICIAL_ADMINISTRATION": {
+            "doctrine_score": 0.929911530612245,
+            "family_count": 7
+          },
+          "D02_RELEVANCE_403": {
+            "doctrine_score": 0.8500843650793651,
+            "family_count": 12
+          },
+          "D03_CHARACTER_PROPENSITY_HABIT": {
+            "doctrine_score": 0.7433485578002245,
+            "family_count": 9
+          },
+          "D04_POLICY_EXCLUSIONS": {
+            "doctrine_score": 0.7674048346560847,
+            "family_count": 9
+          },
+          "D05_WITNESS_EXAMINATION": {
+            "doctrine_score": 0.6578250396825397,
+            "family_count": 10
+          },
+          "D06_IMPEACHMENT_REHABILITATION": {
+            "doctrine_score": 0.7184155291005292,
+            "family_count": 9
+          },
+          "D07_OPINION_EXPERTS": {
+            "doctrine_score": 0.6450634888888889,
+            "family_count": 50
+          },
+          "D08_HEARSAY_DEFINITIONS": {
+            "doctrine_score": 0.673928787878788,
+            "family_count": 11
+          },
+          "D09_HEARSAY_EXCEPTIONS": {
+            "doctrine_score": 0.7615786441798942,
+            "family_count": 12
+          },
+          "D10_AUTHENTICATION_IDENTIFICATION": {
+            "doctrine_score": 0.7567692418546367,
+            "family_count": 19
+          },
+          "D11_CONTENTS_ORIGINALS_SUMMARIES": {
+            "doctrine_score": 0.7701217460317461,
+            "family_count": 11
+          },
+          "D12_PRIVILEGE_CONSTITUTIONAL": {
+            "doctrine_score": 0.6659981150793651,
+            "family_count": 9
+          }
+        },
+        "calibration": 0.8016672849358244,
+        "doctrine_score": 0.7450374900703589,
+        "domain_count": 12,
+        "failure_count": 0,
+        "family_count": 168,
+        "family_mean_score": 0.7202406932419433,
+        "grounding_f1": 0.6527064019978598,
+        "hallucinated_authority_count": 7,
+        "invalid_authority_count": 83,
+        "issue_f1": 0.8081458143464723,
+        "item_mean_score": 0.7254067198472823,
+        "n": 240,
+        "outcome_accuracy": 0.7543347953216374,
+        "score_ci_95": [
+          0.7166296107282839,
+          0.7727459603180721
+        ]
+      },
+      "matter": {
+        "authority_grounding_rate": 0.2794863145538315,
+        "complete_task_rate": 0,
+        "deliverable_completeness_rate": 0.9833333333333333,
+        "factual_accuracy_rate": 0.6985219135021467,
+        "failure_count": 1,
+        "hallucinated_authority_count": 68,
+        "invalid_authority_count": 210,
+        "legal_criteria_rate": 0.763888888888889,
+        "matter_score": 0.6901199943805327,
+        "n": 60,
+        "score_ci_95": [
+          0.6460994974404253,
+          0.7319718358350322
+        ]
+      },
+      "model_id": "x-ai/grok-4.5",
+      "overall_ci_95": [
+        0.6905934562805046,
+        0.7423452842979248
+      ],
+      "overall_score": 0.7175787422254458,
+      "overall_score_100": 71.75787422254459,
+      "run_cost_usd": {
+        "doctrine": 1.6318896000000003,
+        "matter": 5.966928000000001,
+        "total": 7.598817600000001
+      },
+      "run_protocol": {
+        "doctrine_manifest": "grok-4-5-doctrine.json",
+        "matter_manifest": "grok-4-5-matter.json",
+        "provider": "OpenRouter",
+        "runs_per_model": 1
+      },
+      "schema_version": "4.0",
+      "slug": "grok-4-5",
+      "track_weights": {
+        "doctrine": 0.5,
+        "matter": 0.5
+      },
+      "weight_sensitivity": {
+        "doctrine_40_matter_60": 0.7120869926564632,
+        "doctrine_50_matter_50": 0.7175787422254458,
+        "doctrine_60_matter_40": 0.7230704917944284
+      }
+    },
+    {
+      "display_name": "Gemini 3.1 Pro Preview",
+      "doctrine": {
+        "authority_f1": 0.47163779397989924,
+        "by_domain": {
+          "D01_JUDICIAL_ADMINISTRATION": {
+            "doctrine_score": 0.8806998299319728,
+            "family_count": 7
+          },
+          "D02_RELEVANCE_403": {
+            "doctrine_score": 0.6986154067460317,
+            "family_count": 12
+          },
+          "D03_CHARACTER_PROPENSITY_HABIT": {
+            "doctrine_score": 0.6748091380070547,
+            "family_count": 9
+          },
+          "D04_POLICY_EXCLUSIONS": {
+            "doctrine_score": 0.5125708774250441,
+            "family_count": 9
+          },
+          "D05_WITNESS_EXAMINATION": {
+            "doctrine_score": 0.63753125,
+            "family_count": 10
+          },
+          "D06_IMPEACHMENT_REHABILITATION": {
+            "doctrine_score": 0.742932208994709,
+            "family_count": 9
+          },
+          "D07_OPINION_EXPERTS": {
+            "doctrine_score": 0.6481599107142857,
+            "family_count": 50
+          },
+          "D08_HEARSAY_DEFINITIONS": {
+            "doctrine_score": 0.46652083333333333,
+            "family_count": 11
+          },
+          "D09_HEARSAY_EXCEPTIONS": {
+            "doctrine_score": 0.6276372767857143,
+            "family_count": 12
+          },
+          "D10_AUTHENTICATION_IDENTIFICATION": {
+            "doctrine_score": 0.7215534931077694,
+            "family_count": 19
+          },
+          "D11_CONTENTS_ORIGINALS_SUMMARIES": {
+            "doctrine_score": 0.6615588474025974,
+            "family_count": 11
+          },
+          "D12_PRIVILEGE_CONSTITUTIONAL": {
+            "doctrine_score": 0.5366147486772487,
+            "family_count": 9
+          }
+        },
+        "calibration": 0.7244639491326169,
+        "doctrine_score": 0.6507669850938135,
+        "domain_count": 12,
+        "failure_count": 24,
+        "family_count": 168,
+        "family_mean_score": 0.6499046110874905,
+        "grounding_f1": 0.5452742929604354,
+        "hallucinated_authority_count": 6,
+        "invalid_authority_count": 87,
+        "issue_f1": 0.7709923061019552,
+        "item_mean_score": 0.6429650171957673,
+        "n": 240,
+        "outcome_accuracy": 0.682351807549176,
+        "score_ci_95": [
+          0.6039834827890556,
+          0.6937416354851071
+        ]
+      },
+      "matter": {
+        "authority_grounding_rate": 0.31546232248319533,
+        "complete_task_rate": 0,
+        "deliverable_completeness_rate": 0.9916666666666667,
+        "factual_accuracy_rate": 0.5797376564719943,
+        "failure_count": 0,
+        "hallucinated_authority_count": 8,
+        "invalid_authority_count": 62,
+        "legal_criteria_rate": 0.6538888888888889,
+        "matter_score": 0.6257475574118827,
+        "n": 60,
+        "score_ci_95": [
+          0.5784793655511951,
+          0.6703297356210125
+        ]
+      },
+      "model_id": "google/gemini-3.1-pro-preview",
+      "overall_ci_95": [
+        0.6063166315041517,
+        0.6694431818182489
+      ],
+      "overall_score": 0.638257271252848,
+      "overall_score_100": 63.8257271252848,
+      "run_cost_usd": {
+        "doctrine": 1.9768740000000002,
+        "matter": 9.361858800000004,
+        "total": 11.338732800000004
+      },
+      "run_protocol": {
+        "doctrine_manifest": "gemini-3-1-pro-doctrine.json",
+        "matter_manifest": "gemini-3-1-pro-matter.json",
+        "provider": "OpenRouter",
+        "runs_per_model": 1
+      },
+      "schema_version": "4.0",
+      "slug": "gemini-3-1-pro",
+      "track_weights": {
+        "doctrine": 0.5,
+        "matter": 0.5
+      },
+      "weight_sensitivity": {
+        "doctrine_40_matter_60": 0.635755328484655,
+        "doctrine_50_matter_50": 0.638257271252848,
+        "doctrine_60_matter_40": 0.6407592140210412
+      }
+    },
+    {
+      "display_name": "GPT-5.6 Sol",
+      "doctrine": {
+        "authority_f1": 0.3346230090166494,
+        "by_domain": {
+          "D01_JUDICIAL_ADMINISTRATION": {
+            "doctrine_score": 0.8158951020408164,
+            "family_count": 7
+          },
+          "D02_RELEVANCE_403": {
+            "doctrine_score": 0.7832546825396826,
+            "family_count": 12
+          },
+          "D03_CHARACTER_PROPENSITY_HABIT": {
+            "doctrine_score": 0.6363732623857624,
+            "family_count": 9
+          },
+          "D04_POLICY_EXCLUSIONS": {
+            "doctrine_score": 0.6231965211640211,
+            "family_count": 9
+          },
+          "D05_WITNESS_EXAMINATION": {
+            "doctrine_score": 0.5758413988095238,
+            "family_count": 10
+          },
+          "D06_IMPEACHMENT_REHABILITATION": {
+            "doctrine_score": 0.588886919592753,
+            "family_count": 9
+          },
+          "D07_OPINION_EXPERTS": {
+            "doctrine_score": 0.5328493507936508,
+            "family_count": 50
+          },
+          "D08_HEARSAY_DEFINITIONS": {
+            "doctrine_score": 0.5117575703463203,
+            "family_count": 11
+          },
+          "D09_HEARSAY_EXCEPTIONS": {
+            "doctrine_score": 0.665543253968254,
+            "family_count": 12
+          },
+          "D10_AUTHENTICATION_IDENTIFICATION": {
+            "doctrine_score": 0.6853305433090302,
+            "family_count": 19
+          },
+          "D11_CONTENTS_ORIGINALS_SUMMARIES": {
+            "doctrine_score": 0.4799148412698413,
+            "family_count": 11
+          },
+          "D12_PRIVILEGE_CONSTITUTIONAL": {
+            "doctrine_score": 0.46263275793650793,
+            "family_count": 9
+          }
+        },
+        "calibration": 0.7003783272923471,
+        "doctrine_score": 0.6134563503463469,
+        "domain_count": 12,
+        "failure_count": 15,
+        "family_count": 168,
+        "family_mean_score": 0.596590502860235,
+        "grounding_f1": 0.6487512021119216,
+        "hallucinated_authority_count": 46,
+        "invalid_authority_count": 149,
+        "issue_f1": 0.7614813812730479,
+        "item_mean_score": 0.6248859052128427,
+        "n": 240,
+        "outcome_accuracy": 0.640668416622364,
+        "score_ci_95": [
+          0.5735897830833143,
+          0.6496880238084952
+        ]
+      },
+      "matter": {
+        "authority_grounding_rate": 0.2526370391642979,
+        "complete_task_rate": 0,
+        "deliverable_completeness_rate": 1.0,
+        "factual_accuracy_rate": 0.6269484859432993,
+        "failure_count": 0,
+        "hallucinated_authority_count": 55,
+        "invalid_authority_count": 181,
+        "legal_criteria_rate": 0.6561111111111111,
+        "matter_score": 0.6226252362799101,
+        "n": 60,
+        "score_ci_95": [
+          0.5755175709347533,
+          0.6703065084953028
+        ]
+      },
+      "model_id": "openai/gpt-5.6-sol",
+      "overall_ci_95": [
+        0.5870945127740369,
+        0.6485075711581395
+      ],
+      "overall_score": 0.6180407933131284,
+      "overall_score_100": 61.80407933131284,
+      "run_cost_usd": {
+        "doctrine": 4.931025000000002,
+        "matter": 15.981245750000008,
+        "total": 20.912270750000012
+      },
+      "run_protocol": {
+        "doctrine_manifest": "gpt-5-6-sol-doctrine.json",
+        "matter_manifest": "gpt-5-6-sol-matter.json",
+        "provider": "OpenRouter",
+        "runs_per_model": 1
+      },
+      "schema_version": "4.0",
+      "slug": "gpt-5-6-sol",
+      "track_weights": {
+        "doctrine": 0.5,
+        "matter": 0.5
+      },
+      "weight_sensitivity": {
+        "doctrine_40_matter_60": 0.6189576819064848,
+        "doctrine_50_matter_50": 0.6180407933131284,
+        "doctrine_60_matter_40": 0.6171239047197722
+      }
+    },
+    {
+      "display_name": "Claude Opus 5",
+      "doctrine": {
+        "authority_f1": 0.303356948279489,
+        "by_domain": {
+          "D01_JUDICIAL_ADMINISTRATION": {
+            "doctrine_score": 0.8053521088435375,
+            "family_count": 7
+          },
+          "D02_RELEVANCE_403": {
+            "doctrine_score": 0.5946858730158731,
+            "family_count": 12
+          },
+          "D03_CHARACTER_PROPENSITY_HABIT": {
+            "doctrine_score": 0.5883989197530864,
+            "family_count": 9
+          },
+          "D04_POLICY_EXCLUSIONS": {
+            "doctrine_score": 0.5439361838624339,
+            "family_count": 9
+          },
+          "D05_WITNESS_EXAMINATION": {
+            "doctrine_score": 0.5378181904761905,
+            "family_count": 10
+          },
+          "D06_IMPEACHMENT_REHABILITATION": {
+            "doctrine_score": 0.5608593360189194,
+            "family_count": 9
+          },
+          "D07_OPINION_EXPERTS": {
+            "doctrine_score": 0.5296488670634921,
+            "family_count": 50
+          },
+          "D08_HEARSAY_DEFINITIONS": {
+            "doctrine_score": 0.445409025974026,
+            "family_count": 11
+          },
+          "D09_HEARSAY_EXCEPTIONS": {
+            "doctrine_score": 0.762276304563492,
+            "family_count": 12
+          },
+          "D10_AUTHENTICATION_IDENTIFICATION": {
+            "doctrine_score": 0.6773848527568923,
+            "family_count": 19
+          },
+          "D11_CONTENTS_ORIGINALS_SUMMARIES": {
+            "doctrine_score": 0.6413386507936508,
+            "family_count": 11
+          },
+          "D12_PRIVILEGE_CONSTITUTIONAL": {
+            "doctrine_score": 0.5174403240740741,
+            "family_count": 9
+          }
+        },
+        "calibration": 0.7793880232541581,
+        "doctrine_score": 0.600379053099639,
+        "domain_count": 12,
+        "failure_count": 0,
+        "family_count": 168,
+        "family_mean_score": 0.5863207480416409,
+        "grounding_f1": 0.5671399680885113,
+        "hallucinated_authority_count": 65,
+        "invalid_authority_count": 282,
+        "issue_f1": 0.7069871912525421,
+        "item_mean_score": 0.6122132091450216,
+        "n": 240,
+        "outcome_accuracy": 0.6681936691476165,
+        "score_ci_95": [
+          0.569082037370538,
+          0.6319725487498834
+        ]
+      },
+      "matter": {
+        "authority_grounding_rate": 0.2730853544711694,
+        "complete_task_rate": 0,
+        "deliverable_completeness_rate": 0.9833333333333333,
+        "factual_accuracy_rate": 0.5561483503164383,
+        "failure_count": 1,
+        "hallucinated_authority_count": 42,
+        "invalid_authority_count": 184,
+        "legal_criteria_rate": 0.47444444444444445,
+        "matter_score": 0.5227615456639219,
+        "n": 60,
+        "score_ci_95": [
+          0.4601466936515833,
+          0.5862691998991645
+        ]
+      },
+      "model_id": "anthropic/claude-opus-5",
+      "overall_ci_95": [
+        0.525630197319481,
+        0.5970164821398064
+      ],
+      "overall_score": 0.5615702993817804,
+      "overall_score_100": 56.15702993817804,
+      "run_cost_usd": {
+        "doctrine": 4.455399999999998,
+        "matter": 31.58595999999999,
+        "total": 36.04135999999999
+      },
+      "run_protocol": {
+        "doctrine_manifest": "claude-opus-5-doctrine.json",
+        "matter_manifest": "claude-opus-5-matter.json",
+        "provider": "OpenRouter",
+        "runs_per_model": 1
+      },
+      "schema_version": "4.0",
+      "slug": "claude-opus-5",
+      "track_weights": {
+        "doctrine": 0.5,
+        "matter": 0.5
+      },
+      "weight_sensitivity": {
+        "doctrine_40_matter_60": 0.5538085486382087,
+        "doctrine_50_matter_50": 0.5615702993817804,
+        "doctrine_60_matter_40": 0.5693320501253522
+      }
+    }
+  ],
+  "protocol": {
+    "holdout_visibility": "private",
+    "models": 4,
+    "overall_score": "50% Doctrine + 50% Matter",
+    "provider": "OpenRouter",
+    "run_date": "2026-07-25",
+    "runs_per_model": 1
+  },
+  "published_as_official": false,
+  "release_id": "v4-research-2026-07",
+  "release_status": "unreviewed_research_release",
+  "review_status": {
+    "disclosure": "All gold labels are unreviewed construction candidates. Results are a transparent research release, not an attorney-validated official leaderboard.",
+    "professional_review_completed": false,
+    "reviewed_items": 0,
+    "total_items": 300
+  },
+  "schema_version": "4.0"
+}
