@@ -14,6 +14,9 @@ EvidenceBench v4 must not be presented as an official leaderboard until the
 legal-review and release gates in [V4_RELEASE_GATES.md](V4_RELEASE_GATES.md)
 are complete.
 
+Identity-verified legal professionals can help complete that gate through the
+[EvidenceBench v4 reviewer program](REVIEWING_V4.md).
+
 v4 reports a single overall score:
 
 `0.50 × Doctrine score + 0.50 × Matter score`

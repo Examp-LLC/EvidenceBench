@@ -1,0 +1,69 @@
+name: EvidenceBench v4 professional reviewer
+description: Volunteer to independently review one or more sealed EvidenceBench v4 candidates.
+title: "[Reviewer application] "
+labels:
+  - reviewer-application
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for volunteering. EvidenceBench v4 needs identity-verified legal professionals to review sealed evidence-law items before release.
+
+        **Do not post bar numbers, identification documents, client information, or other sensitive personal data in this public issue.** Objection Academy will arrange private verification and assignment after initial triage.
+  - type: input
+    id: professional_role
+    attributes:
+      label: Professional role
+      description: For example, litigation attorney, judge, law professor, appellate lawyer, or evidence instructor.
+      placeholder: Litigation attorney
+    validations:
+      required: true
+  - type: input
+    id: jurisdictions
+    attributes:
+      label: Jurisdictions or evidence-law experience
+      description: List relevant jurisdictions or describe your evidence-law teaching, research, or practice experience.
+      placeholder: California and federal courts; trial-practice instructor
+    validations:
+      required: true
+  - type: dropdown
+    id: capacity
+    attributes:
+      label: Review capacity
+      description: Each assignment is a private Doctrine item or Matter workspace.
+      options:
+        - 1–2 candidates
+        - 3–5 candidates
+        - 6–10 candidates
+        - More than 10 candidates
+    validations:
+      required: true
+  - type: checkboxes
+    id: tracks
+    attributes:
+      label: Preferred track
+      options:
+        - label: Doctrine — applied evidentiary rulings
+        - label: Matter — closed-universe files and work product
+  - type: textarea
+    id: background
+    attributes:
+      label: Relevant background
+      description: Briefly describe the experience that would help with this review.
+    validations:
+      required: true
+  - type: checkboxes
+    id: attestations
+    attributes:
+      label: Review commitments
+      options:
+        - label: I can keep assigned benchmark material confidential.
+          required: true
+        - label: I will disclose conflicts and will not use assigned material to train or prompt a model.
+          required: true
+        - label: I understand that identity verification will occur privately before access is granted.
+          required: true
+  - type: markdown
+    attributes:
+      value: |
+        If you prefer not to open a public issue, email **dylan@examp.com** with the subject “EvidenceBench v4 reviewer.”

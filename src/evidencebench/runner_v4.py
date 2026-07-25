@@ -22,6 +22,49 @@ MATTER_PROMPT_VERSION = "evidencebench-v4-matter-agent-1"
 DEFAULT_OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 
+class CostBudgetExceeded(RuntimeError):
+    pass
+
+
+class RunCostBudget:
+    def __init__(self, limit_usd: float | None) -> None:
+        self.limit_usd = float(limit_usd) if limit_usd is not None else None
+        self.spent_usd = 0.0
+
+    def ensure_available(self) -> None:
+        if self.limit_usd is not None and self.spent_usd >= self.limit_usd:
+            raise CostBudgetExceeded(
+                f"run cost limit reached: ${self.spent_usd:.6f} "
+                f"of ${self.limit_usd:.2f}"
+            )
+
+    def record(self, result: dict) -> None:
+        value = result.get("usage", {}).get("cost", 0)
+        if isinstance(value, (int, float, str)):
+            try:
+                self.spent_usd += float(value)
+            except ValueError:
+                pass
+
+
+def _read_jsonl_if_present(path: Path) -> list[dict]:
+    if not path.is_file():
+        return []
+    return [
+        json.loads(line)
+        for line in path.read_text().splitlines()
+        if line.strip()
+    ]
+
+
+def _append_jsonl(path: Path, record: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a") as handle:
+        handle.write(json.dumps(record, sort_keys=True) + "\n")
+        handle.flush()
+        os.fsync(handle.fileno())
+
+
 def _load_ignored_env(start: Path) -> None:
     path = None
     for directory in (start, *start.parents):
@@ -64,8 +107,14 @@ def _post_openrouter(manifest: dict, payload: dict) -> dict:
         headers=headers,
         method="POST",
     )
-    with urllib.request.urlopen(request, timeout=manifest.get("timeout_seconds", 180)) as response:
-        return json.loads(response.read())
+    try:
+        with urllib.request.urlopen(
+            request, timeout=manifest.get("timeout_seconds", 180)
+        ) as response:
+            return json.loads(response.read())
+    except urllib.error.HTTPError as error:
+        error.openrouter_body = error.read().decode(errors="replace")[:2000]
+        raise
 
 
 def _is_retryable(error: Exception) -> bool:
@@ -81,15 +130,46 @@ def _is_retryable(error: Exception) -> bool:
     }
 
 
-def _request(manifest: dict, payload: dict) -> dict:
+def _error_message(error: Exception) -> str:
+    body = getattr(error, "openrouter_body", "")
+    return f"{error}: {body}".strip()[:2000]
+
+
+def _request(
+    manifest: dict, payload: dict, budget: RunCostBudget | None = None
+) -> dict:
+    if budget is not None:
+        budget.ensure_available()
     for attempt in range(2):
         try:
-            return _post_openrouter(manifest, payload)
+            result = _post_openrouter(manifest, payload)
+            if budget is not None:
+                budget.record(result)
+            return result
         except Exception as error:
             if attempt == 0 and _is_retryable(error):
                 continue
             raise
     raise AssertionError("unreachable")
+
+
+def _generation_parameters(manifest: dict) -> dict:
+    parameters: dict = {}
+    if "temperature" not in manifest:
+        parameters["temperature"] = 0
+    elif manifest["temperature"] is not None:
+        parameters["temperature"] = manifest["temperature"]
+    for key in ("reasoning", "verbosity"):
+        if key in manifest:
+            parameters[key] = manifest[key]
+    if "provider_route" in manifest:
+        parameters["provider"] = manifest["provider_route"]
+    seed = manifest.get("seed", 20260304)
+    if seed is not None:
+        parameters["seed"] = seed
+    if "parallel_tool_calls" in manifest:
+        parameters["parallel_tool_calls"] = manifest["parallel_tool_calls"]
+    return parameters
 
 
 def _json_content(message: dict) -> dict:
@@ -143,54 +223,66 @@ def run_doctrine(
         raise ValueError("v4 runner requires provider=openrouter")
     if manifest.get("tools_enabled"):
         raise ValueError("Doctrine track must disable tools")
-    outputs = []
+    budget = RunCostBudget(manifest.get("max_run_cost_usd"))
+    output = Path(output_path)
+    prior_outputs = _read_jsonl_if_present(output)
+    completed_ids = {
+        record.get("item_id")
+        for record in prior_outputs
+        if record.get("item_id")
+    }
+    for record in prior_outputs:
+        budget.record(record)
+    new_count = 0
     for item in load_doctrine_items(items_path):
+        if item.id in completed_ids:
+            continue
         try:
             result = _request(
                 manifest,
                 {
                     "model": manifest["model_id"],
-                    "temperature": 0,
-                    "seed": manifest.get("seed", 20260304),
                     "max_tokens": manifest.get("max_output_tokens", 1200),
                     "response_format": {"type": "json_object"},
                     "messages": [{"role": "user", "content": doctrine_prompt(item)}],
+                    **_generation_parameters(manifest),
                 },
+                budget,
             )
             parsed = _json_content(result["choices"][0]["message"])
-            outputs.append(
-                {
-                    **parsed,
-                    "item_id": item.id,
-                    "status": "ok",
-                    "usage": result.get("usage", {}),
-                    "generation_id": result.get("id"),
-                }
-            )
+            record = {
+                **parsed,
+                "item_id": item.id,
+                "status": "ok",
+                "usage": result.get("usage", {}),
+                "generation_id": result.get("id"),
+                "served_model": result.get("model"),
+                "served_provider": result.get("provider"),
+            }
         except Exception as error:
-            outputs.append(
-                {
-                    "item_id": item.id,
-                    "ruling": None,
-                    "issue_codes": [],
-                    "authorities": [],
-                    "grounding": [],
-                    "confidence": None,
-                    "explanation": "",
-                    "status": f"failed:{type(error).__name__}",
-                }
-            )
-    output = Path(output_path)
-    output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(
-        "\n".join(json.dumps(record, sort_keys=True) for record in outputs) + "\n"
-    )
+            record = {
+                "item_id": item.id,
+                "ruling": None,
+                "issue_codes": [],
+                "authorities": [],
+                "grounding": [],
+                "confidence": None,
+                "explanation": "",
+                "status": f"failed:{type(error).__name__}",
+                "error": _error_message(error),
+            }
+        _append_jsonl(output, record)
+        new_count += 1
     return {
         "provider": "openrouter",
         "model": manifest["model_id"],
         "prompt_version": DOCTRINE_PROMPT_VERSION,
         "dataset_sha256": file_sha256(str(items_path)),
         "output_path": str(output),
+        "items": len(completed_ids) + new_count,
+        "resumed_items": len(completed_ids),
+        "cost_usd": budget.spent_usd,
+        "cost_limit_usd": budget.limit_usd,
     }
 
 
@@ -256,6 +348,28 @@ MATTER_TOOLS = [
                 "type": "object",
                 "properties": {"path": {"type": "string"}},
                 "required": ["path"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "read_documents",
+            "description": (
+                "Read up to ten declared matter documents in one call. Prefer "
+                "this when the task requires reviewing the complete record."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "paths": {
+                        "type": "array",
+                        "minItems": 1,
+                        "maxItems": 10,
+                        "items": {"type": "string"},
+                    }
+                },
+                "required": ["paths"],
             },
         },
     },
@@ -330,6 +444,18 @@ class MatterWorkspace:
                 else _extract_document(path)
             )
             return {"path": requested, "content": content}
+        if name == "read_documents":
+            paths = arguments.get("paths")
+            if not isinstance(paths, list) or not 1 <= len(paths) <= 10:
+                raise ValueError("paths must contain between one and ten documents")
+            if len(paths) != len(set(paths)):
+                raise ValueError("paths must not contain duplicates")
+            return {
+                "documents": [
+                    self.execute("read_document", {"path": path})
+                    for path in paths
+                ]
+            }
         if name == "search_documents":
             query = arguments["query"].casefold()
             matches = []
@@ -370,19 +496,22 @@ class MatterWorkspace:
 
 def matter_prompt(task: MatterTask) -> str:
     deliverables = ", ".join(task.deliverables)
+    documents = ", ".join(document.path for document in task.documents)
     return f"""You are completing the EvidenceBench v4 Matter track in a
 restricted workspace. Review the supplied record with the available tools.
 Do not browse or assume facts not in the record.
 
 Task: {task.title}
 Instructions: {task.instructions}
+Declared documents: {documents}
 Required deliverables: {deliverables}
 
 You must write findings.json with this shape:
 {{"findings":[{{"issue_code":"...","disposition":"...",
 "fact_ids":["..."],"record_refs":["document:line-or-section"],
 "authorities":["controlling rule or case citation"],"explanation":"..."}}]}}
-Use write_output for every deliverable. When complete, respond briefly.
+Read every declared document. Prefer one read_documents call for the complete
+record. Use write_output for every deliverable. When complete, respond briefly.
 """
 
 
@@ -391,6 +520,7 @@ def _run_matter_task(
     task_dir: Path,
     task: MatterTask,
     output_root: Path,
+    budget: RunCostBudget | None = None,
 ) -> tuple[dict, list[dict], dict]:
     workspace = MatterWorkspace(
         task_dir / "documents",
@@ -405,18 +535,27 @@ def _run_matter_task(
     messages: list[dict] = [{"role": "user", "content": matter_prompt(task)}]
     transcript: list[dict] = list(messages)
     total_usage: dict[str, int] = {}
+    route_events: list[dict] = []
     for _ in range(manifest.get("max_turns", 20)):
         result = _request(
             manifest,
             {
                 "model": manifest["model_id"],
-                "temperature": 0,
-                "seed": manifest.get("seed", 20260304),
                 "max_tokens": manifest.get("max_output_tokens", 2000),
                 "messages": messages,
                 "tools": MATTER_TOOLS,
-                "parallel_tool_calls": False,
+                **_generation_parameters(manifest),
             },
+            budget,
+        )
+        route_events.append(
+            {
+                "generation_id": result.get("id"),
+                "served_model": result.get("model"),
+                "served_provider": result.get("provider"),
+                "created": result.get("created"),
+                "usage": result.get("usage", {}),
+            }
         )
         for key, value in result.get("usage", {}).items():
             if isinstance(value, int):
@@ -485,6 +624,7 @@ def _run_matter_task(
         "findings": parsed["findings"],
         "deliverables": actual_deliverables,
         "deliverable_metadata": deliverable_metadata,
+        "route_events": route_events,
         "status": "ok",
     }
     return response, transcript, total_usage
@@ -504,8 +644,21 @@ def run_matter(
         raise ValueError("Matter track requires tools_enabled=true")
     destination = Path(output_root)
     destination.mkdir(parents=True, exist_ok=True)
-    records = []
+    budget = RunCostBudget(manifest.get("max_run_cost_usd"))
+    response_path = destination / "responses.jsonl"
+    prior_records = _read_jsonl_if_present(response_path)
+    completed_ids = {
+        record.get("task_id")
+        for record in prior_records
+        if record.get("task_id")
+    }
+    for record in prior_records:
+        for route_event in record.get("route_events", []):
+            budget.record(route_event)
+    new_count = 0
     for task_dir, task in load_matter_tasks(tasks_path):
+        if task.id in completed_ids:
+            continue
         task_output = destination / "workspaces" / task.id
         if task_output.exists():
             raise FileExistsError(
@@ -514,7 +667,7 @@ def run_matter(
         task_output.mkdir(parents=True)
         try:
             response, transcript, usage = _run_matter_task(
-                manifest, task_dir, task, task_output
+                manifest, task_dir, task, task_output, budget
             )
         except Exception as error:
             response = {
@@ -522,21 +675,30 @@ def run_matter(
                 "findings": [],
                 "deliverables": [],
                 "status": f"failed:{type(error).__name__}",
+                "error": _error_message(error),
             }
             transcript = []
             usage = {}
-        records.append(response)
         (destination / f"{task.id}.transcript.json").write_text(
-            json.dumps({"messages": transcript, "usage": usage}, indent=2) + "\n"
+            json.dumps(
+                {
+                    "messages": transcript,
+                    "usage": usage,
+                    "route_events": response.get("route_events", []),
+                },
+                indent=2,
+            )
+            + "\n"
         )
-    response_path = destination / "responses.jsonl"
-    response_path.write_text(
-        "\n".join(json.dumps(record, sort_keys=True) for record in records) + "\n"
-    )
+        _append_jsonl(response_path, response)
+        new_count += 1
     return {
         "provider": "openrouter",
         "model": manifest["model_id"],
         "prompt_version": MATTER_PROMPT_VERSION,
         "response_path": str(response_path),
-        "tasks": len(records),
+        "tasks": len(completed_ids) + new_count,
+        "resumed_tasks": len(completed_ids),
+        "cost_usd": budget.spent_usd,
+        "cost_limit_usd": budget.limit_usd,
     }

@@ -14,7 +14,13 @@ from evidencebench.models_v4 import (
     MatterResponse,
     MatterTask,
 )
-from evidencebench.runner_v4 import MatterWorkspace, doctrine_prompt
+from evidencebench.runner_v4 import (
+    CostBudgetExceeded,
+    MatterWorkspace,
+    RunCostBudget,
+    _generation_parameters,
+    doctrine_prompt,
+)
 from evidencebench.release_v4 import build_release_manifest
 from evidencebench.scoring_v4 import score_doctrine_item, score_matter_task
 from evidencebench.statistics_v4 import summarize_doctrine, summarize_suite
@@ -328,6 +334,12 @@ class MatterWorkspaceTests(unittest.TestCase):
                 )["content"],
                 "canonical needle",
             )
+            self.assertEqual(
+                workspace.execute(
+                    "read_documents", {"paths": ["record.docx"]}
+                )["documents"][0]["content"],
+                "canonical needle",
+            )
             with self.assertRaises(ValueError):
                 workspace.execute(
                     "read_document", {"path": "_canonical/record.txt"}
@@ -346,6 +358,34 @@ class PromptTests(unittest.TestCase):
         prompt = doctrine_prompt(state_item)
         self.assertIn("controlling evidence law of California", prompt)
         self.assertNotIn("Apply the Federal Rules of Evidence", prompt)
+
+    def test_generation_parameters_support_reasoning_without_temperature(self) -> None:
+        self.assertEqual(
+            _generation_parameters({}),
+            {"temperature": 0, "seed": 20260304},
+        )
+        self.assertEqual(
+            _generation_parameters(
+                {
+                    "temperature": None,
+                    "reasoning": {"effort": "high"},
+                    "provider_route": {"allow_fallbacks": False},
+                }
+            ),
+            {
+                "seed": 20260304,
+                "reasoning": {"effort": "high"},
+                "provider": {"allow_fallbacks": False},
+            },
+        )
+
+    def test_cost_budget_uses_openrouter_reported_cost(self) -> None:
+        budget = RunCostBudget(1.0)
+        budget.record({"usage": {"cost": 0.4}})
+        budget.ensure_available()
+        budget.record({"usage": {"cost": "0.6"}})
+        with self.assertRaises(CostBudgetExceeded):
+            budget.ensure_available()
 
 
 if __name__ == "__main__":

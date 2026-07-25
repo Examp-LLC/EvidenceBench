@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "provider_route": {"allow_fallbacks": false, "require_parameters": true},
+  "display_name": "Grok 4.5",
+  "model_id": "x-ai/grok-4.5",
+  "base_url": "https://openrouter.ai/api/v1/chat/completions",
+  "api_key_env": "OPENROUTER_API_KEY",
+  "app_title": "Objection Academy EvidenceBench v4",
+  "http_referer": "https://objectionacademy.com",
+  "seed": 20260304,
+  "temperature": null,
+  "reasoning": {"effort": "low", "exclude": true},
+  "max_output_tokens": 4000,
+  "max_turns": 8,
+  "max_run_cost_usd": 9,
+  "timeout_seconds": 300,
+  "tools_enabled": true
+}
