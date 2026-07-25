@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "provider_route": {"allow_fallbacks": false, "require_parameters": true},
+  "display_name": "Gemini 3.1 Pro Preview",
+  "model_id": "google/gemini-3.1-pro-preview",
+  "base_url": "https://openrouter.ai/api/v1/chat/completions",
+  "api_key_env": "OPENROUTER_API_KEY",
+  "app_title": "Objection Academy EvidenceBench v4",
+  "http_referer": "https://objectionacademy.com",
+  "seed": 20260304,
+  "temperature": null,
+  "reasoning": {"effort": "medium", "exclude": true},
+  "max_output_tokens": 1600,
+  "concurrency": 3,
+  "max_run_cost_usd": 3,
+  "timeout_seconds": 300,
+  "tools_enabled": false
+}

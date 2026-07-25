@@ -1,0 +1,12 @@
+MATTER RECORD — DEVELOPMENT FIXTURE
+
+[F1] Dr. Chen is a licensed mechanical engineer with 18 years of crash work.
+[F2] The delta-v method she identifies is accepted for accident reconstruction.
+[F3] The method's written protocol requires measurements from both vehicles.
+[F4] Dr. Chen measured only the claimant's vehicle.
+[F5] Photographs and an available inspection report contained measurements for
+the second vehicle, but her file does not mention them.
+[F6] At deposition, she could not explain the departure from the protocol.
+[F7] Her opinion would assist the jury if it satisfied Rule 702.
+
+Prepare a gatekeeping assessment of the proposed opinion.

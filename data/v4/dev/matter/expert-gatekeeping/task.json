@@ -1,0 +1,71 @@
+{
+  "schema_version": "4.0",
+  "track": "matter",
+  "id": "V4M-DEV-002",
+  "family_id": "V4MF-702-001",
+  "title": "Expert gatekeeping assessment",
+  "task_type": "record_review",
+  "instructions": "Review the record and determine whether the proposed accident-reconstruction opinion satisfies Rule 702. Distinguish the reliability of the general method from the reliability of its application in this matter.",
+  "documents": [
+    {
+      "path": "record.txt",
+      "sha256": "284d1a0c13ff16040f6007541e38a494970c7be7bd13ea7ab028e0bfc91b7d95"
+    }
+  ],
+  "deliverables": ["findings.json"],
+  "criteria": [
+    {
+      "id": "C1",
+      "dimension": "legal",
+      "title": "Reaches the supported gatekeeping disposition",
+      "issue_code": "FRE_702_RELIABLE_APPLICATION",
+      "expected_disposition": "exclude",
+      "critical": true
+    },
+    {
+      "id": "C2",
+      "dimension": "authority",
+      "title": "Grounds reliable application in Rule 702(d)",
+      "issue_code": "FRE_702_RELIABLE_APPLICATION",
+      "expected_disposition": "exclude",
+      "required_authority_groups": [["FRE 702(d)"]],
+      "accepted_authorities": ["FRE 702(d)"],
+      "critical": true
+    },
+    {
+      "id": "C3",
+      "dimension": "fact",
+      "title": "Identifies the unexplained protocol departure",
+      "issue_code": "FRE_702_RELIABLE_APPLICATION",
+      "expected_disposition": "exclude",
+      "required_fact_ids": ["F3", "F4", "F5", "F6"],
+      "required_record_refs": ["record.txt"],
+      "critical": true
+    },
+    {
+      "id": "C4",
+      "dimension": "deliverable",
+      "title": "Creates the structured findings deliverable",
+      "deliverable": "findings.json",
+      "critical": true
+    },
+    {
+      "id": "R1",
+      "dimension": "legal",
+      "title": "Separately discusses qualifications, helpfulness, method, and application",
+      "issue_code": "FRE_702_RELIABLE_APPLICATION",
+      "critical": false,
+      "review_only": true
+    }
+  ],
+  "corpus_version": "fre-2025",
+  "review": {
+    "status": "DRAFT",
+    "author_id": "oa-v4-drafter",
+    "reviewer_ids": []
+  },
+  "dimensions": {
+    "skill": "record-grounded expert gatekeeping",
+    "source": "synthetic"
+  }
+}

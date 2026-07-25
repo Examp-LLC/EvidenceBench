@@ -15,3 +15,11 @@ jobs:
           python-version: '3.12'
       - run: uv run --python 3.12 python -m unittest discover -s tests -v
       - run: uv run --python 3.12 evidencebench validate data/dev-v1.jsonl
+      - run: uv run --python 3.12 evidencebench validate-v4 --track doctrine --input data/v4/dev/doctrine.jsonl
+      - run: uv run --python 3.12 evidencebench validate-v4 --track matter --input data/v4/dev/matter
+      - name: Confirm draft fixtures cannot be published as official
+        run: |
+          if uv run --python 3.12 evidencebench validate-v4 --track doctrine --input data/v4/dev/doctrine.jsonl --official; then
+            echo "Draft v4 data incorrectly passed the official gate"
+            exit 1
+          fi
