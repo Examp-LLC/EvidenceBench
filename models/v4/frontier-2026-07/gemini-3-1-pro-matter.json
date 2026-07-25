@@ -13,7 +13,7 @@
   "max_output_tokens": 4000,
   "max_turns": 8,
   "concurrency": 2,
-  "max_run_cost_usd": 8,
+  "max_run_cost_usd": 10,
   "timeout_seconds": 300,
   "tools_enabled": true
 }

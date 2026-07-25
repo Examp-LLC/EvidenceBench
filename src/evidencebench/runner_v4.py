@@ -727,9 +727,14 @@ def run_matter(
         task_dir, task = entry
         task_output = destination / "workspaces" / task.id
         if task_output.exists():
-            raise FileExistsError(
-                f"refusing to overwrite prior task workspace: {task_output}"
-            )
+            interrupted_root = destination / "interrupted"
+            interrupted_root.mkdir(parents=True, exist_ok=True)
+            interrupted = interrupted_root / task.id
+            suffix = 1
+            while interrupted.exists():
+                interrupted = interrupted_root / f"{task.id}-{suffix}"
+                suffix += 1
+            task_output.rename(interrupted)
         task_output.mkdir(parents=True)
         try:
             response, transcript, usage = _run_matter_task(
