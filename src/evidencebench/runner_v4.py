@@ -6,9 +6,11 @@ import os
 import re
 import socket
 import subprocess
+import threading
 import urllib.error
 import urllib.request
 import zipfile
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from xml.etree import ElementTree
 
@@ -30,21 +32,27 @@ class RunCostBudget:
     def __init__(self, limit_usd: float | None) -> None:
         self.limit_usd = float(limit_usd) if limit_usd is not None else None
         self.spent_usd = 0.0
+        self._lock = threading.Lock()
 
     def ensure_available(self) -> None:
-        if self.limit_usd is not None and self.spent_usd >= self.limit_usd:
-            raise CostBudgetExceeded(
-                f"run cost limit reached: ${self.spent_usd:.6f} "
-                f"of ${self.limit_usd:.2f}"
-            )
+        with self._lock:
+            if self.limit_usd is not None and self.spent_usd >= self.limit_usd:
+                raise CostBudgetExceeded(
+                    f"run cost limit reached: ${self.spent_usd:.6f} "
+                    f"of ${self.limit_usd:.2f}"
+                )
 
     def record(self, result: dict) -> None:
         value = result.get("usage", {}).get("cost", 0)
         if isinstance(value, (int, float, str)):
             try:
-                self.spent_usd += float(value)
+                with self._lock:
+                    self.spent_usd += float(value)
             except ValueError:
                 pass
+
+
+_JSONL_LOCK = threading.Lock()
 
 
 def _read_jsonl_if_present(path: Path) -> list[dict]:
@@ -59,10 +67,11 @@ def _read_jsonl_if_present(path: Path) -> list[dict]:
 
 def _append_jsonl(path: Path, record: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("a") as handle:
-        handle.write(json.dumps(record, sort_keys=True) + "\n")
-        handle.flush()
-        os.fsync(handle.fileno())
+    with _JSONL_LOCK:
+        with path.open("a") as handle:
+            handle.write(json.dumps(record, sort_keys=True) + "\n")
+            handle.flush()
+            os.fsync(handle.fileno())
 
 
 def _load_ignored_env(start: Path) -> None:
@@ -233,10 +242,13 @@ def run_doctrine(
     }
     for record in prior_outputs:
         budget.record(record)
-    new_count = 0
-    for item in load_doctrine_items(items_path):
-        if item.id in completed_ids:
-            continue
+    pending_items = [
+        item
+        for item in load_doctrine_items(items_path)
+        if item.id not in completed_ids
+    ]
+
+    def evaluate(item) -> dict:
         try:
             result = _request(
                 manifest,
@@ -250,7 +262,7 @@ def run_doctrine(
                 budget,
             )
             parsed = _json_content(result["choices"][0]["message"])
-            record = {
+            return {
                 **parsed,
                 "item_id": item.id,
                 "status": "ok",
@@ -260,7 +272,7 @@ def run_doctrine(
                 "served_provider": result.get("provider"),
             }
         except Exception as error:
-            record = {
+            return {
                 "item_id": item.id,
                 "ruling": None,
                 "issue_codes": [],
@@ -271,8 +283,13 @@ def run_doctrine(
                 "status": f"failed:{type(error).__name__}",
                 "error": _error_message(error),
             }
-        _append_jsonl(output, record)
-        new_count += 1
+    workers = max(1, int(manifest.get("concurrency", 1)))
+    new_count = 0
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = [pool.submit(evaluate, item) for item in pending_items]
+        for future in as_completed(futures):
+            _append_jsonl(output, future.result())
+            new_count += 1
     return {
         "provider": "openrouter",
         "model": manifest["model_id"],
@@ -655,10 +672,14 @@ def run_matter(
     for record in prior_records:
         for route_event in record.get("route_events", []):
             budget.record(route_event)
-    new_count = 0
-    for task_dir, task in load_matter_tasks(tasks_path):
-        if task.id in completed_ids:
-            continue
+    pending_tasks = [
+        (task_dir, task)
+        for task_dir, task in load_matter_tasks(tasks_path)
+        if task.id not in completed_ids
+    ]
+
+    def evaluate(entry) -> dict:
+        task_dir, task = entry
         task_output = destination / "workspaces" / task.id
         if task_output.exists():
             raise FileExistsError(
@@ -690,8 +711,15 @@ def run_matter(
             )
             + "\n"
         )
-        _append_jsonl(response_path, response)
-        new_count += 1
+        return response
+
+    workers = max(1, int(manifest.get("concurrency", 1)))
+    new_count = 0
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = [pool.submit(evaluate, entry) for entry in pending_tasks]
+        for future in as_completed(futures):
+            _append_jsonl(response_path, future.result())
+            new_count += 1
     return {
         "provider": "openrouter",
         "model": manifest["model_id"],

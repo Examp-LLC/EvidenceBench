@@ -7,10 +7,12 @@ project, not legal advice or a substitute for professional legal research.
 
 ## v4 status
 
-The v4 evaluator, schemas, OpenRouter runners, scoring, integrity checks, and
-public development fixtures are implemented. The fixtures are deliberately
-marked `DRAFT`; they validate for development and fail the `--official` gate.
-EvidenceBench v4 must not be presented as an official leaderboard until the
+The v4 evaluator, schemas, OpenRouter runners, scoring, integrity checks, public
+development fixtures, and private 300-item candidate corpus are implemented.
+The July 2026 four-model snapshot is an **unreviewed research release**: all
+gold labels remain `DRAFT`, zero professional reviews were complete at run
+time, and only one run was made per model. EvidenceBench v4 must not be
+presented as an official or attorney-validated leaderboard until the
 legal-review and release gates in [V4_RELEASE_GATES.md](V4_RELEASE_GATES.md)
 are complete.
 
@@ -38,8 +40,7 @@ specific lessons taken from Harvey LAB are in
 - A 24-question development set and its scoring annotations.
 - The prompt contract, scoring code, model manifests, methodology, and website
   export format.
-- Aggregate official results after an approved sealed holdout run, including
-  separate FRE and caselaw dimensions.
+- Aggregate research or official results with their release and review status.
 
 ## What is sealed
 
@@ -57,7 +58,7 @@ annotations, and item-level results are not public. Once approved, published
 manifests will commit to the holdout with a SHA-256 hash, counts, categories,
 protocol hash, and aggregate metrics.
 
-The private v4 construction target is 240 Doctrine candidates and 60 Matter
+The private v4 research corpus contains 240 Doctrine candidates and 60 Matter
 tasks. These remain a candidate pool—not an official holdout—until every item
 passes the review and freeze gates.
 

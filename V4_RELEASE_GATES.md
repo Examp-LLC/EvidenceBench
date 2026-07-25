@@ -2,6 +2,11 @@
 
 No result is “official EvidenceBench v4” until all gates pass.
 
+The July 2026 four-model snapshot is permitted only under the distinct label
+`unreviewed_research_release`. It does not waive, satisfy, or weaken any gate
+below and must not be described as an official or attorney-validated
+leaderboard.
+
 ## Data gate
 
 - [ ] Target sample and coverage plan are frozen before model runs.

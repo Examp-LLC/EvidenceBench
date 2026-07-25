@@ -11,6 +11,7 @@
   "reasoning": {"effort": "medium", "exclude": true},
   "provider_route": {"allow_fallbacks": false, "require_parameters": true},
   "max_output_tokens": 1600,
+  "concurrency": 3,
   "max_run_cost_usd": 5,
   "timeout_seconds": 300,
   "tools_enabled": false

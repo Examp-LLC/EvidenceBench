@@ -26,10 +26,11 @@ leaderboard.
 
 ## Private data
 
-The official set will remain under Objection Academy control in a private
+The corpus remains under Objection Academy control in a private
 source-controlled repository. A public release commits to it by cryptographic
 hash and reports counts and coverage without releasing answers or item-level
-outputs.
+outputs. The July 2026 research corpus contains 240 Doctrine candidates and 60
+Matter candidates; none had completed professional review at run time.
 
 ## Primary metric
 
@@ -53,6 +54,11 @@ strict secondary metric.
 - headline scoring is deterministic;
 - uncertainty is clustered by task family; and
 - official results require repeated runs and disclosure of failures and costs.
+
+The July 2026 snapshot does not satisfy the independent-review or repeated-run
+controls. It is published only as an unreviewed research release so researchers
+can inspect the evaluator and initial measurement behavior while professional
+review remains open.
 
 ## Foreseeable risks
 

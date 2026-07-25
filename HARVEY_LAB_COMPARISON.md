@@ -7,12 +7,12 @@ counts are descriptive rather than permanent.
 |---|---|---|
 | Primary target | Long-horizon legal work across many practice areas | Evidence-law doctrine and litigation-record analysis |
 | Unit | Matter files, instruction, and reviewable work product | Doctrine item or closed-universe evidence matter |
-| Breadth | Current repository documentation reports 1,660 tasks and roughly 101,000 criteria | v4 candidate has 8 public Doctrine and 2 public Matter development fixtures; official set is not yet authored |
+| Breadth | Harvey's May 2026 announcement reported more than 1,200 tasks, 24 practice areas, and 75,000 expert-written criteria | Private research corpus has 240 Doctrine items and 60 Matter tasks; 8 Doctrine and 2 Matter fixtures are public |
 | Tools | File read/edit/write, glob, grep, bash, and document-format skills | List/read/search documents and write outputs; no model shell or network |
 | Core grading | Semantic LLM judge for each binary criterion; task score uses all-pass | Deterministic structured criteria; weighted track score plus all-critical Matter resolution |
 | Citation treatment | A rubric can require citations | Citations are normalized against a pinned authority corpus; invalid, nonexistent, and unsupported authorities are separated |
 | Uncertainty | Results emphasize all-pass and criterion pass rates | Family-clustered 95% bootstrap intervals, repeated-run requirement, and weight sensitivity |
-| Contamination strategy | Public tasks plus a held-out set | Public DRAFT development set plus a private family-separated holdout with public cryptographic commitments |
+| Contamination strategy | Public tasks plus a held-out test set | Public DRAFT development set plus a private family-separated candidate corpus with a public cryptographic commitment |
 
 ## Lessons adopted
 
@@ -66,13 +66,14 @@ v4 addresses those problems with:
 - one preregistered overall score with mandatory track disclosure; and
 - clustered confidence intervals, run replication, and weighting sensitivity.
 
-## What remains before a defensible launch
+## What remains before an official launch
 
-The v4 software is not the v4 benchmark corpus. The official sample needs a
-coverage matrix, original families, independent professional review,
-adjudication, pilot-based item analysis, and a preregistered release plan.
-Only after those gates pass should Objection Academy run paid models or publish
-a leaderboard.
+The candidate corpus has a frozen coverage matrix, original families, private
+provenance, review packets, and deterministic validation. It still needs
+independent professional review, adjudication, replicated model runs, external
+reproduction, and prospective challenge handling. Until those gates pass, the
+July 2026 results remain an unreviewed research release rather than an official
+leaderboard.
 
 ## Sources
 

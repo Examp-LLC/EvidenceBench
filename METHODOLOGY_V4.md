@@ -1,7 +1,8 @@
 # EvidenceBench v4 methodology
 
-Status: implementation candidate. The public development fixtures are `DRAFT`,
-not an official benchmark release.
+Status: evaluator-complete. The July 2026 four-model snapshot is an
+**unreviewed research release**, not an official or attorney-validated
+leaderboard. The official gates remain unchanged.
 
 ## Research question
 
@@ -94,8 +95,10 @@ the v4 score.
 
 Model sampling is temperature zero with a recorded seed when the route supports
 it. Each official model result must include at least three independent runs.
-The leaderboard reports the run mean, run dispersion, and family-clustered 95%
-bootstrap confidence intervals.
+The July 2026 research release uses one run per model and reports
+family-clustered 95% bootstrap confidence intervals across the frozen corpus;
+those intervals measure item-family sampling uncertainty, not run-to-run model
+variance.
 
 ## Dataset design
 
@@ -110,7 +113,9 @@ records have hashed canonical-text companions so extraction-library variance
 cannot change the input presented to a model. Real cases may be used
 only when the source, license, holding, current-law status, and retrieval hash
 are recorded. Every official item must name an author and at least one
-independent reviewer and must have status `APPROVED`.
+independent reviewer and must have status `APPROVED`. The July 2026 research
+corpus is frozen while all 300 items remain `DRAFT`; its public results must
+carry that limitation wherever they appear.
 
 The construction target is 240 Doctrine items and 60 Matter tasks. Doctrine
 contains 151 migrated v3 concepts and 89 new coverage items, scored as 168
@@ -135,6 +140,11 @@ An official result publishes:
   citation counts;
 - family-clustered confidence intervals and weighting sensitivity; and
 - all deviations from the reference harness.
+
+The July 2026 research release publishes the same aggregate fields where
+available, plus an explicit zero-of-300 review count, one-run disclosure, and
+`unreviewed_research_release` status. Item-level prompts, annotations,
+responses, transcripts, and scores remain private.
 
 ## Known limitations
 

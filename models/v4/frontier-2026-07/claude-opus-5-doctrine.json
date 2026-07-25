@@ -11,6 +11,7 @@
   "temperature": null,
   "reasoning": {"effort": "medium", "exclude": true},
   "max_output_tokens": 1600,
+  "concurrency": 3,
   "max_run_cost_usd": 7,
   "timeout_seconds": 300,
   "tools_enabled": false

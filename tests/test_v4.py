@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from evidencebench.datasets_v4 import load_doctrine_items, load_matter_tasks
 from evidencebench.models_v4 import (
@@ -20,6 +22,7 @@ from evidencebench.runner_v4 import (
     RunCostBudget,
     _generation_parameters,
     doctrine_prompt,
+    run_doctrine,
 )
 from evidencebench.release_v4 import build_release_manifest
 from evidencebench.scoring_v4 import score_doctrine_item, score_matter_task
@@ -386,6 +389,55 @@ class PromptTests(unittest.TestCase):
         budget.record({"usage": {"cost": "0.6"}})
         with self.assertRaises(CostBudgetExceeded):
             budget.ensure_available()
+
+    def test_doctrine_run_resumes_without_repeating_paid_calls(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            manifest = root / "manifest.json"
+            items = root / "items.jsonl"
+            output = root / "responses.jsonl"
+            manifest.write_text(
+                json.dumps(
+                    {
+                        "provider": "openrouter",
+                        "model_id": "test/model",
+                        "tools_enabled": False,
+                        "max_run_cost_usd": 1,
+                    }
+                )
+            )
+            items.write_text(DOCTRINE.read_text().splitlines()[0] + "\n")
+            response = {
+                "id": "generation-1",
+                "model": "test/model",
+                "provider": "Test",
+                "choices": [
+                    {
+                        "message": {
+                            "content": json.dumps(
+                                {
+                                    "ruling": "exclude",
+                                    "issue_codes": [],
+                                    "authorities": [],
+                                    "grounding": [],
+                                    "confidence": 0.5,
+                                    "explanation": "test",
+                                }
+                            )
+                        }
+                    }
+                ],
+                "usage": {"cost": 0.01},
+            }
+            with patch(
+                "evidencebench.runner_v4._request", return_value=response
+            ) as request:
+                first = run_doctrine(manifest, items, output)
+                second = run_doctrine(manifest, items, output)
+            self.assertEqual(request.call_count, 1)
+            self.assertEqual(first["items"], 1)
+            self.assertEqual(second["resumed_items"], 1)
+            self.assertEqual(len(output.read_text().splitlines()), 1)
 
 
 if __name__ == "__main__":
